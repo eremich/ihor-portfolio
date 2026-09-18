@@ -1,0 +1,155 @@
+@import "tailwindcss";
+
+@theme {
+  --color-ink: #fafafa;
+  --color-ink-muted: #9a9a9a;
+  --color-ink-faint: #5a5a5a;
+  --color-paper: #0f0f11;
+  --color-paper-raised: #17171a;
+  --color-line: rgba(255, 255, 255, 0.08);
+  --color-line-strong: rgba(255, 255, 255, 0.16);
+  --color-accent: #34d158;
+
+  --font-sans: var(--font-geist-sans), ui-sans-serif, system-ui, sans-serif;
+  --font-mono: var(--font-geist-mono), ui-monospace, SFMono-Regular, monospace;
+
+  --ease-out-soft: cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+  color-scheme: dark;
+  scroll-behavior: smooth;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+body {
+  background: var(--color-paper);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Sepia film grain — sits above all content but blends warmly into the dark
+   paper. Fixed to viewport so it doesn't scroll. Cost is near zero: a single
+   tiled SVG and a stepped-transform animation that's cheap for the compositor. */
+body::before {
+  content: "";
+  position: fixed;
+  inset: -10%;
+  pointer-events: none;
+  z-index: 100;
+  background-image: url("/grain.svg");
+  background-repeat: repeat;
+  background-size: 180px 180px;
+  opacity: 0.18;
+  mix-blend-mode: screen;
+  animation: grain-shift 900ms steps(6) infinite;
+  will-change: transform;
+}
+
+@keyframes grain-shift {
+  0%,   100% { transform: translate3d(0,      0,     0); }
+  16.6%      { transform: translate3d(-3%,   -2%,    0); }
+  33.3%      { transform: translate3d( 4%,   -4%,    0); }
+  50%        { transform: translate3d(-5%,    3%,    0); }
+  66.6%      { transform: translate3d( 3%,    5%,    0); }
+  83.3%      { transform: translate3d(-2%,   -3%,    0); }
+}
+
+::selection {
+  background: var(--color-ink);
+  color: var(--color-paper);
+}
+
+a {
+  color: inherit;
+}
+
+/* Micro-interaction primitives borrowed from references */
+@keyframes rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes pulse-dot {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.6;
+    transform: scale(0.85);
+  }
+}
+
+@keyframes pulse-ring {
+  0% {
+    opacity: 0.5;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(2.4);
+  }
+}
+
+.rise {
+  animation: rise-in 700ms var(--ease-out-soft) both;
+}
+
+.rise-1 { animation-delay: 80ms; }
+.rise-2 { animation-delay: 200ms; }
+.rise-3 { animation-delay: 340ms; }
+
+.dot-live {
+  position: relative;
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  box-shadow: 0 0 0 3px color-mix(in oklab, var(--color-accent) 22%, transparent);
+  animation: pulse-dot 2s var(--ease-out-soft) infinite;
+}
+
+.dot-live::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: var(--color-accent);
+  animation: pulse-ring 2s var(--ease-out-soft) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rise,
+  .rise-1,
+  .rise-2,
+  .rise-3 {
+    animation: none;
+  }
+  .dot-live,
+  .dot-live::after {
+    animation: none;
+  }
+  *,
+  *::before,
+  *::after {
+    transition-duration: 0.01ms !important;
+    animation-duration: 0.01ms !important;
+  }
+}
