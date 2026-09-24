@@ -1,0 +1,393 @@
+// Case study content: Patient Management System redesign for New Malden Diagnostic Centre.
+// Every fact here comes from the project itself (audit, flows, prototype, design system).
+// No invented metrics or reviews.
+
+export type Shot = {
+  src: string;
+  alt: string;
+  caption: string;
+  width: number;
+  height: number;
+};
+
+export type Finding = { title: string; desc: string };
+export type Persona = { name: string; tagline: string; goals: string; context: string };
+export type Phase = { label: string; title: string; intro: string; bullets: string[] };
+export type Decision = { title: string; why: string };
+export type Pair = { finding: string; fix: string; before: Shot | null; after: Shot[] };
+export type Flow = { title: string; desc: string; shots: Shot[] };
+export type Fact = { number: string; label: string };
+export type Lesson = { title: string; body: string };
+
+const after = (file: string, alt: string, caption: string): Shot => ({
+  src: `/case-pms/after/${file}.webp`,
+  alt,
+  caption,
+  width: 2400,
+  height: 1500,
+});
+
+const before = (file: string, height: number, alt: string, caption: string): Shot => ({
+  src: `/case-pms/before/${file}.webp`,
+  alt,
+  caption,
+  width: 2400,
+  height,
+});
+
+export const pmsLinks = {
+  demo: "https://nmdc-patient-management.vercel.app",
+  storybook: "https://nmdc-patient-management.vercel.app/storybook",
+};
+
+export const pmsBody = {
+  tldr: [
+    {
+      label: "The problem",
+      text: "Staff at a busy diagnostic clinic could not tell what needed action now. Priority was invisible, status was colour-only, and two core flows did not exist.",
+    },
+    {
+      label: "What I did",
+      text: "Audited the existing screens, defined the pathway, task states and roles, redesigned the key flows, and built a working prototype on a documented design system.",
+    },
+    {
+      label: "The result",
+      text: "A clickable product covering referral to billing for three roles, in light and dark, with every component documented in Storybook.",
+    },
+  ],
+
+  overview: {
+    kicker: "Project Overview",
+    headline: "A patient management system for a busy private diagnostic clinic, made usable all day.",
+    paragraphs: [
+      "New Malden Diagnostic Centre is a large private outpatient and diagnostics clinic in South London, part of Sterling Healthcare Group. It offers diagnostic imaging, specialist consultant clinics and a paediatric department, six days a week.",
+      "It needed a cloud-based Patient Management System to run its daily operations: register patients, schedule clinics, check patients in, manage worklists of tasks, track diagnostic results and report activity for billing. The system connects to Myorb for radiology, an on-site pathology lab and Healthcode for insurer invoicing.",
+      "A first set of screens already existed. My job was to find out where it would fail in daily use, define the flows and rules underneath, and redesign the parts that matter most.",
+    ],
+  },
+
+  goals: {
+    kicker: "Goals",
+    product: {
+      title: "Product goals, from the brief",
+      items: [
+        "Register patients and find existing records, adding a new episode of care rather than a duplicate",
+        "Schedule appointments into clinics",
+        "Check patients in on arrival so clinicians can see who is here",
+        "Manage tasks in worklists, each with a priority and a full log of who did what and when",
+        "Report activity by time frame and funding source, for billing",
+      ],
+    },
+    design: {
+      title: "Design goals",
+      items: [
+        "Staff see in seconds what needs action now, without scanning a table",
+        "Priority and status can never be misread, including by colour-blind users",
+        "Each role sees exactly what they may act on",
+        "Mistakes are prevented, not fixed afterwards",
+      ],
+    },
+  },
+
+  users: {
+    kicker: "Who it is for",
+    headline: "Three kinds of staff, working under constant interruption.",
+    intro:
+      "Phones, walk-ins, patients in the room, mostly at a desktop. Personas come only from the roles in the brief, with no invented characters.",
+    personas: [
+      {
+        name: "Admin / Reception",
+        tagline: "Keeps the day moving",
+        goals: "Register patients, keep clinics booked, check patients in, keep worklists clear.",
+        context: "Front desk and back office, high interruption. Some also hold the Finance capability.",
+      },
+      {
+        name: "Consultant",
+        tagline: "Sees only their patients",
+        goals: "Run clinic efficiently, request a test in one step mid-consultation, get results back with little admin.",
+        context: "Consulting or scanning room, patient present, time-boxed.",
+      },
+      {
+        name: "Consultant Secretary",
+        tagline: "Acts for one consultant",
+        goals: "Book and manage their consultant's patients quickly, keep the list clean.",
+        context: "Office, working for a named consultant. Cannot see unrelated tasks.",
+      },
+    ] as Persona[],
+  },
+
+  role: {
+    kicker: "My Role",
+    bullets: [
+      "Turned the brief into a domain model and the lifecycle of a booking task",
+      "Audited the existing screens against usability heuristics and WCAG",
+      "Defined information architecture and flows for each role",
+      "Designed the visual language and every screen, in light and dark",
+      "Built the design system: tokens, components, documentation in Storybook",
+      "Built the clickable prototype in code, so the flows can be tried, not just viewed",
+    ],
+  },
+
+  research: {
+    kicker: "Research",
+    headline: "Start from the evidence: what the existing screens got wrong.",
+    intro:
+      "I worked from the client's project proposal, the patient pathway diagram with its radiology swim lane, the paper referral forms and the existing screens for the Admin and Doctor roles: eleven admin screens and six doctor screens.",
+    method:
+      "A heuristic and craft review of five screens, mapped to Nielsen's heuristics and WCAG 2.1 AA risks, each finding rated by severity.",
+    critical: [
+      { title: "Priority was invisible", desc: "The brief makes routine, urgent and red flag core, yet the booking list had no priority column. Staff could not triage." },
+      { title: "No patient name in results", desc: "Twelve columns, but nothing said whose result you were chasing." },
+      { title: "No check-in screen", desc: "Reception marking patients arrived is a core daily task, and nothing supported it." },
+      { title: "No online referral form", desc: "Daily intake still depended on paper." },
+    ] as Finding[],
+    other: [
+      "Status shown by colour alone; two states read as near-identical green",
+      "Twelve-column results table: cognitive overload, no hierarchy",
+      "No “what needs me now” view: flat lists, no default sort or grouping",
+      "Registration with no progress model and no duplicate-patient check",
+      "Two overlapping calendars with unclear purposes",
+      "Role-blind: the same interface for every role",
+      "Placeholder content everywhere, hiding real edge cases",
+    ],
+    shots: [
+      before("01-task-worklist", 706, "The existing task worklist: a dense table with no priority column", "Task worklist: no priority, colour-only status, no triage"),
+      before("05-results-tracking", 910, "The existing results tracking table with twelve columns", "Results tracking: twelve columns and no patient name"),
+      before("02-patient-registration", 431, "The existing five-step patient registration form", "Patient registration: no progress model, no duplicate check"),
+    ] as Shot[],
+  },
+
+  define: {
+    kicker: "Define",
+    pathway: {
+      headline: "The patient pathway, redrawn as a product flow.",
+      body: "The client's pathway diagram became a clean flow from referral to result. Three audit gaps turned into explicit steps: register with a duplicate check, check-in as a first-class step, and referral request as one of two ways a booking task is created.",
+      diagram: "patient-pathway",
+      alt: "Flow diagram of the patient pathway: referral received, patient record check, register with duplicate check, episode of care, booking task, schedule appointment, check-in, consultation or test, clinician confirms, test logged for billing and results tracking task, result sent to referrer.",
+    },
+    status: {
+      headline: "One status and priority language.",
+      body: "The task model became the source of truth for the interface. Every state and every allowed move is written down, so a button never offers something the process does not allow.",
+      bullets: [
+        "Priority (routine, urgent, red flag) is separate from status and shows as a column, a sort and a filter on every list",
+        "Deactivating a task always needs a reason; “no longer required” needs it in writing",
+        "Every status and priority is icon, label and colour, never colour alone",
+        "Statuses group by meaning: needs action, waiting, done, closed. This fixed the two look-alike greens from the audit",
+      ],
+      diagram: "task-lifecycle",
+      alt: "State diagram of a booking task. Pending moves to Scheduled when an appointment is booked, and Pending or Scheduled can be marked Complete, No longer required or Created in error. Complete and No longer required can be reactivated to Reactivate pending, which returns to Pending.",
+    },
+    ia: {
+      headline: "Information architecture, role-aware.",
+      body: "One navigation, filtered by role. A matrix defines what each role sees and can do: a secretary's list is scoped to their consultant, and results are scoped to the clinician's own patients.",
+      columns: ["Area", "Admin / Reception", "Consultant", "Secretary"],
+      rows: [
+        ["Dashboard", "Triage across all lists", "My patients, arrivals, results awaited", "My consultant's list and clinics"],
+        ["Booking tasks", "All", "Request from clinic", "Scoped to their consultant"],
+        ["Results", "All", "My patients only", "Scoped"],
+        ["Billing and reports", "Finance capability only", "No", "No"],
+      ],
+    },
+  },
+
+  design: {
+    kicker: "Design",
+    phases: [
+      {
+        label: "Direction",
+        title: "Calm, precise, unflashy",
+        intro:
+          "The brief was a well-run reception desk, not a cold hospital portal and not a consumer health app. Colour is reserved for meaning, so status is the only thing that shouts. A rule I kept: red is reserved for system errors, so a clinical red flag can never be mistaken for a validation error.",
+        bullets: [
+          "A first direction with a deep-blue sidebar was rejected in review as too heavy",
+          "The final look: a light canvas, a white work panel, bordered tables, initials avatars and soft tinted status pills with icons",
+          "DM Sans, one type scale from 12 to 28 px, one blue for action",
+        ],
+      },
+      {
+        label: "Prototype",
+        title: "A product you can use",
+        intro:
+          "I built the redesign as a clickable prototype with seeded data and a role switcher instead of a login. This was a deliberate cut: a reviewer judges screens and flows, so the effort went into the interface, not a database. State changes are real within a session: creating an episode adds a task, scheduling moves it to Scheduled, logging billing marks the episode paid or invoiced.",
+        bullets: [],
+      },
+      {
+        label: "Design system",
+        title: "From screens to a system",
+        intro:
+          "Once the screens existed I turned them into a system, so the next screen would be faster and consistent. Three token tiers, light and dark themes from the same tokens, and every component documented with variants, states, do and don't, and accessibility notes.",
+        bullets: [],
+      },
+    ] as Phase[],
+  },
+
+  compare: {
+    kicker: "Audit findings and the redesign",
+    headline: "Each finding, and what replaced it.",
+    pairs: [
+      {
+        finding: "Priority invisible, status by colour alone, no “what needs me now”",
+        fix: "A priority tag and an icon-and-label status on every task, filters by priority, and a dashboard that lists what needs attention first.",
+        before: before("01-task-worklist", 706, "The existing task worklist", "Existing screens: Booking Tasks and Retrieval Task lists"),
+        after: [
+          after("tasks-light", "The redesigned task list with priority and status pills, search and filters", "Task list: priority, status with icon and label, filters"),
+          after("tasks-red-flag-light", "The redesigned task list filtered to red flag tasks", "Filtered to red flag: one click to what is most urgent"),
+        ],
+      },
+      {
+        finding: "Registration with no duplicate check, and a disabled submit that explains nothing",
+        fix: "A form that warns of a possible duplicate and lets the clinic register anyway, with a message under each field that is wrong and a submit that always works.",
+        before: before("02-patient-registration", 431, "The existing five-step registration form", "Existing screen: five-step patient registration"),
+        after: [
+          after("register-errors-light", "The register patient dialog showing errors under three empty required fields", "Errors under the fields that need fixing"),
+          after("register-duplicate-light", "The register patient dialog warning of a possible duplicate patient", "A possible duplicate is flagged, not blocked"),
+        ],
+      },
+      {
+        finding: "Two overlapping calendars and no clear way to book",
+        fix: "Scheduling lives in the task, with date, time and location, and the task moves to Scheduled on its own. An appointments page lists everything booked.",
+        before: before("03-clinic-scheduling", 717, "The existing clinic scheduling grid", "Existing screen: clinic scheduling grid"),
+        after: [
+          after("task-scheduled-light", "The task dialog showing a booked appointment and allowed next actions", "Scheduling inside the task"),
+          after("appointments-light", "The appointments table", "All appointments in one place"),
+        ],
+      },
+      {
+        finding: "Results list with twelve columns and no patient name",
+        fix: "Results sit in the task next to the appointment and the referral form, always under the patient's name, with one clear next step.",
+        before: before("05-results-tracking", 910, "The existing results tracking table", "Existing screen: results tracking, twelve columns"),
+        after: [after("task-result-light", "The task dialog showing a received result with a send to referrer action", "Result, referral and appointment together")],
+      },
+      {
+        finding: "Referral form never designed; intake still on paper",
+        fix: "A referral form per category, added from the task and linked to it, with structured fields instead of scanned free text.",
+        before: null,
+        after: [after("task-referral-form-light", "The task dialog with a referral form being filled in", "Structured referral form, linked to the task")],
+      },
+    ] as Pair[],
+  },
+
+  decisions: {
+    kicker: "Design decisions",
+    items: [
+      { title: "Status is colour, icon and label", why: "Readable for colour-blind users and in greyscale." },
+      { title: "One primary action per screen or dialog", why: "Staff are triaging, not browsing." },
+      { title: "Hover only on clickable things", why: "Hover always means “you can click this”." },
+      { title: "Submit is never disabled to hide a reason", why: "A greyed button explains nothing; show what to fix." },
+      { title: "Errors under the field, after the first submit", why: "No red while someone is still typing; it clears as they fix it." },
+      { title: "Controls a role cannot use are omitted", why: "Nobody meets an error after clicking." },
+      { title: "A duplicate patient warns instead of blocking", why: "The clinic can still register a genuine second record." },
+    ] as Decision[],
+  },
+
+  flows: {
+    kicker: "Key flows",
+    headline: "The prototype, end to end.",
+    items: [
+      {
+        title: "Dashboard: what needs attention",
+        desc: "The primary tile counts active tasks. A list underneath puts red flag and urgent tasks first.",
+        shots: [
+          after("dashboard-light", "The dashboard in the light theme", "Dashboard, light"),
+          after("dashboard-dark", "The dashboard in the dark theme", "Dashboard, dark"),
+        ],
+      },
+      {
+        title: "Patients and episodes",
+        desc: "Search patients, open a record, and see every referral as an episode with its tasks and billing.",
+        shots: [
+          after("patients-light", "The patients list", "Patients"),
+          after("patient-detail-light", "A patient record with episodes and tasks", "A patient, grouped by episode"),
+        ],
+      },
+      {
+        title: "Task lifecycle",
+        desc: "Staff move a task only along allowed transitions. Each move is logged with who and when.",
+        shots: [
+          after("task-detail-pending-light", "A pending task in the task dialog", "A red flag task, pending"),
+          after("task-schedule-error-light", "The schedule form showing an error for a missing date", "The scheduling form explains what is missing"),
+        ],
+      },
+      {
+        title: "Three roles, three views",
+        desc: "A role switcher steps into each role. A consultant sees only their own tasks and no billing.",
+        shots: [
+          after("role-switcher-menu-light", "The role switcher menu listing the demo staff", "Role switcher"),
+          after("tasks-consultant-light", "The task list as a consultant, showing only that consultant's two tasks", "Consultant view"),
+        ],
+      },
+      {
+        title: "Billing, Admin only",
+        desc: "Self-pay is marked paid, an insurer is marked invoiced, and the report totals both.",
+        shots: [after("billing-light", "The billing report for Admin", "Billing report")],
+      },
+      {
+        title: "Dark theme",
+        desc: "Designed with the light theme from the same tokens, and checked for contrast.",
+        shots: [
+          after("tasks-dark", "The task list in the dark theme", "Task list, dark"),
+          after("task-detail-dark", "The task dialog in the dark theme", "Task dialog, dark"),
+        ],
+      },
+    ] as Flow[],
+  },
+
+  system: {
+    kicker: "Design system",
+    headline: "A documented system, not a set of screens.",
+    body: "Three tiers of tokens: a raw palette, purpose-named semantic tokens such as background surface and text secondary, then component tokens for buttons, fields and tables. Every semantic token has a light and a dark value, and components never branch on the theme. The default palette is removed, so only design-system values can be used, and a check fails on raw colours.",
+    bullets: [
+      "Every component documented with live examples, all variants and states",
+      "When to use it, and do and don't, with real examples",
+      "Tokens used and accessibility notes",
+      "A matrix showing every interactive component in every state",
+    ],
+    shots: [
+      after("storybook-introduction", "The Storybook introduction page of the design system", "Introduction: tiers, principles, how to contribute"),
+      after("storybook-button-docs", "The Button documentation page in Storybook", "A component page: examples, props, guidance"),
+      after("storybook-colors-semantic", "The semantic colour tokens page in Storybook", "Semantic tokens, resolved per theme"),
+      after("storybook-states", "The interaction states matrix in Storybook", "Every component in every state"),
+    ] as Shot[],
+  },
+
+  outcome: {
+    kicker: "Outcome",
+    headline: "What exists today.",
+    facts: [
+      { number: "6", label: "screens and 4 dialogs, covering the pathway from referral to billing" },
+      { number: "3", label: "roles with different views and permissions" },
+      { number: "6", label: "task states with an explicit set of allowed moves" },
+      { number: "60+", label: "Storybook stories, with documentation for every component" },
+      { number: "3", label: "token tiers, about 100 colour tokens, light and dark themes" },
+      { number: "AA", label: "contrast checked on every screen and dialog in both themes" },
+    ] as Fact[],
+    notDone: {
+      title: "What is not done",
+      items: [
+        "The check-in and arrivals board and the clinic calendar exist as wireframes, not in the prototype",
+        "Hi-fi work in Figma covered the foundations (colour variables, text styles, priority tags, status chips, buttons), not every screen",
+        "No usage data or client feedback: this is a design case, not a shipped product",
+      ],
+    },
+  },
+
+  lessons: {
+    kicker: "Lessons Learned",
+    blocks: [
+      { title: "Start from the evidence", body: "The audit turned “it feels wrong” into a ranked list, and the ranking decided what to design first." },
+      { title: "A status model is a design tool", body: "Writing the states and allowed moves before any screen removed most later arguments about what a button should do." },
+      { title: "Cut the backend, keep the flows", body: "The first prototype plan had a database and real login. Removing them left all the effort on screens and flows." },
+      { title: "Tokens before components", body: "Defining token tiers first, then components that only compose them, made themes, states and documentation follow naturally." },
+      { title: "Show the hard states", body: "Error, empty, disabled and duplicate cases took more thought than the happy path, and they are where a clinical tool earns trust." },
+    ] as Lesson[],
+  },
+
+  cta: {
+    title: "Try it yourself",
+    sub: "Switch between roles in the demo, or read the design system.",
+    links: [
+      { label: "Live demo", href: pmsLinks.demo },
+      { label: "Design system", href: pmsLinks.storybook },
+    ],
+  },
+};

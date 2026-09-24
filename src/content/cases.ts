@@ -14,6 +14,16 @@ export type Case = {
 
 export const cases: Case[] = [
   {
+    slug: "regulate",
+    title: "Regulate",
+    role: "Product Designer",
+    company: "Preview / demo case",
+    year: "2024",
+    tags: ["Healthcare", "Mobile", "Design System"],
+    summary:
+      "A personalized metabolic health platform powered by continuous glucose monitoring. Preview content used only to showcase the case-page layout.",
+  },
+  {
     slug: "apination",
     title: "API Nation",
     role: "Sole Product Designer",
@@ -24,14 +34,14 @@ export const cases: Case[] = [
       "A real-estate automation platform with 4,000+ clients and 45M tasks a month. Design system from scratch, full platform redesign, onboarding, a no-code workflow builder, and conversational UI for an autonomous AI lead agent.",
   },
   {
-    slug: "pms-3fivetwo",
+    slug: "patient-management",
     title: "Patient Management System",
-    role: "UX / UI Designer",
-    company: "A-Development · 3fivetwo",
-    year: "2019",
-    tags: ["Healthcare", "Dashboard", "Web"],
+    role: "Product Designer",
+    company: "New Malden Diagnostic Centre",
+    year: "2020",
+    tags: ["Healthcare", "Web app", "Design system"],
     summary:
-      "A clinic-side dashboard for private healthcare — booking, patient records, and clinician scheduling.",
+      "A staff system for a busy diagnostic clinic, redesigned from a UX audit: one clear priority and status language, task lists that show what needs action now, and role-aware views. Built as a working prototype on a documented design system.",
   },
   {
     slug: "eticket",

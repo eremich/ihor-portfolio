@@ -112,3 +112,15 @@ D:\Portfolio\
 4. **Шрифт** — оставить дефолтный Geist от Next.js или сразу подключить что-то более "editorial" (например, Inter Tight / Söhne подобное через Fontshare)?
 
 Как подтвердишь план и ответишь на 4 вопроса — стартую с инициализации.
+
+---
+
+## Case study: Patient Management System (2026-09-24)
+
+Content source: `D:\PMS3fivetwo\docs\case-study-draft.md`; assets in `D:\PMS3fivetwo\docs\case-assets` (copied to `public/case-pms/`).
+Live demo https://nmdc-patient-management.vercel.app, design system /storybook. Do not mention 3fivetwo or Anuitex.
+
+- [x] Step 1 — data: `cases.ts` entry (`/work/patient-management`, client, year 2020), `src/content/case-pms.ts`, assets copied
+- [x] Step 2 — page: `PmsBody` sections wired into `/work/[slug]` (tl;dr, overview, goals, users, research + before shots, define + diagrams, design, before/after pairs, decisions, flows gallery, design system, outcome, lessons, CTA)
+- [~] Step 3 — verified: 1440 and 375 (no overflow), 32 images load with alt text, diagrams inline, no console errors; still to do: keyboard pass, design-review pass, trim length if wanted
+- [ ] Step 4 — first Vercel deploy of the portfolio (needs the user's login); make repos private if wanted
