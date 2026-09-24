@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
 import { pmsBody as b, pmsLinks, type Shot } from "@/content/case-pms";
 import { CaseToc, type TocItem } from "@/components/case-toc";
@@ -152,6 +152,7 @@ export function PmsBody() {
         <Lead title={b.define.pathway.headline}>
           <p>{b.define.pathway.body}</p>
         </Lead>
+        <Board board={b.define.pathway.board} />
         <Diagram name={b.define.pathway.diagram} alt={b.define.pathway.alt} />
 
         <Lead title={b.define.status.headline} className="mt-24">
@@ -378,6 +379,28 @@ function Block({ kicker, id, children }: { kicker: string; id?: string; children
 
 function Headline({ children }: { children: React.ReactNode }) {
   return <h2 className="max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">{children}</h2>;
+}
+
+/** A process artifact (the Miro board) in a raised frame with a chip label. Renders nothing until the image exists. */
+function Board({ board }: { board: { src: string; label: string; caption: string; alt: string } }) {
+  const file = path.join(process.cwd(), "public", board.src);
+  if (!existsSync(file)) return null;
+  return (
+    <figure className="mt-10">
+      <a
+        href={board.src}
+        target="_blank"
+        rel="noopener noreferrer"
+        aria-label={`${board.label} (open full size)`}
+        className="block overflow-hidden rounded-xl border border-line bg-paper-raised p-3 transition-colors duration-200 hover:border-line-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:p-4"
+      >
+        <span className="mb-3 inline-block rounded-md bg-line px-2.5 py-1 text-[12px] text-ink">{board.label}</span>
+        {/* eslint-disable-next-line @next/next/no-img-element -- size comes from the export, unknown until then */}
+        <img src={board.src} alt={board.alt} loading="lazy" className="h-auto w-full rounded-md" />
+      </a>
+      <figcaption className="mt-3 max-w-[70ch] text-[13px] leading-[1.5] text-ink-faint">{board.caption}</figcaption>
+    </figure>
+  );
 }
 
 /** Headline on the left, short supporting text on the right; stacks on narrow screens. */

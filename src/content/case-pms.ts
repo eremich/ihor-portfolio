@@ -156,6 +156,14 @@ export const pmsBody = {
       headline: "I turned the clinic's pathway into a flow the product could follow.",
       body: "Three audit gaps became explicit steps: register with a duplicate check, check-in as a first-class step, and a referral request as a second way to create a booking task.",
       diagram: "patient-pathway",
+      // The real Miro working board, exported as an image. Shown only once the file exists.
+      board: {
+        src: "/case-pms/process/miro-board.webp",
+        label: "Miro · working board",
+        caption:
+          "Two of eight flows on the working board: the patient pathway, with the diagnostic-or-consultation split and the loop back for a further test, and radiology across our system and Myorb. The board also holds the results pathway and five flows I proposed where the brief had only text.",
+        alt: "Two frames from the Miro board. Patient Pathway: referral received, existing record check, create patient record, episode of care, create task, schedule appointment, patient arrives, then a diagnostic appointment decision: a test is carried out and confirmed by the clinician, which is logged for billing, or the patient sees a consultant; a further test decision loops back to create task. Radiology Flow: swim lanes for Patient Management and Myorb, from booking task to report link received.",
+      },
       alt: "Flow diagram of the patient pathway: referral received, patient record check, register with duplicate check, episode of care, booking task, schedule appointment, check-in, consultation or test, clinician confirms, test logged for billing and results tracking task, result sent to referrer.",
     },
     status: {
