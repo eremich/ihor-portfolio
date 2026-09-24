@@ -6,6 +6,10 @@ export type Case = {
   year: string;
   tags: string[];
   summary: string;
+  // Optional richer hero: an outcome headline instead of the product name, plus a facts card.
+  headline?: string;
+  team?: string;
+  deliverables?: string[];
 };
 
 // TODO: verify company/year/tags/summary for every non-API-Nation case.
@@ -39,6 +43,9 @@ export const cases: Case[] = [
     role: "Product Designer",
     company: "New Malden Diagnostic Centre",
     year: "2020 · revisited 2026",
+    headline: "A clinic's worklist that says what needs doing now.",
+    team: "2 designers, 1 PM, 1 front-end and 1 back-end developer",
+    deliverables: ["UX audit", "Flows", "Prototype", "Design system"],
     tags: ["Healthcare", "Web app", "Design system"],
     summary:
       "A staff system for a busy diagnostic clinic. Our team designed the first version in 2020; in 2026 I audited it and redesigned it: one clear priority and status language, task lists that show what needs action now, and role-aware views. Built as a working prototype on a documented design system.",

@@ -42,6 +42,16 @@ export function PmsBody() {
 
       <Figure shot={b.flows.items[0].shots[0]} priority className="mt-16" />
 
+      {/* Headline numbers straight after the cover: roles, task states, stories, contrast. */}
+      <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
+        {b.highlights.map((f) => (
+          <div key={f.label} className="flex flex-col-reverse justify-end gap-2 bg-paper p-5">
+            <dt className="text-[13px] leading-[1.4] text-ink-muted">{f.label}</dt>
+            <dd className="text-[32px] leading-none tabular-nums tracking-tight text-accent">{f.number}</dd>
+          </div>
+        ))}
+      </dl>
+
       <Block kicker={b.overview.kicker}>
         <Headline>{b.overview.headline}</Headline>
         <Prose>

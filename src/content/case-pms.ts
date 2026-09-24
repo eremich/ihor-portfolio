@@ -346,6 +346,14 @@ export const pmsBody = {
     ] as Shot[],
   },
 
+  // Short versions of the outcome facts, shown as a strip right under the cover image.
+  highlights: [
+    { number: "3", label: "roles, each with its own view" },
+    { number: "6", label: "task states with allowed moves" },
+    { number: "60+", label: "documented Storybook stories" },
+    { number: "AA", label: "text contrast in both themes" },
+  ] as Fact[],
+
   outcome: {
     kicker: "Outcome",
     headline: "What exists today.",

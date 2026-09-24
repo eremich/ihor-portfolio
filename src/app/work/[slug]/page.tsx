@@ -53,6 +53,9 @@ export default async function CasePage({
         ← Back to case studies
       </Link>
 
+      {c.headline ? (
+        <RichHeader c={c} />
+      ) : (
       <header className="mb-20 border-b border-line pb-14">
         <p className="mb-6 text-[13px] tracking-[0.14em] text-ink-muted uppercase">
           {c.tags.join(" · ")}
@@ -79,6 +82,7 @@ export default async function CasePage({
           </div>
         </dl>
       </header>
+      )}
 
       {isRegulate ? <RegulateBody /> : isPms ? <PmsBody /> : <PlaceholderBody />}
 
@@ -91,6 +95,55 @@ export default async function CasePage({
         </Link>
       </div>
     </article>
+  );
+}
+
+// Hero for cases with an outcome headline: kicker, headline, summary, and a facts card
+// (role, timeline, team, deliverables) beside it on wide screens.
+function RichHeader({ c }: { c: NonNullable<ReturnType<typeof getCase>> }) {
+  const facts = [
+    { label: "Role", value: c.role },
+    { label: "Timeline", value: c.year },
+    { label: "Company", value: c.company },
+    { label: "Team", value: c.team },
+  ].filter((f) => f.value);
+  return (
+    <header className="mb-16 grid grid-cols-1 gap-12 border-b border-line pb-14 lg:grid-cols-[1fr_320px] lg:items-end">
+      <div>
+        <ul className="mb-6 flex flex-wrap gap-2">
+          {c.tags.map((t) => (
+            <li key={t} className="rounded-full border border-line-strong px-3 py-1 text-[12px] text-ink-muted">
+              {t}
+            </li>
+          ))}
+        </ul>
+        <p className="mb-4 text-[13px] tracking-[0.14em] text-accent uppercase">{c.title} · case study</p>
+        <h1 className="max-w-[18ch] text-[40px] leading-[1.04] tracking-[-0.03em] text-ink sm:text-[56px]">{c.headline}</h1>
+        <p className="mt-8 max-w-[54ch] text-[18px] leading-[1.6] text-ink-muted">{c.summary}</p>
+      </div>
+      <div className="rounded-xl border border-line bg-paper-raised/60 p-5">
+        <dl className="grid grid-cols-2 gap-x-4 gap-y-5 text-[14px]">
+          {facts.map((f) => (
+            <div key={f.label} className={f.label === "Team" ? "col-span-2" : ""}>
+              <dt className="text-[12px] text-ink-faint">{f.label}</dt>
+              <dd className="mt-1 leading-[1.45] text-ink">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+        {c.deliverables && (
+          <>
+            <p className="mt-6 text-[12px] text-ink-faint">Deliverables</p>
+            <ul className="mt-2 flex flex-wrap gap-2">
+              {c.deliverables.map((d) => (
+                <li key={d} className="rounded-full bg-line px-3 py-1 text-[12px] text-ink-muted">
+                  {d}
+                </li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+    </header>
   );
 }
 
