@@ -2,6 +2,19 @@ import Image from "next/image";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 import { pmsBody as b, pmsLinks, type Shot } from "@/content/case-pms";
+import { CaseToc, type TocItem } from "@/components/case-toc";
+
+const toc: TocItem[] = [
+  { id: "overview", label: "Overview" },
+  { id: "research", label: "Research" },
+  { id: "define", label: "Define" },
+  { id: "design", label: "Design" },
+  { id: "compare", label: "Findings" },
+  { id: "flows", label: "Key flows" },
+  { id: "system", label: "Design system" },
+  { id: "outcome", label: "Outcome" },
+  { id: "lessons", label: "Lessons" },
+];
 
 // Body of the Patient Management System case study. Server component: diagrams are inlined
 // from public/case-pms/diagrams so they inherit the page's text colour.
@@ -52,13 +65,15 @@ export function PmsBody() {
         ))}
       </dl>
 
-      <Block kicker={b.overview.kicker}>
-        <Headline>{b.overview.headline}</Headline>
-        <Prose>
+      <div className="lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-16">
+      <CaseToc items={toc} />
+      <div>
+      <Block kicker={b.overview.kicker} id="overview">
+        <Lead title={b.overview.headline}>
           {b.overview.paragraphs.map((p) => (
             <p key={p}>{p}</p>
           ))}
-        </Prose>
+        </Lead>
       </Block>
 
       <Block kicker={b.goals.kicker}>
@@ -80,8 +95,9 @@ export function PmsBody() {
       </Block>
 
       <Block kicker={b.users.kicker}>
-        <Headline>{b.users.headline}</Headline>
-        <p className="mt-6 max-w-[62ch] text-[17px] leading-[1.65] text-ink-muted">{b.users.intro}</p>
+        <Lead title={b.users.headline}>
+          <p>{b.users.intro}</p>
+        </Lead>
         <ul className="mt-10 grid grid-cols-1 gap-8 md:grid-cols-3">
           {b.users.personas.map((p) => (
             <li key={p.name} className="border-t border-line pt-6">
@@ -105,12 +121,11 @@ export function PmsBody() {
         </ul>
       </Block>
 
-      <Block kicker={b.research.kicker}>
-        <Headline>{b.research.headline}</Headline>
-        <Prose>
+      <Block kicker={b.research.kicker} id="research">
+        <Lead title={b.research.headline}>
           <p>{b.research.intro}</p>
           <p>{b.research.method}</p>
-        </Prose>
+        </Lead>
         <ol className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
           {b.research.critical.map((f, i) => (
             <li key={f.title} className="border-t border-line pt-6">
@@ -133,19 +148,15 @@ export function PmsBody() {
         </ul>
       </Block>
 
-      <Block kicker={b.define.kicker}>
-        <Headline>{b.define.pathway.headline}</Headline>
-        <Prose>
+      <Block kicker={b.define.kicker} id="define">
+        <Lead title={b.define.pathway.headline}>
           <p>{b.define.pathway.body}</p>
-        </Prose>
+        </Lead>
         <Diagram name={b.define.pathway.diagram} alt={b.define.pathway.alt} />
 
-        <h2 className="mt-24 max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">
-          {b.define.status.headline}
-        </h2>
-        <Prose>
+        <Lead title={b.define.status.headline} className="mt-24">
           <p>{b.define.status.body}</p>
-        </Prose>
+        </Lead>
         <ul className="mt-6 max-w-[62ch] space-y-2">
           {b.define.status.bullets.map((x) => (
             <li key={x} className="flex items-baseline gap-3 text-[15px] leading-[1.6] text-ink-muted">
@@ -156,12 +167,9 @@ export function PmsBody() {
         </ul>
         <Diagram name={b.define.status.diagram} alt={b.define.status.alt} />
 
-        <h2 className="mt-24 max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">
-          {b.define.ia.headline}
-        </h2>
-        <Prose>
+        <Lead title={b.define.ia.headline} className="mt-24">
           <p>{b.define.ia.body}</p>
-        </Prose>
+        </Lead>
         <div className="mt-8 overflow-x-auto">
           <table className="w-full min-w-[640px] border-collapse text-left text-[14px]">
             <thead>
@@ -194,7 +202,7 @@ export function PmsBody() {
         </div>
       </Block>
 
-      <Block kicker={b.design.kicker}>
+      <Block kicker={b.design.kicker} id="design">
         {b.design.phases.map((phase) => (
           <div key={phase.label} className="mt-14 grid grid-cols-1 gap-8 border-t border-line pt-8 first:mt-0 md:grid-cols-[180px_1fr] md:gap-12">
             <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{phase.label}</p>
@@ -216,7 +224,7 @@ export function PmsBody() {
         ))}
       </Block>
 
-      <Block kicker={b.compare.kicker}>
+      <Block kicker={b.compare.kicker} id="compare">
         <Headline>{b.compare.headline}</Headline>
         <div className="mt-14 space-y-24">
           {b.compare.pairs.map((pair, i) => (
@@ -258,7 +266,7 @@ export function PmsBody() {
         </ul>
       </Block>
 
-      <Block kicker={b.flows.kicker}>
+      <Block kicker={b.flows.kicker} id="flows">
         <Headline>{b.flows.headline}</Headline>
         <div className="mt-14 space-y-24">
           {b.flows.items.map((flow) => (
@@ -275,11 +283,10 @@ export function PmsBody() {
         </div>
       </Block>
 
-      <Block kicker={b.system.kicker}>
-        <Headline>{b.system.headline}</Headline>
-        <Prose>
+      <Block kicker={b.system.kicker} id="system">
+        <Lead title={b.system.headline}>
           <p>{b.system.body}</p>
-        </Prose>
+        </Lead>
         <ul className="mt-6 max-w-[62ch] space-y-2">
           {b.system.bullets.map((x) => (
             <li key={x} className="flex items-baseline gap-3 text-[15px] leading-[1.6] text-ink-muted">
@@ -303,7 +310,7 @@ export function PmsBody() {
         </a>
       </Block>
 
-      <Block kicker={b.outcome.kicker}>
+      <Block kicker={b.outcome.kicker} id="outcome">
         <Headline>{b.outcome.headline}</Headline>
         <div className="mt-10 grid grid-cols-2 gap-6 md:grid-cols-3">
           {b.outcome.facts.map((f) => (
@@ -324,7 +331,7 @@ export function PmsBody() {
         </ul>
       </Block>
 
-      <Block kicker={b.lessons.kicker}>
+      <Block kicker={b.lessons.kicker} id="lessons">
         <div className="grid grid-cols-1 gap-x-12 gap-y-2 md:grid-cols-2">
           {b.lessons.blocks.map((l) => (
             <div key={l.title} className="border-t border-line py-6">
@@ -346,6 +353,8 @@ export function PmsBody() {
           ))}
         </div>
       </section>
+      </div>
+      </div>
     </>
   );
 }
@@ -358,9 +367,9 @@ function Arrow() {
   );
 }
 
-function Block({ kicker, children }: { kicker: string; children: React.ReactNode }) {
+function Block({ kicker, id, children }: { kicker: string; id?: string; children: React.ReactNode }) {
   return (
-    <section className="mt-24 md:mt-32">
+    <section id={id} className="mt-24 scroll-mt-24 md:mt-32">
       <p className="mb-8 text-[13px] tracking-[0.14em] text-ink-muted uppercase">{kicker}</p>
       {children}
     </section>
@@ -371,9 +380,16 @@ function Headline({ children }: { children: React.ReactNode }) {
   return <h2 className="max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">{children}</h2>;
 }
 
-function Prose({ children }: { children: React.ReactNode }) {
-  return <div className="mt-8 max-w-[62ch] space-y-4 text-[17px] leading-[1.65] text-ink-muted">{children}</div>;
+/** Headline on the left, short supporting text on the right; stacks on narrow screens. */
+function Lead({ title, className = "", children }: { title: string; className?: string; children: React.ReactNode }) {
+  return (
+    <div className={`grid grid-cols-1 gap-6 md:grid-cols-[minmax(0,1.1fr)_minmax(0,1fr)] md:items-start md:gap-12 ${className}`}>
+      <h2 className="text-[26px] leading-[1.15] tracking-tight text-ink sm:text-[32px]">{title}</h2>
+      <div className="space-y-4 text-[16px] leading-[1.65] text-ink-muted">{children}</div>
+    </div>
+  );
 }
+
 
 /** A screenshot in a thin frame with a caption. Click opens the full-size image. */
 function Figure({ shot, label, priority, className = "" }: { shot: Shot; label?: string; priority?: boolean; className?: string }) {

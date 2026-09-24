@@ -42,7 +42,8 @@ export default async function CasePage({
 
   const isRegulate = slug === "regulate";
   const isPms = slug === "patient-management";
-  const wide = isRegulate || isPms ? "max-w-[960px]" : "max-w-[880px]";
+  // The PMS case has a side "Story" navigation, so its page is wider on desktop.
+  const wide = isPms ? "max-w-[1180px]" : isRegulate ? "max-w-[960px]" : "max-w-[880px]";
 
   return (
     <article className={`mx-auto ${wide} px-6 pt-16 pb-24 sm:px-10`}>

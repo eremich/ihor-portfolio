@@ -59,11 +59,11 @@ export const pmsBody = {
 
   overview: {
     kicker: "Project Overview",
-    headline: "A patient management system for a busy private diagnostic clinic, made usable all day.",
+    headline: "We shipped it in 2020. Six years later, I could see where it failed.",
     paragraphs: [
-      "New Malden Diagnostic Centre is a large private outpatient and diagnostics clinic in South London, part of Sterling Healthcare Group. It offers diagnostic imaging, specialist consultant clinics and a paediatric department, six days a week.",
-      "It needed a cloud-based Patient Management System to run its daily operations: register patients, schedule clinics, check patients in, manage worklists of tasks, track diagnostic results and report activity for billing. The system connects to Myorb for radiology, an on-site pathology lab and Healthcode for insurer invoicing.",
-      "We designed the first version from scratch in 2020. In 2026 I came back to it with fresh eyes: audited our own screens, found where they would fail in daily use, defined the flows and rules underneath, and redesigned the parts that matter most.",
+      "New Malden Diagnostic Centre is a private outpatient and diagnostics clinic in South London: imaging, specialist clinics and a paediatric department, six days a week.",
+      "Its staff system registers patients, books clinics, tracks results and reports activity for billing, linked to Myorb for radiology, an on-site lab and Healthcode for insurers.",
+      "In 2026 I audited our own first version and redesigned the parts that matter most.",
     ],
   },
 
@@ -92,9 +92,9 @@ export const pmsBody = {
 
   users: {
     kicker: "Who it is for",
-    headline: "Three kinds of staff, working under constant interruption.",
+    headline: "Nobody here gets to use the system in peace.",
     intro:
-      "Phones, walk-ins, patients in the room, mostly at a desktop. Personas come only from the roles in the brief, with no invented characters.",
+      "Phones ring, patients walk in, a consultant waits. Personas come only from the roles in the brief, with no invented characters.",
     personas: [
       {
         name: "Admin / Reception",
@@ -131,11 +131,11 @@ export const pmsBody = {
 
   research: {
     kicker: "Research",
-    headline: "Start from the evidence: what our first version missed.",
+    headline: "Before redrawing anything, I audited what we had shipped.",
     intro:
-      "I went back to the client's project proposal, the patient pathway diagram with its radiology swim lane, the paper referral forms and our 2020 screens for the Admin and Doctor roles: eleven admin screens and six doctor screens.",
+      "Sources: the client's proposal, the pathway diagram, paper referral forms and our 2020 screens, eleven for admins and six for doctors.",
     method:
-      "A heuristic and craft review of five of our own screens, mapped to Nielsen's heuristics and WCAG 2.1 AA risks, each finding rated by severity.",
+      "Five screens reviewed against Nielsen's heuristics and WCAG 2.1 AA, each finding rated by severity.",
     critical: [
       { title: "Priority was invisible", desc: "The brief makes routine, urgent and red flag core, yet the booking list had no priority column. Staff could not triage." },
       { title: "No patient name in results", desc: "The admin results list had twelve columns, but none said whose result you were chasing." },
@@ -144,10 +144,7 @@ export const pmsBody = {
     ] as Finding[],
     other: [
       "Status shown by colour alone; two states read as near-identical green",
-      "Twelve-column results table: cognitive overload, no hierarchy",
       "No “what needs me now” view: flat lists, no default sort or grouping",
-      "Registration with no progress model and no duplicate-patient check",
-      "Two overlapping calendars with unclear purposes",
       "Role-blind: the same interface for every role",
       "Placeholder content everywhere, hiding real edge cases",
     ],
@@ -156,14 +153,14 @@ export const pmsBody = {
   define: {
     kicker: "Define",
     pathway: {
-      headline: "The patient pathway, redrawn as a product flow.",
-      body: "The client's pathway diagram became a clean flow from referral to result. Three audit gaps turned into explicit steps: register with a duplicate check, check-in as a first-class step, and referral request as one of two ways a booking task is created.",
+      headline: "I turned the clinic's pathway into a flow the product could follow.",
+      body: "Three audit gaps became explicit steps: register with a duplicate check, check-in as a first-class step, and a referral request as a second way to create a booking task.",
       diagram: "patient-pathway",
       alt: "Flow diagram of the patient pathway: referral received, patient record check, register with duplicate check, episode of care, booking task, schedule appointment, check-in, consultation or test, clinician confirms, test logged for billing and results tracking task, result sent to referrer.",
     },
     status: {
-      headline: "One status and priority language.",
-      body: "The task model became the source of truth for the interface. Every state and every allowed move is written down, so a button never offers something the process does not allow.",
+      headline: "A status model settled most arguments before they started.",
+      body: "Every state and allowed move is written down, so a button never offers something the process does not allow.",
       bullets: [
         "Priority (routine, urgent, red flag) is separate from status and shows as a column, a sort and a filter on every list",
         "Deactivating a task always needs a reason; “no longer required” needs it in writing",
@@ -174,8 +171,8 @@ export const pmsBody = {
       alt: "State diagram of a booking task. Pending moves to Scheduled when an appointment is booked, and Pending or Scheduled can be marked Complete, No longer required or Created in error. Complete and No longer required can be reactivated to Reactivate pending, which returns to Pending.",
     },
     ia: {
-      headline: "Information architecture, role-aware.",
-      body: "One navigation, filtered by role. A matrix defines what each role sees and can do: a secretary's list is scoped to their consultant, and results are scoped to the clinician's own patients.",
+      headline: "Each role sees only what it can act on.",
+      body: "One navigation, filtered by role: a secretary sees their consultant's list, a consultant sees their own patients.",
       columns: ["Area", "Admin / Reception", "Consultant", "Secretary"],
       rows: [
         ["Dashboard", "Triage across all lists", "My patients, arrivals, results awaited", "My consultant's list and clinics"],
@@ -219,7 +216,7 @@ export const pmsBody = {
 
   compare: {
     kicker: "Audit findings and the redesign",
-    headline: "Each finding, and what replaced it.",
+    headline: "What our first version got wrong, and what replaced it.",
     pairs: [
       {
         finding: "Priority invisible, status by colour alone, no “what needs me now”",
@@ -270,15 +267,13 @@ export const pmsBody = {
       { title: "One primary action per screen or dialog", why: "Staff are triaging, not browsing." },
       { title: "Hover only on clickable things", why: "Hover always means “you can click this”." },
       { title: "Submit is never disabled to hide a reason", why: "A greyed button explains nothing; show what to fix." },
-      { title: "Errors under the field, after the first submit", why: "No red while someone is still typing; it clears as they fix it." },
       { title: "Controls a role cannot use are omitted", why: "Nobody meets an error after clicking." },
-      { title: "A duplicate patient warns instead of blocking", why: "The clinic can still register a genuine second record." },
     ] as Decision[],
   },
 
   flows: {
     kicker: "Key flows",
-    headline: "The prototype, end to end.",
+    headline: "Built in code, so you can click through it, not just look at it.",
     items: [
       {
         title: "Dashboard: what needs attention",
@@ -330,8 +325,8 @@ export const pmsBody = {
 
   system: {
     kicker: "Design system",
-    headline: "A documented system, not a set of screens.",
-    body: "Three tiers of tokens: a raw palette, purpose-named semantic tokens such as background surface and text secondary, then component tokens for buttons, fields and tables. Every semantic token has a light and a dark value, and components never branch on the theme. The default palette is removed, so only design-system values can be used, and a check fails on raw colours.",
+    headline: "I made the next screen cheaper to build.",
+    body: "Three tiers of tokens: raw palette, purpose-named semantic tokens, component tokens. Every semantic token has a light and a dark value, and a check fails on any raw colour.",
     bullets: [
       "Every component documented with live examples, all variants and states",
       "When to use it, and do and don't, with real examples",
