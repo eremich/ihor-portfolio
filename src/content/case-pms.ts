@@ -27,11 +27,12 @@ const after = (file: string, alt: string, caption: string): Shot => ({
   height: 1500,
 });
 
-const before = (file: string, height: number, alt: string, caption: string): Shot => ({
+// One version 1 screen per finding, cropped and marked; numbers in the image match the caption.
+const before = (file: string, width: number, height: number, alt: string, caption: string): Shot => ({
   src: `/case-pms/before/${file}.webp`,
   alt,
   caption,
-  width: 2400,
+  width,
   height,
 });
 
@@ -44,11 +45,11 @@ export const pmsBody = {
   tldr: [
     {
       label: "The problem",
-      text: "Staff at a busy diagnostic clinic could not tell what needed action now. Priority was invisible, status was colour-only, and two core flows did not exist.",
+      text: "In our 2020 version, staff at a busy diagnostic clinic could not tell what needed action now. Priority was invisible, status was colour-only, and two core flows did not exist.",
     },
     {
       label: "What I did",
-      text: "Audited the existing screens, defined the pathway, task states and roles, redesigned the key flows, and built a working prototype on a documented design system.",
+      text: "Audited our own first version, defined the pathway, task states and roles, redesigned the key flows, and built a working prototype on a documented design system.",
     },
     {
       label: "The result",
@@ -62,7 +63,7 @@ export const pmsBody = {
     paragraphs: [
       "New Malden Diagnostic Centre is a large private outpatient and diagnostics clinic in South London, part of Sterling Healthcare Group. It offers diagnostic imaging, specialist consultant clinics and a paediatric department, six days a week.",
       "It needed a cloud-based Patient Management System to run its daily operations: register patients, schedule clinics, check patients in, manage worklists of tasks, track diagnostic results and report activity for billing. The system connects to Myorb for radiology, an on-site pathology lab and Healthcode for insurer invoicing.",
-      "A first set of screens already existed. My job was to find out where it would fail in daily use, define the flows and rules underneath, and redesign the parts that matter most.",
+      "We designed the first version from scratch in 2020. In 2026 I came back to it with fresh eyes: audited our own screens, found where they would fail in daily use, defined the flows and rules underneath, and redesigned the parts that matter most.",
     ],
   },
 
@@ -130,15 +131,15 @@ export const pmsBody = {
 
   research: {
     kicker: "Research",
-    headline: "Start from the evidence: what the existing screens got wrong.",
+    headline: "Start from the evidence: what our first version missed.",
     intro:
-      "I worked from the client's project proposal, the patient pathway diagram with its radiology swim lane, the paper referral forms and the existing screens for the Admin and Doctor roles: eleven admin screens and six doctor screens.",
+      "I went back to the client's project proposal, the patient pathway diagram with its radiology swim lane, the paper referral forms and our 2020 screens for the Admin and Doctor roles: eleven admin screens and six doctor screens.",
     method:
-      "A heuristic and craft review of five screens, mapped to Nielsen's heuristics and WCAG 2.1 AA risks, each finding rated by severity.",
+      "A heuristic and craft review of five of our own screens, mapped to Nielsen's heuristics and WCAG 2.1 AA risks, each finding rated by severity.",
     critical: [
       { title: "Priority was invisible", desc: "The brief makes routine, urgent and red flag core, yet the booking list had no priority column. Staff could not triage." },
-      { title: "No patient name in results", desc: "Twelve columns, but nothing said whose result you were chasing." },
-      { title: "No check-in screen", desc: "Reception marking patients arrived is a core daily task, and nothing supported it." },
+      { title: "No patient name in results", desc: "The admin results list had twelve columns, but none said whose result you were chasing." },
+      { title: "Check-in was hidden", desc: "Marking a patient as arrived is a core daily task for reception, yet it lived only in a row menu in the doctor's view." },
       { title: "No online referral form", desc: "Daily intake still depended on paper." },
     ] as Finding[],
     other: [
@@ -150,11 +151,6 @@ export const pmsBody = {
       "Role-blind: the same interface for every role",
       "Placeholder content everywhere, hiding real edge cases",
     ],
-    shots: [
-      before("01-task-worklist", 706, "The existing task worklist: a dense table with no priority column", "Task worklist: no priority, colour-only status, no triage"),
-      before("05-results-tracking", 910, "The existing results tracking table with twelve columns", "Results tracking: twelve columns and no patient name"),
-      before("02-patient-registration", 431, "The existing five-step patient registration form", "Patient registration: no progress model, no duplicate check"),
-    ] as Shot[],
   },
 
   define: {
@@ -228,7 +224,7 @@ export const pmsBody = {
       {
         finding: "Priority invisible, status by colour alone, no “what needs me now”",
         fix: "A priority tag and an icon-and-label status on every task, filters by priority, and a dashboard that lists what needs attention first.",
-        before: before("01-task-worklist", 706, "The existing task worklist", "Existing screens: Booking Tasks and Retrieval Task lists"),
+        before: before("v1-task-worklist", 1440, 1024, "Our 2020 booking task list, with the status column and the header row marked", "Version 1 task list. 1: status by colour alone. 2: no priority column."),
         after: [
           after("tasks-light", "The redesigned task list with priority and status pills, search and filters", "Task list: priority, status with icon and label, filters"),
           after("tasks-red-flag-light", "The redesigned task list filtered to red flag tasks", "Filtered to red flag: one click to what is most urgent"),
@@ -237,7 +233,7 @@ export const pmsBody = {
       {
         finding: "Registration with no duplicate check, and a disabled submit that explains nothing",
         fix: "A form that warns of a possible duplicate and lets the clinic register anyway, with a message under each field that is wrong and a submit that always works.",
-        before: before("02-patient-registration", 431, "The existing five-step registration form", "Existing screen: five-step patient registration"),
+        before: before("v1-registration", 1440, 1024, "Our 2020 patient registration, with the collapsed steps two to five and the greyed-out submit marked", "Version 1 registration. 1: four more steps waiting below, with no sense of progress. 2: submit greyed out with no reason."),
         after: [
           after("register-errors-light", "The register patient dialog showing errors under three empty required fields", "Errors under the fields that need fixing"),
           after("register-duplicate-light", "The register patient dialog warning of a possible duplicate patient", "A possible duplicate is flagged, not blocked"),
@@ -246,16 +242,16 @@ export const pmsBody = {
       {
         finding: "Two overlapping calendars and no clear way to book",
         fix: "Scheduling lives in the task, with date, time and location, and the task moves to Scheduled on its own. An appointments page lists everything booked.",
-        before: before("03-clinic-scheduling", 717, "The existing clinic scheduling grid", "Existing screen: clinic scheduling grid"),
+        before: before("v1-clinic-scheduling", 2928, 1024, "Two of our 2020 screens side by side: the Clinic Page calendar and the Appointments day view, both a rooms by hours grid", "Version 1. 1: the Clinic Page calendar. 2: the Appointments calendar. The same rooms-by-hours grid, in two places."),
         after: [
           after("task-scheduled-light", "The task dialog showing a booked appointment and allowed next actions", "Scheduling inside the task"),
           after("appointments-light", "The appointments table", "All appointments in one place"),
         ],
       },
       {
-        finding: "Results list with twelve columns and no patient name",
+        finding: "Admin results list with twelve columns and no patient name",
         fix: "Results sit in the task next to the appointment and the referral form, always under the patient's name, with one clear next step.",
-        before: before("05-results-tracking", 910, "The existing results tracking table", "Existing screen: results tracking, twelve columns"),
+        before: before("v1-results-tracking", 1920, 1080, "Our 2020 results list, with the header row and the status column marked", "Version 1 results list. 1: twelve columns, none of them the patient's name. 2: status by colour alone."),
         after: [after("task-result-light", "The task dialog showing a received result with a send to referrer action", "Result, referral and appointment together")],
       },
       {
@@ -359,12 +355,12 @@ export const pmsBody = {
       { number: "6", label: "task states with an explicit set of allowed moves" },
       { number: "60+", label: "Storybook stories, with documentation for every component" },
       { number: "3", label: "token tiers, about 100 colour tokens, light and dark themes" },
-      { number: "AA", label: "contrast checked on every screen and dialog in both themes" },
+      { number: "AA", label: "text contrast on every screen and dialog in both themes; field borders are still below 3:1" },
     ] as Fact[],
     notDone: {
       title: "What is not done",
       items: [
-        "The check-in and arrivals board and the clinic calendar exist as wireframes, not in the prototype",
+        "Check-in is an action on the appointment (“Mark attended”); the arrivals board and the clinic calendar exist only as wireframes",
         "Hi-fi work in Figma covered the foundations (colour variables, text styles, priority tags, status chips, buttons), not every screen",
         "No usage data or client feedback: this is a design case, not a shipped product",
       ],
@@ -374,6 +370,7 @@ export const pmsBody = {
   lessons: {
     kicker: "Lessons Learned",
     blocks: [
+      { title: "Revisit your own work", body: "Years later, the problems in our first version were obvious: priority hidden, status by colour alone. Auditing my own screens was harder than auditing someone else's, and more useful." },
       { title: "Start from the evidence", body: "The audit turned “it feels wrong” into a ranked list, and the ranking decided what to design first." },
       { title: "A status model is a design tool", body: "Writing the states and allowed moves before any screen removed most later arguments about what a button should do." },
       { title: "Cut the backend, keep the flows", body: "The first prototype plan had a database and real login. Removing them left all the effort on screens and flows." },

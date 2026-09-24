@@ -121,11 +121,6 @@ export function PmsBody() {
             </li>
           ))}
         </ul>
-        <div className="mt-12 space-y-10">
-          {b.research.shots.map((s) => (
-            <Figure key={s.src} shot={s} label="Before" />
-          ))}
-        </div>
       </Block>
 
       <Block kicker={b.define.kicker}>
@@ -225,15 +220,15 @@ export function PmsBody() {
               </div>
               <div className="mt-8 space-y-8">
                 {pair.before ? (
-                  <Figure shot={pair.before} label="Before" />
+                  <Figure shot={pair.before} label="Version 1 · 2020" />
                 ) : (
                   <p className="rounded-md border border-dashed border-line px-4 py-3 text-[14px] text-ink-faint">
-                    Before: this screen was never designed; intake was on paper.
+                    Version 1: this screen was never designed; intake was on paper.
                   </p>
                 )}
                 <div className={`grid grid-cols-1 gap-6 ${pair.after.length > 1 ? "md:grid-cols-2" : ""}`}>
                   {pair.after.map((s) => (
-                    <Figure key={s.src} shot={s} label="After" />
+                    <Figure key={s.src} shot={s} label="Redesign · 2026" />
                   ))}
                 </div>
               </div>

@@ -38,10 +38,10 @@ export const cases: Case[] = [
     title: "Patient Management System",
     role: "Product Designer",
     company: "New Malden Diagnostic Centre",
-    year: "2020",
+    year: "2020 · revisited 2026",
     tags: ["Healthcare", "Web app", "Design system"],
     summary:
-      "A staff system for a busy diagnostic clinic, redesigned from a UX audit: one clear priority and status language, task lists that show what needs action now, and role-aware views. Built as a working prototype on a documented design system.",
+      "A staff system for a busy diagnostic clinic. Our team designed the first version in 2020; in 2026 I audited it and redesigned it: one clear priority and status language, task lists that show what needs action now, and role-aware views. Built as a working prototype on a documented design system.",
   },
   {
     slug: "eticket",
