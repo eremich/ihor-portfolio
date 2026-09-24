@@ -156,13 +156,21 @@ export const pmsBody = {
       headline: "I turned the clinic's pathway into a flow the product could follow.",
       body: "Three audit gaps became explicit steps: register with a duplicate check, check-in as a first-class step, and a referral request as a second way to create a booking task.",
       diagram: "patient-pathway",
+      // The five flows I added where the brief had only text.
+      boardProposed: {
+        src: "/case-pms/process/miro-board-proposed.webp",
+        label: "Miro · flows I proposed",
+        caption:
+          "Where the brief had only text, I drew the flow myself: pathology lab integration (mirroring the Myorb pattern), billing and the activity report, the booking task lifecycle, user permissions by role, and how a referral form gets captured.",
+        alt: "Five proposed flows from the Miro board. Pathology Lab Integration with swim lanes for Patient Management and the lab. Billing and Activity Report: a self-funding decision leads to payment at reception or a Healthcode invoice to the insurer, both feeding the activity report. Booking Task Lifecycle: scheduled leads to complete, otherwise reactivate or deactivate, with every action logged. User Provisioning: a site admin creates a user, then admin staff, consultant or consultant secretary access. Service Request Form Capture: consultant online form, staff paper entry or scanned upload, all linked to the booking task and episode of care.",
+      },
       // The real Miro working board, exported as an image. Shown only once the file exists.
       board: {
         src: "/case-pms/process/miro-board.webp",
         label: "Miro · working board",
         caption:
-          "Two of eight flows on the working board: the patient pathway, with the diagnostic-or-consultation split and the loop back for a further test, and radiology across our system and Myorb. The board also holds the results pathway and five flows I proposed where the brief had only text.",
-        alt: "Two frames from the Miro board. Patient Pathway: referral received, existing record check, create patient record, episode of care, create task, schedule appointment, patient arrives, then a diagnostic appointment decision: a test is carried out and confirmed by the clinician, which is logged for billing, or the patient sees a consultant; a further test decision loops back to create task. Radiology Flow: swim lanes for Patient Management and Myorb, from booking task to report link received.",
+          "From the client's diagrams: the patient pathway, with the diagnostic-or-consultation split and the loop back for a further test, and radiology across our system and Myorb.",
+        alt: "Two frames from the Miro board, redrawn from the client's diagrams. Patient Pathway: referral received, existing record check, create patient record, episode of care, create task, schedule appointment, patient arrives, then a diagnostic appointment decision: a test is carried out and confirmed by the clinician, which is logged for billing, or the patient sees a consultant; a further test decision loops back to create task. Radiology Flow: swim lanes for Patient Management and Myorb, from booking task to report link received.",
       },
       alt: "Flow diagram of the patient pathway: referral received, patient record check, register with duplicate check, episode of care, booking task, schedule appointment, check-in, consultation or test, clinician confirms, test logged for billing and results tracking task, result sent to referrer.",
     },

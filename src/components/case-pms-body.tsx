@@ -153,6 +153,7 @@ export function PmsBody() {
           <p>{b.define.pathway.body}</p>
         </Lead>
         <Board board={b.define.pathway.board} />
+        <Board board={b.define.pathway.boardProposed} />
         <Diagram name={b.define.pathway.diagram} alt={b.define.pathway.alt} />
 
         <Lead title={b.define.status.headline} className="mt-24">
