@@ -87,6 +87,15 @@ body::before {
   will-change: transform;
 }
 
+/* Light theme: the same spheres read as frosted glass, a touch lighter than the
+   paper. Inverting the dark render and screening it only ever lightens, so text
+   on top stays readable. Follows the theme toggle with no JS. */
+:root[data-theme="light"] .hero-metaballs {
+  filter: invert(1) grayscale(1);
+  mix-blend-mode: screen;
+  opacity: 0.9;
+}
+
 /* On the silver paper, grain becomes a coarse metallic texture — desaturated
    (no sepia warmth) and coarser than the dark-theme version. */
 :root[data-theme="light"] body::before {
