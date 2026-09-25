@@ -22,6 +22,21 @@ export const metadata: Metadata = {
     "Senior product designer with 8+ years across B2B SaaS, agency, and in-house teams. Sole designer at API Nation. Former design lead at A-Development in London. Based in Berlin.",
 };
 
+// Inlined in <head> so data-theme is set before the browser paints — no dark
+// flash for users whose saved choice is light.
+const themeInitScript = `
+(function() {
+  try {
+    var saved = localStorage.getItem('theme');
+    var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
+    var theme = saved === 'light' || saved === 'dark' ? saved : (prefersLight ? 'light' : 'dark');
+    document.documentElement.setAttribute('data-theme', theme);
+  } catch (e) {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  }
+})();
+`;
+
 export default function RootLayout({
   children,
 }: {
@@ -29,6 +44,9 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+      <head>
+        <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
+      </head>
       <body className="min-h-screen bg-paper text-ink antialiased">
         <SiteHeader />
         <main>{children}</main>

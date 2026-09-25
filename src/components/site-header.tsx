@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
   { label: "Case studies", href: "/#case-studies" },
@@ -22,11 +23,12 @@ export function SiteHeader() {
             <Link
               key={item.href}
               href={item.href}
-              className="rounded-full px-3 py-1.5 text-[13px] text-ink-muted transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-white/[0.04] hover:text-ink sm:px-4 sm:text-[14px]"
+              className="rounded-full px-3 py-1.5 text-[13px] text-ink-muted transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-paper-raised hover:text-ink sm:px-4 sm:text-[14px]"
             >
               {item.label}
             </Link>
           ))}
+          <ThemeToggle />
         </nav>
       </div>
     </header>

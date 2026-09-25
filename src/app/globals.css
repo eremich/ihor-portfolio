@@ -24,6 +24,42 @@ html {
   scroll-behavior: smooth;
 }
 
+/* Light-theme tokens — cool silver-gray with metallic grain and a soft highlight
+   in the lower-right, matching the stock-paper reference. */
+:root[data-theme="light"] {
+  --color-ink: #141414;
+  --color-ink-muted: #4a4a4a;
+  --color-ink-faint: #7a7a7a;
+  --color-paper: #cfcfcf;
+  --color-paper-raised: #c2c2c2;
+  --color-line: rgba(0, 0, 0, 0.14);
+  --color-line-strong: rgba(0, 0, 0, 0.24);
+  --color-accent: #1d8f3d;
+  color-scheme: light;
+}
+
+/* Metallic paper shape — a radial highlight biased to the lower-right corner
+   over the base silver, so the page reads as one dimensional surface. Fixed so
+   it doesn't scroll away with content. */
+:root[data-theme="light"] body {
+  background:
+    radial-gradient(
+      ellipse 90% 80% at 78% 92%,
+      rgba(255, 255, 255, 0.55),
+      transparent 60%
+    ),
+    var(--color-paper);
+  background-attachment: fixed;
+}
+
+/* Smooth token transitions when the user toggles themes. */
+body,
+body::before {
+  transition: background-color 240ms var(--ease-out-soft),
+              color 240ms var(--ease-out-soft),
+              opacity 240ms var(--ease-out-soft);
+}
+
 @media (prefers-reduced-motion: reduce) {
   html {
     scroll-behavior: auto;
@@ -54,6 +90,16 @@ body::before {
   animation: grain-shift 900ms steps(6) infinite;
   will-change: transform;
 }
+
+/* On the silver paper, grain becomes a coarse metallic texture — desaturated
+   (no sepia warmth) and coarser than the dark-theme version. */
+:root[data-theme="light"] body::before {
+  opacity: 0.55;
+  mix-blend-mode: multiply;
+  background-size: 260px 260px;
+  filter: saturate(0.1) brightness(0.85);
+}
+
 
 @keyframes grain-shift {
   0%,   100% { transform: translate3d(0,      0,     0); }
