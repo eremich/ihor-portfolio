@@ -13,7 +13,7 @@ const toc: TocItem[] = [
   { id: "flows", label: "Key flows" },
   { id: "system", label: "Design system" },
   { id: "outcome", label: "Outcome" },
-  { id: "lessons", label: "Lessons" },
+  { id: "lessons", label: "Takeaways" },
 ];
 
 // Body of the Patient Management System case study. Server component: diagrams are inlined
@@ -334,14 +334,16 @@ export function PmsBody() {
       </Block>
 
       <Block kicker={b.lessons.kicker} id="lessons">
-        <div className="grid grid-cols-1 gap-x-12 gap-y-2 md:grid-cols-2">
-          {b.lessons.blocks.map((l) => (
-            <div key={l.title} className="border-t border-line py-6">
-              <p className="text-[17px] tracking-tight text-ink">{l.title}</p>
+        <h2 className="max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">{b.lessons.headline}</h2>
+        <ol className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+          {b.lessons.blocks.map((l, i) => (
+            <li key={l.title} className="flex flex-col rounded-xl border border-line bg-paper-raised/60 p-6">
+              <span className="text-[32px] leading-none tabular-nums tracking-tight text-accent">{String(i + 1).padStart(2, "0")}</span>
+              <p className="mt-6 text-[19px] leading-[1.25] tracking-tight text-ink">{l.title}</p>
               <p className="mt-3 text-[15px] leading-[1.6] text-ink-muted">{l.body}</p>
-            </div>
+            </li>
           ))}
-        </div>
+        </ol>
       </Block>
 
       <section className="mt-24 border-t border-line pt-12">

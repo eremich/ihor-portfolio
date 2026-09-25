@@ -397,14 +397,12 @@ export const pmsBody = {
   },
 
   lessons: {
-    kicker: "Lessons Learned",
+    kicker: "Key takeaways",
+    headline: "Three things this project taught me.",
     blocks: [
-      { title: "Revisit your own work", body: "Years later, the problems in our first version were obvious: priority hidden, status by colour alone. Auditing my own screens was harder than auditing someone else's, and more useful." },
-      { title: "Start from the evidence", body: "The audit turned “it feels wrong” into a ranked list, and the ranking decided what to design first." },
-      { title: "A status model is a design tool", body: "Writing the states and allowed moves before any screen removed most later arguments about what a button should do." },
-      { title: "Cut the backend, keep the flows", body: "The first prototype plan had a database and real login. Removing them left all the effort on screens and flows." },
-      { title: "Tokens before components", body: "Defining token tiers first, then components that only compose them, made themes, states and documentation follow naturally." },
-      { title: "Show the hard states", body: "Error, empty, disabled and duplicate cases took more thought than the happy path, and they are where a clinical tool earns trust." },
+      { title: "Care is a loop, not a line", body: "A consultation often ends in another test. The system has to create the next task in the same episode, in one step, instead of starting over." },
+      { title: "Billing follows proof", body: "The clinic charges for tests carried out, not tests booked. One clinician confirmation became the link between the clinic floor and finance." },
+      { title: "Audit your own work first", body: "Six years on, our first version's problems were obvious. Auditing my own screens was harder than critiquing someone else's, and it decided what to redesign first." },
     ] as Lesson[],
   },
 
