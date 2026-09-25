@@ -154,7 +154,7 @@ export const pmsBody = {
     kicker: "Define",
     pathway: {
       headline: "I turned the clinic's pathway into a flow the product could follow.",
-      body: "Three audit gaps became explicit steps: register with a duplicate check, check-in as a first-class step, and a referral request as a second way to create a booking task.",
+      body: "It splits after check-in: a test is confirmed by the clinician and logged for billing, a consultation goes straight to one question, whether another test is needed. Yes loops back to a new task in the same episode. The steps in blue are what the audit added: a duplicate check and check-in.",
       diagram: "patient-pathway",
       // The five flows I added where the brief had only text.
       boardProposed: {
@@ -162,7 +162,8 @@ export const pmsBody = {
         label: "Miro · flows I proposed",
         caption:
           "Where the brief had only text, I drew the flow myself: pathology lab integration (mirroring the Myorb pattern), billing and the activity report, the booking task lifecycle, user permissions by role, and how a referral form gets captured.",
-        alt: "Five proposed flows from the Miro board. Pathology Lab Integration with swim lanes for Patient Management and the lab. Billing and Activity Report: a self-funding decision leads to payment at reception or a Healthcode invoice to the insurer, both feeding the activity report. Booking Task Lifecycle: scheduled leads to complete, otherwise reactivate or deactivate, with every action logged. User Provisioning: a site admin creates a user, then admin staff, consultant or consultant secretary access. Service Request Form Capture: consultant online form, staff paper entry or scanned upload, all linked to the booking task and episode of care.",
+        alt: "Flow diagram of the patient pathway. Referral received; if the patient has no record, register with a duplicate check, otherwise open the record; create an episode of care and a booking task; schedule the appointment; patient arrives and is checked in. If it is a diagnostic appointment, the test is carried out, the clinician confirms it, and the test is logged in the activity report for billing; otherwise the patient sees a consultant. Both lead to a decision: if a further test or appointment is needed, a new booking task is created in the same episode; if not, the pathway ends.",
+
       },
       // The real Miro working board, exported as an image. Shown only once the file exists.
       board: {
