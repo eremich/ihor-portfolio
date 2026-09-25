@@ -52,13 +52,9 @@ html {
   background-attachment: fixed;
 }
 
-/* Smooth token transitions when the user toggles themes. */
-body,
-body::before {
-  transition: background-color 240ms var(--ease-out-soft),
-              color 240ms var(--ease-out-soft),
-              opacity 240ms var(--ease-out-soft);
-}
+/* The theme switches instantly, with no transition on the page: colour
+   transitions here could stall behind the WebGL hero and leave the old theme's
+   paper or text under the new one (dark text on dark paper). */
 
 @media (prefers-reduced-motion: reduce) {
   html {

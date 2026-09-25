@@ -49,6 +49,8 @@ const fragmentShader = /* glsl */ `
   uniform float uCursorGlowRadius;
   uniform vec3  uCursorGlowColor;
   uniform float uOpacity;
+  uniform float uStipple;
+  uniform float uPixelRatio;
   uniform float uPhaseOffsets[10];
   uniform float uSpeedOffsets[10];
 
@@ -254,7 +256,21 @@ const fragmentShader = /* glsl */ `
     float glow = cursorGlow(ro);
     vec3 glowContribution = uCursorGlowColor * glow;
 
-    if (t > 0.0) {
+    if (t > 0.0 && uStipple > 0.5) {
+      // Light theme: stippled print. A white core breaks into black grain toward the
+      // silhouette, like engraving, so the spheres sit in the paper's own grain.
+      vec3 n = calcNormal(p);
+      float facing = max(dot(-rd, n), 0.0);
+      float ndl = dot(n, normalize(uLightPosition)) * 0.5 + 0.5;
+      float lit = clamp(facing * 1.1 + (ndl - 0.5) * 0.45, 0.0, 1.0);
+      float dark = smoothstep(0.08, 0.95, 1.0 - lit);
+      // One grain cell per CSS pixel, so dots stay crisp instead of blending into grey.
+      vec2 cell = floor(gl_FragCoord.xy / max(uPixelRatio, 1.0));
+      float grain = fract(sin(dot(cell, vec2(12.9898, 78.233))) * 43758.5453);
+      vec3 ink = vec3(0.07);
+      vec3 paper = vec3(0.97);
+      gl_FragColor = vec4(grain < dark ? ink : paper, 1.0);
+    } else if (t > 0.0) {
       float fogAmount = 1.0 - exp(-t * uFogDensity);
       color = mix(color, uBackgroundColor.rgb, fogAmount * 0.3);
       color += glowContribution * 0.3;
@@ -396,12 +412,17 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
         uCursorGlowRadius: { value: preset.cursorGlowRadius },
         uCursorGlowColor: { value: preset.cursorGlowColor },
         uOpacity: { value: 0 },
+        uPixelRatio: { value: pixelRatio },
+        uStipple: { value: document.documentElement.dataset.theme === "light" ? 1 : 0 },
         uPhaseOffsets: { value: phaseOffsets },
         uSpeedOffsets: { value: speedOffsets },
       },
       vertexShader,
       fragmentShader,
       transparent: true,
+      // The shader already multiplies rgb by alpha (edge fade, intro fade); blend it that way
+      // so white stippled spheres stay white instead of being darkened a second time.
+      premultipliedAlpha: true,
     });
 
     const mesh = new THREE.Mesh(new THREE.PlaneGeometry(2, 2), material);
@@ -524,6 +545,13 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
     }
     window.addEventListener("scroll", onScroll, { passive: true });
 
+    // Follow the theme toggle: stippled spheres in light, liquid metal in dark.
+    const themeObserver = new MutationObserver(() => {
+      material.uniforms.uStipple.value = document.documentElement.dataset.theme === "light" ? 1 : 0;
+      renderer.render(scene, camera);
+    });
+    themeObserver.observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+
     // Always draw one initial frame so the canvas isn't blank if paused
     material.uniforms.uOpacity.value = 1;
     material.uniforms.uTime.value = uTime;
@@ -541,6 +569,7 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
       cancelAnimationFrame(rafId);
       if (scrollIdleTimer) clearTimeout(scrollIdleTimer);
       io?.disconnect();
+      themeObserver.disconnect();
       document.removeEventListener("visibilitychange", onVisibilityChange);
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("mousemove", onMouseMove);
