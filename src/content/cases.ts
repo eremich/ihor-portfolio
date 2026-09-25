@@ -10,15 +10,21 @@ export type Case = {
   headline?: string;
   team?: string;
   deliverables?: string[];
+  // Not finished yet: hidden from the site (no list entry, no page) until the case is written.
+  draft?: boolean;
+  // Not a real project (a layout sample): never listed.
+  hidden?: boolean;
 };
 
 // TODO: verify company/year/tags/summary for every non-API-Nation case.
 // Only API Nation is grounded in the CV; the others are placeholders
 // waiting for real details from Ihor.
 
-export const cases: Case[] = [
+const allCases: Case[] = [
   {
     slug: "regulate",
+    draft: true,
+    hidden: true,
     title: "Regulate",
     role: "Product Designer",
     company: "Preview / demo case",
@@ -29,6 +35,7 @@ export const cases: Case[] = [
   },
   {
     slug: "apination",
+    draft: true,
     title: "API Nation",
     role: "Sole Product Designer",
     company: "API Nation",
@@ -65,6 +72,7 @@ export const cases: Case[] = [
   },
   {
     slug: "eticket",
+    draft: true,
     title: "Eticket",
     role: "UX / UI Designer",
     company: "A-Development",
@@ -75,6 +83,7 @@ export const cases: Case[] = [
   },
   {
     slug: "hadron-solar",
+    draft: true,
     title: "Hadron Solar",
     role: "UX / UI Designer",
     company: "A-Development",
@@ -85,6 +94,7 @@ export const cases: Case[] = [
   },
   {
     slug: "konto",
+    draft: true,
     title: "Konto",
     role: "Product Designer",
     company: "Independent",
@@ -95,6 +105,7 @@ export const cases: Case[] = [
   },
   {
     slug: "wandr",
+    draft: true,
     title: "Wandr",
     role: "Product Designer",
     company: "Independent",
@@ -105,6 +116,7 @@ export const cases: Case[] = [
   },
   {
     slug: "pokecollect",
+    draft: true,
     title: "PokeCollect",
     role: "Product Designer",
     company: "Independent",
@@ -114,6 +126,15 @@ export const cases: Case[] = [
       "A collector-first app for tracking, valuing, and trading Pokémon cards.",
   },
 ];
+
+// Listed on the homepage: finished cases, then drafts shown as "Coming soon".
+export const listedCases: Case[] = [
+  ...allCases.filter((c) => !c.hidden && !c.draft),
+  ...allCases.filter((c) => !c.hidden && c.draft),
+];
+
+// Only finished cases get a page.
+export const cases: Case[] = allCases.filter((c) => !c.draft && !c.hidden);
 
 export function getCase(slug: string): Case | undefined {
   return cases.find((c) => c.slug === slug);
