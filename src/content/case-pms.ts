@@ -317,6 +317,15 @@ export const pmsBody = {
         ],
       },
       {
+        title: "Diagnostic or consultation",
+        desc: "Every task carries its appointment type. After a test, the clinician confirms it was carried out, and that confirmation is what billing waits for. After a consultation, the consultant answers one question: is another test needed? Yes creates a new task in the same episode, in one step.",
+        shots: [
+          after("task-diagnostic-confirmed-light", "A diagnostic task after the patient attended, with the clinician's test confirmation logged for billing", "Diagnostic: tests confirmed, logged for billing"),
+          after("task-consultation-question-light", "A consultation task after the patient attended, asking whether a further test or appointment is needed", "Consultation: one question after the visit"),
+          after("task-further-test-light", "The consultation task completed, with a message that a radiology test is now a pending task in the same episode", "A further test becomes a new task in the same episode"),
+        ],
+      },
+      {
         title: "Three roles, three views",
         desc: "A role switcher steps into each role. A consultant sees only their own tasks and no billing.",
         shots: [
