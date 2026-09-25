@@ -51,6 +51,19 @@ export const cases: Case[] = [
       "A staff system for a busy diagnostic clinic. Our team designed the first version in 2020; in 2026 I audited it and redesigned it: one clear priority and status language, task lists that show what needs action now, and role-aware views. Built as a working prototype on a documented design system.",
   },
   {
+    slug: "patronim",
+    title: "Patronim",
+    role: "UI/UX Designer",
+    company: "Patronim · Tel Aviv",
+    year: "2019 · revisited 2026",
+    tags: ["Mobile app", "Operations", "Design system"],
+    summary:
+      "A mobile app for a Tel Aviv company that cleans short-term rentals. I designed it in 2019 to replace spreadsheets for six roles; in 2026 I redesigned it around one deadline, the next guest's check-in, and built it as a working prototype with AI.",
+    headline: "From Excel sheets to a service that beats the guest to the door.",
+    team: "The only UI/UX designer in a team of 8: 2 mobile, 1 front-end and 1 part-time web developer, 2 QA, 1 PM",
+    deliverables: ["UX audit", "User flows", "Service blueprint", "Mobile prototype", "Design system"],
+  },
+  {
     slug: "eticket",
     title: "Eticket",
     role: "UX / UI Designer",

@@ -4,6 +4,7 @@ import type { Metadata } from "next";
 import { cases, getCase } from "@/content/cases";
 import { Placeholder } from "@/components/placeholder";
 import { PmsBody } from "@/components/case-pms-body";
+import { PatronimBody } from "@/components/case-patronim-body";
 import { regulateBody } from "@/content/case-regulate";
 import {
   HeroMock,
@@ -42,8 +43,9 @@ export default async function CasePage({
 
   const isRegulate = slug === "regulate";
   const isPms = slug === "patient-management";
+  const isPatronim = slug === "patronim";
   // The PMS case has a side "Story" navigation, so its page is wider on desktop.
-  const wide = isPms ? "max-w-[1180px]" : isRegulate ? "max-w-[960px]" : "max-w-[880px]";
+  const wide = isPms || isPatronim ? "max-w-[1180px]" : isRegulate ? "max-w-[960px]" : "max-w-[880px]";
 
   return (
     <article className={`mx-auto ${wide} px-6 pt-16 pb-24 sm:px-10`}>
@@ -85,7 +87,7 @@ export default async function CasePage({
       </header>
       )}
 
-      {isRegulate ? <RegulateBody /> : isPms ? <PmsBody /> : <PlaceholderBody />}
+      {isRegulate ? <RegulateBody /> : isPms ? <PmsBody /> : isPatronim ? <PatronimBody /> : <PlaceholderBody />}
 
       <div className="mt-32 border-t border-line pt-10">
         <Link
