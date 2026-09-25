@@ -321,6 +321,8 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
   useEffect(() => {
     const container = containerRef.current;
     if (!container) return;
+    // Non-null alias for the nested handlers below, where TypeScript loses the narrowing.
+    const host: HTMLDivElement = container;
 
     const reduceMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
@@ -388,7 +390,7 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
         uLightPosition: { value: preset.lightPosition },
         uContrast: { value: preset.contrast },
         uFogDensity: { value: preset.fogDensity },
-        uAnimationSpeed: { value: preset.animationSpeed },
+        uAnimationSpeed: { value: staticSettings.animationSpeed },
         uMovementScale: { value: staticSettings.movementScale },
         uMinMovementScale: { value: staticSettings.minMovementScale },
         uMaxMovementScale: { value: staticSettings.maxMovementScale },
@@ -425,7 +427,7 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
     }
 
     function handlePointer(clientX: number, clientY: number) {
-      const r = container.getBoundingClientRect();
+      const r = host.getBoundingClientRect();
       const nx = (clientX - r.left) / r.width;
       const ny = 1.0 - (clientY - r.top) / r.height;
       targetMouse.set(Math.max(0, Math.min(1, nx)), Math.max(0, Math.min(1, ny)));
@@ -442,7 +444,7 @@ export function HeroMetaballs({ pauseTargetId = "hero" }: { pauseTargetId?: stri
     }
 
     function onResize() {
-      const r = container.getBoundingClientRect();
+      const r = host.getBoundingClientRect();
       width = Math.max(r.width, 1);
       height = Math.max(r.height, 1);
       renderer.setSize(width, height);
