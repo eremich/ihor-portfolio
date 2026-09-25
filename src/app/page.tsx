@@ -15,26 +15,38 @@ export default function HomePage() {
         <div className="relative z-10 mx-auto max-w-[1200px] px-6 sm:px-10">
           <div className="rise rise-1 mb-8 inline-flex items-center gap-3 rounded-full border border-line bg-paper/40 px-3 py-1.5 text-[12px] tracking-[0.08em] text-ink-muted uppercase backdrop-blur-md">
             <span className="dot-live" aria-hidden />
-            <span>Senior Product Designer — Berlin</span>
+            <span>Product Designer · Berlin</span>
           </div>
 
           <h1
             id="hero-heading"
-            className="rise rise-2 max-w-[14ch] text-[52px] leading-[1.02] tracking-[-0.03em] text-ink sm:text-[80px] md:text-[104px]"
+            className="rise rise-2 max-w-[18ch] text-[44px] leading-[1.04] tracking-[-0.03em] text-ink sm:text-[64px] md:text-[80px]"
           >
-            Ihor Yeromich
+            I design complex products&nbsp;— and build them with&nbsp;AI.
           </h1>
 
           <p className="rise rise-3 mt-12 max-w-[58ch] text-[19px] leading-[1.6] text-ink-muted sm:text-[20px]">
-            Senior product designer with eight years across B2B SaaS, agency,
-            and in-house teams. Sole designer at{" "}
-            <span className="text-ink">API Nation</span> — a real-estate
-            automation platform with 4,000+ clients and 45M tasks a month —
-            where I own the design system, onboarding, workflow builder, and
-            AI-agent interfaces. Formerly design lead at{" "}
-            <span className="text-ink">A-Development</span> in London, shipping
-            30+ products across 10+ countries. Based in Berlin.
+            Product designer for SaaS and AI teams. For six years I was
+            the sole designer of <span className="text-ink">API Nation</span>, a
+            real-estate automation platform with 4,000+ clients and 45M tasks a
+            month, from its design system to the interface of an autonomous AI
+            agent.
           </p>
+
+          <div className="rise rise-3 mt-10 flex flex-wrap gap-3">
+            <a
+              href="#case-studies"
+              className="inline-flex min-h-11 items-center rounded-full border border-ink bg-ink px-5 py-2 text-[14px] text-paper! transition-colors duration-200 hover:bg-transparent hover:text-ink! focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+            >
+              View case studies
+            </a>
+            <a
+              href="#contacts"
+              className="inline-flex min-h-11 items-center rounded-full border border-line-strong px-5 py-2 text-[14px] text-ink transition-colors duration-200 hover:border-ink focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
+            >
+              Get in touch
+            </a>
+          </div>
         </div>
       </section>
 
@@ -62,46 +74,53 @@ function AboutSection() {
 
       <div className="grid grid-cols-1 gap-12 md:grid-cols-[1.4fr_1fr] md:gap-20">
         <div className="space-y-6 text-[17px] leading-[1.65] text-ink-muted">
-          <p>
-            I&rsquo;ve spent the last eight years shaping software — from
-            fintech and healthcare to workflow automation. Two chapters have
-            defined the work: leading design at{" "}
-            <span className="text-ink">A-Development</span> in London
-            (2015&ndash;2020), and being the sole designer at{" "}
-            <span className="text-ink">API Nation</span> in California
-            (2020&ndash;now).
+          <p className="text-[22px] leading-[1.3] tracking-tight text-ink sm:text-[26px]">
+            Product designer. Systems thinker. AI-native builder.
           </p>
           <p>
-            At API Nation I built the design system from scratch, redesigned
-            the full platform, and now design conversational UI for an
-            autonomous AI lead agent. Along the way I taught UX/UI at Hillel
-            IT School and mentored a handful of designers.
+            I build B2B software: I started as a front-end developer, then
+            became a designer and design lead. At{" "}
+            <span className="text-ink">API Nation</span> I owned the whole
+            product: a design system that made design and development 20%
+            faster, a platform redesign that cut task time by 30%, onboarding
+            that lifted conversion by 22%, a no-code workflow builder, and the
+            conversational UI for an AI lead agent.
           </p>
           <p>
-            I care about calm, decisive interfaces — the kind that feel
-            typographic rather than templated. Currently open to senior /
-            product-lead roles from Q1 2026.
+            Today I design with AI as much as for it. I prototype in code on a
+            documented design system, so ideas become working products that
+            engineers can pick up, not static mockups.
+          </p>
+          <p>
+            Before that, I led a design team at{" "}
+            <span className="text-ink">A-Development</span> in London,
+            delivering 30+ products for clients in 10+ countries, and taught
+            UX/UI at Hillel IT School.
           </p>
         </div>
 
         <dl className="grid grid-cols-1 gap-y-8 self-start text-[14px] sm:grid-cols-2 md:grid-cols-1">
-          <MetaRow label="Currently">
-            Sole Product Designer at{" "}
-            <span className="text-ink">API Nation</span> — B2B SaaS, remote from
-            Berlin
+          <MetaRow label="Recently">
+            Senior Product Designer at{" "}
+            <span className="text-ink">API Nation</span> · 2020&ndash;2026
           </MetaRow>
           <MetaRow label="Previously">
             Lead UX/UI Designer at{" "}
-            <span className="text-ink">A-Development</span>, London
+            <span className="text-ink">A-Development</span>, London ·
+            2017&ndash;2020
+          </MetaRow>
+          <MetaRow label="AI tools I use daily">
+            Claude Code · Cursor · Figma AI / Figma Make · ChatGPT · MCP
           </MetaRow>
           <MetaRow label="Teaching">
-            UX/UI Lecturer at Hillel IT School, 2022&ndash;2023
+            UX/UI Lecturer at Hillel IT School · 2 cohorts
           </MetaRow>
-          <MetaRow label="Studying">
-            Design Systems & AI at cimdata Bildungsakademie, Berlin
+          <MetaRow label="Learning">
+            Design Systems &amp; Service Design with AI, cimdata Berlin ·{" "}
+            <span className="whitespace-nowrap">2025&ndash;2026</span>
           </MetaRow>
           <MetaRow label="Languages">
-            German B2/C1 · English B2/C1 · Ukrainian · Russian
+            German B2 · English fluent · Ukrainian, Russian native
           </MetaRow>
         </dl>
       </div>
@@ -135,10 +154,16 @@ function ContactsSection() {
         </h2>
         <span className="flex items-center gap-2 text-[12px] text-ink-faint">
           <span className="dot-live" aria-hidden />
-          <span>Available from Q1 2026</span>
+          <span>Open to new roles</span>
         </span>
       </div>
 
+      <h3 className="mb-3 text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">
+        Let&rsquo;s build something clear.
+      </h3>
+      <p className="mb-10 max-w-[56ch] text-[17px] leading-[1.6] text-ink-muted">
+        Open to product design roles in AI and SaaS teams.
+      </p>
       <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 md:grid-cols-3">
         <ContactCard
           label="Email"

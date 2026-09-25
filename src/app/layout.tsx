@@ -17,9 +17,9 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ihor Yeromich — Senior Product Designer",
+  title: "Ihor Yeromich — Product Designer",
   description:
-    "Senior product designer with 8+ years across B2B SaaS, agency, and in-house teams. Sole designer at API Nation. Former design lead at A-Development in London. Based in Berlin.",
+    "Product designer for SaaS and AI teams, based in Berlin. I design complex products and build them with AI: from design systems to the interface of an autonomous AI agent at API Nation.",
 };
 
 // Inlined in <head> so data-theme is set before the browser paints — no dark
