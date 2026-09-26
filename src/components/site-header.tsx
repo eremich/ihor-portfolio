@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { MobileNav } from "@/components/mobile-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
 
 const navItems = [
@@ -18,18 +19,21 @@ export function SiteHeader() {
           Ihor Yeromich
         </Link>
 
-        <nav className="flex items-center gap-1 sm:gap-2">
-          {navItems.map((item) => (
-            <Link
-              key={item.href}
-              href={item.href}
-              className="rounded-full px-3 py-1.5 text-[13px] text-ink-muted transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-paper-raised hover:text-ink sm:px-4 sm:text-[14px]"
-            >
-              {item.label}
-            </Link>
-          ))}
+        <div className="flex items-center gap-1 sm:gap-2">
+          <nav aria-label="Main" className="hidden items-center gap-2 sm:flex">
+            {navItems.map((item) => (
+              <Link
+                key={item.href}
+                href={item.href}
+                className="rounded-full px-4 py-1.5 text-[14px] text-ink-muted transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-paper-raised hover:text-ink"
+              >
+                {item.label}
+              </Link>
+            ))}
+          </nav>
           <ThemeToggle />
-        </nav>
+          <MobileNav items={navItems} />
+        </div>
       </div>
     </header>
   );

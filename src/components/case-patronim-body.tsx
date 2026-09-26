@@ -58,7 +58,7 @@ export function PatronimBody() {
               {b.users.personas.map((p) => (
                 <li key={p.name} className="border-t border-line pt-6">
                   <p className="text-[18px] tracking-tight text-ink">{p.name}</p>
-                  <p className="mt-2 text-[14px] leading-[1.6] text-ink-faint">{p.context}</p>
+                  <p className="mt-2 text-[14px] leading-[1.6] text-ink-muted">{p.context}</p>
                   <p className="mt-4 text-[15px] leading-[1.6] text-ink-muted">{p.need}</p>
                 </li>
               ))}
@@ -69,14 +69,11 @@ export function PatronimBody() {
             <Lead title={b.audit.headline}>
               <p>{b.audit.intro}</p>
             </Lead>
-            <ol className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-2">
+            <ol className="mt-10 grid grid-cols-1 gap-x-8 border-t border-line sm:grid-cols-2">
               {b.audit.findings.map((f, i) => (
-                <li key={f.title} className="border-t border-line pt-6">
-                  <div className="mb-3 flex items-baseline gap-4">
-                    <span className="text-[32px] leading-none tabular-nums text-ink-faint">{String(i + 1).padStart(2, "0")}</span>
-                    <span className="text-[18px] tracking-tight text-ink">{f.title}</span>
-                  </div>
-                  <p className="text-[15px] leading-[1.6] text-ink-muted">{f.desc}</p>
+                <li key={f.title} className="flex items-baseline gap-4 border-b border-line py-4">
+                  <span className="text-[14px] tabular-nums text-ink-muted">{String(i + 1).padStart(2, "0")}</span>
+                  <span className="text-[17px] tracking-tight text-ink">{f.title}</span>
                 </li>
               ))}
             </ol>
@@ -96,7 +93,29 @@ export function PatronimBody() {
             <Lead title={b.define.blueprint.headline} className="mt-24">
               <p>{b.define.blueprint.body}</p>
             </Lead>
-            <div className="mt-8 overflow-x-auto" tabIndex={0} role="region" aria-label="Service blueprint table">
+            <ol className="mt-8 space-y-4 md:hidden">
+              {b.define.blueprint.columns.slice(1).map((stage, c) => (
+                <li key={stage} className="rounded-xl border border-line p-5">
+                  <p className="text-[12px] tracking-[0.12em] text-ink-muted uppercase">
+                    {String(c + 1).padStart(2, "0")} · {stage}
+                  </p>
+                  <dl className="mt-3 space-y-2.5 text-[14px] leading-[1.5]">
+                    {b.define.blueprint.rows
+                      .filter((row) => row[c + 1])
+                      .map((row) => {
+                        const answer = row[0] === "Redesign answer";
+                        return (
+                          <div key={row[0]} className={answer ? "-mx-2 rounded-md bg-paper-raised px-2 py-1.5" : ""}>
+                            <dt className={`text-[12px] ${answer ? "text-accent" : "text-ink-faint"}`}>{row[0]}</dt>
+                            <dd className={answer ? "text-ink" : "text-ink-muted"}>{row[c + 1]}</dd>
+                          </div>
+                        );
+                      })}
+                  </dl>
+                </li>
+              ))}
+            </ol>
+            <div className="mt-8 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label="Service blueprint table">
               <table className="w-full min-w-[820px] border-collapse text-left text-[13px] leading-[1.45]">
                 <thead>
                   <tr>
@@ -143,7 +162,7 @@ export function PatronimBody() {
                       <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{pair.fix}</p>
                     </div>
                   </div>
-                  <div className="mt-8 grid grid-cols-2 gap-4 sm:gap-6 md:grid-cols-3">
+                  <div className={`${phoneRow} mt-8 md:grid-cols-3`}>
                     <Phone shot={pair.before} label="Version 1 · 2019" />
                     {pair.after.map((s, j) => (
                       <Phone key={s.src} shot={s} label={j === 0 ? "Redesign · 2026" : " "} />
@@ -162,20 +181,15 @@ export function PatronimBody() {
                   <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{r.role}</p>
                   <h3 className="mt-2 text-[22px] tracking-tight text-ink">{r.title}</h3>
                   <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{r.desc}</p>
-                  <div className="mt-8 grid grid-cols-1 items-start gap-8 md:grid-cols-[minmax(0,0.9fr)_minmax(0,2fr)]">
-                    <a
-                      href={r.flow}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      aria-label={`${r.role} user flow (open full size)`}
-                      className="block rounded-xl border border-line bg-paper-raised p-3 transition-colors duration-200 hover:border-line-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
-                    >
-                      <span className="mb-3 inline-block rounded-md bg-line px-2.5 py-1 text-[12px] text-ink">Miro · user flow</span>
-                      {/* eslint-disable-next-line @next/next/no-img-element -- tall diagram, shown at its own ratio */}
-                      <img src={r.flow} alt={r.flowAlt} loading="lazy" className="h-auto w-full rounded-md" />
-                    </a>
-                    <Phones shots={r.shots} />
-                  </div>
+                  <a
+                    href={r.flow}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="mt-3 inline-flex items-center gap-1.5 text-[14px] text-ink-muted! underline decoration-line-strong underline-offset-4 transition-colors duration-200 hover:text-ink! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
+                  >
+                    See the {r.role.toLowerCase()} user flow <Arrow />
+                  </a>
+                  <Phones shots={r.shots} className="mt-8" />
                 </article>
               ))}
             </div>
@@ -198,7 +212,7 @@ export function PatronimBody() {
                 </li>
               ))}
             </ul>
-            <div className="mt-10 rounded-2xl bg-[#111214] px-4 py-8 sm:px-8">
+            <div className="mt-10 overflow-hidden rounded-2xl bg-[#111214] px-6 py-8 sm:px-10">
               <Phones shots={b.system.shots} dark />
             </div>
             <a href={patronimLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} mt-10 border-line-strong text-ink hover:border-ink`}>
@@ -270,10 +284,14 @@ export function PatronimBody() {
 }
 
 /** A row of phone screens at phone scale: 2 per row on small screens, up to 4 on wide ones. */
+// On phones, screens scroll sideways one by one instead of shrinking into a two-column grid.
+const phoneRow =
+  "-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:scroll-px-10 sm:px-10 md:mx-auto md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0";
+
 function Phones({ shots, className = "", priority, dark }: { shots: Shot[]; className?: string; priority?: boolean; dark?: boolean }) {
   const cols = shots.length >= 4 ? "md:grid-cols-4" : "md:grid-cols-3";
   return (
-    <div className={`mx-auto grid max-w-[980px] grid-cols-2 gap-4 sm:gap-6 ${cols} ${className}`}>
+    <div className={`${phoneRow} max-w-[980px] ${cols} ${className}`}>
       {shots.map((s) => (
         <Phone key={s.src} shot={s} priority={priority} dark={dark} />
       ))}
@@ -284,7 +302,7 @@ function Phones({ shots, className = "", priority, dark }: { shots: Shot[]; clas
 /** One phone screen in a rounded frame with a caption; opens full size on click. */
 function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; priority?: boolean; dark?: boolean }) {
   return (
-    <figure>
+    <figure className="w-[68%] shrink-0 snap-start sm:w-[40%] md:w-auto">
       {label && <p className="mb-3 min-h-[18px] text-[12px] tracking-[0.14em] text-ink-faint uppercase">{label}</p>}
       <a
         href={shot.src}

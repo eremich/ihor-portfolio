@@ -80,7 +80,6 @@ export const patronimBody = {
       body: "A bar from checkout to the next check-in, with the cleaning block inside and a \"now\" marker. The same bar appears for the manager, the cleaner and the inspector, and its colour and label say whether the job is on track, at risk or late.",
       shots: [
         after("06-manager-tracking", "Job tracking with the turnover window bar, the now marker and the projected finish before check-in", "Tracking: on time, with time to spare"),
-        after("03-manager-book-at-risk", "Booking with a window too short for the service, with the earliest safe option offered", "Booking: not enough time, and what to do"),
       ],
     },
     e2e: {
@@ -117,7 +116,7 @@ export const patronimBody = {
       {
         finding: "The guest's check-in was optional",
         fix: "Check-in is required, and the window previews live while you book. If the service won't fit, the app says so and offers the earliest safe option.",
-        before: v1("checkin", "Our 2019 booking form with the check-in time set to Unknown, marked", "Version 1: 1, check-in time \"Unknown\""),
+        before: v1("checkin", "Our 2019 booking form with the check-in time set to Unknown, marked", "① check-in time \"Unknown\""),
         after: [
           after("02-manager-book", "The 2026 booking form with required check-in and a live turnover window", "Required check-in, live window"),
           after("03-manager-book-at-risk", "The 2026 booking form warning that the window is too short", "Not enough time: the fix is one tap"),
@@ -126,25 +125,25 @@ export const patronimBody = {
       {
         finding: "The price appeared only at the end",
         fix: "A live total sits in the footer from the first choice. Tapping it explains every adjustment in plain words, and points to a cheaper time when there is one.",
-        before: v1("price", "Our 2019 booking form with the Total row at the very bottom, marked", "Version 1: 1, the total, last and unexplained"),
+        before: v1("price", "Our 2019 booking form with the Total row at the very bottom, marked", "① the total, last and unexplained"),
         after: [after("04-manager-price-breakdown", "The 2026 price breakdown with holiday and late-booking adjustments explained and a cheaper option", "Why the price is higher today, and how to save")],
       },
       {
         finding: "Service names were internal jargon",
         fix: "Plain names, what's included, how long it takes and the price, so a new host can choose without asking.",
-        before: v1("services", "Our 2019 service picker with internal names such as Mid Holiday No Sheets, marked", "Version 1: 1, names only the team understood"),
+        before: v1("services", "Our 2019 service picker with internal names such as Mid Holiday No Sheets, marked", "① names only the team understood"),
         after: [after("16-manager-services", "The 2026 service cards with plain names, scope, duration and price", "Plain names, scope, duration, price")],
       },
       {
         finding: "The cleaner couldn't see the deadline",
         fix: "Jobs are ordered by deadline and lead with the time left before the guest arrives. The zip code moved to the second line.",
-        before: v1("patron-jobs", "Our 2019 cleaner job list leading with the zip code, marked", "Version 1: 1, zip code first; 2, the deadline as plain text"),
+        before: v1("patron-jobs", "Our 2019 cleaner job list leading with the zip code, marked", "① zip code first ② the deadline as plain text"),
         after: [after("07-patron-jobs", "The 2026 cleaner job list leading with time left before the guest arrives", "\"Guest arrives in 2 h 35 min\"")],
       },
       {
         finding: "Inspection had no evidence",
         fix: "The inspector sees the cleaner's photos room by room, passes or sends back single items with a note and a photo.",
-        before: v1("quality", "Our 2019 inspection screen, a plain list of dates and addresses, marked", "Version 1: 1, addresses, nothing to judge by"),
+        before: v1("quality", "Our 2019 inspection screen, a plain list of dates and addresses, marked", "① addresses, nothing to judge by"),
         after: [
           after("11-inspector-queue", "The 2026 inspection queue with turnover window bars", "Queue by guest check-in"),
           after("12-inspector-needs-redo", "The 2026 needs-redo sheet with a note and photo for one item", "Send back one item, with a note"),
@@ -201,7 +200,6 @@ export const patronimBody = {
     shots: [
       after("14-manager-empty", "Empty Today screen that guides the manager to book a cleaning", "Empty: a next step, not a blank"),
       after("15-payment-error", "Payment declined with a clear fix: another card or invoice", "Declined: what happened, how to fix"),
-      after("03-manager-book-at-risk", "At-risk booking with the earliest safe option", "At risk: before it's too late"),
     ],
   },
 
