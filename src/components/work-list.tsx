@@ -25,7 +25,10 @@ export function WorkList() {
                 className="-mx-4 grid grid-cols-[1fr_auto] items-baseline gap-4 px-4 py-6 sm:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.2fr)_11rem] sm:gap-10 sm:py-7"
               >
                 <span className="text-[26px] leading-tight tracking-tight text-ink-muted sm:text-[32px]">{c.title}</span>
-                <span className="hidden truncate text-[14px] text-ink-muted sm:block">{c.company}</span>
+                <span className="hidden min-w-0 sm:block">
+                  <span className="block truncate text-[14px] text-ink-muted">{c.company}</span>
+                  {c.location && <span className="mt-1 block truncate text-[13px] text-ink-faint">{c.location}</span>}
+                </span>
                 <span className="hidden truncate text-[14px] text-ink-muted sm:block">{c.role}</span>
                 <span className="justify-self-end rounded-full border border-line px-3 py-1 text-[12px] whitespace-nowrap text-ink-muted">
                   Coming soon
@@ -38,7 +41,7 @@ export function WorkList() {
               href={`/work/${c.slug}`}
               className="group relative -mx-4 grid grid-cols-[1fr_auto] items-baseline gap-4 rounded-md px-4 py-6 transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] hover:bg-white/[0.03] sm:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)_minmax(0,1.2fr)_11rem] sm:gap-10 sm:py-7"
             >
-              <span className="flex items-baseline gap-3 text-[26px] leading-tight tracking-tight text-ink sm:text-[32px]">
+              <span className="flex flex-wrap items-baseline gap-x-3 text-[26px] leading-tight tracking-tight text-ink sm:text-[32px]">
                 <span className="inline-block transition-transform duration-300 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:translate-x-1.5">
                   {c.title}
                 </span>
@@ -48,9 +51,13 @@ export function WorkList() {
                 >
                   →
                 </span>
+                {c.location && <span className="basis-full pt-1 text-[13px] tracking-normal text-ink-faint sm:hidden">{c.location}</span>}
               </span>
-              <span className="hidden truncate text-[14px] text-ink-muted transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:text-ink sm:block">
-                {c.company}
+              <span className="hidden min-w-0 sm:block">
+                <span className="block truncate text-[14px] text-ink-muted transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:text-ink">
+                  {c.company}
+                </span>
+                {c.location && <span className="mt-1 block truncate text-[13px] text-ink-faint">{c.location}</span>}
               </span>
               <span className="hidden truncate text-[14px] text-ink-muted transition-colors duration-200 ease-[cubic-bezier(0.4,0,0.2,1)] group-hover:text-ink sm:block">
                 {c.role}

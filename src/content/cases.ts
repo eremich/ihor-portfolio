@@ -3,6 +3,8 @@ export type Case = {
   title: string;
   role: string;
   company: string;
+  /** City or region, shown under the company on the homepage and in the case facts */
+  location?: string;
   year: string;
   tags: string[];
   summary: string;
@@ -49,6 +51,7 @@ const allCases: Case[] = [
     title: "Patient Management System",
     role: "Product Designer",
     company: "New Malden Diagnostic Centre",
+    location: "London, UK",
     year: "2020 · revisited 2026",
     headline: "A clinic's worklist that says what needs doing now.",
     team: "2 designers, 1 PM, 1 front-end and 1 back-end developer",
@@ -61,7 +64,8 @@ const allCases: Case[] = [
     slug: "patronim",
     title: "Patronim",
     role: "UI/UX Designer",
-    company: "Patronim · Tel Aviv",
+    company: "Patronim",
+    location: "Tel Aviv, Israel",
     year: "2019 · revisited 2026",
     tags: ["Mobile app", "Operations", "Design system"],
     summary:
@@ -74,7 +78,8 @@ const allCases: Case[] = [
     slug: "chilicon-power",
     title: "Chilicon Power",
     role: "UX/UI Designer",
-    company: "Chilicon Power · California",
+    company: "Chilicon Power",
+    location: "California, USA",
     year: "2021 · revisited 2026",
     tags: ["Mobile app", "Energy", "Design system"],
     summary:

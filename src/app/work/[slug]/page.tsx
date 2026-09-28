@@ -110,6 +110,7 @@ function RichHeader({ c }: { c: NonNullable<ReturnType<typeof getCase>> }) {
     { label: "Role", value: c.role },
     { label: "Timeline", value: c.year },
     { label: "Company", value: c.company },
+    { label: "Location", value: c.location },
     { label: "Team", value: c.team },
   ].filter((f) => f.value);
   return (
