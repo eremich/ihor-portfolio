@@ -217,6 +217,17 @@ export const chiliconBody = {
       "The dark theme is near-black and neutral; colour comes only from energy and status",
       "Every number is tabular; touch targets are 44 points",
     ],
+    brand: {
+      mark: "/case-chilicon/brand/logo-mark.svg",
+      wordmark: "/case-chilicon/brand/logo-wordmark.svg",
+      caption: "The Chilicon Power logo: a sun over a leaf. Its two colours became the two anchors of the palette.",
+      palette: [
+        { name: "Sun", hex: "#FBAB16", role: "Brand and solar energy: primary buttons, production bars, the flow from the roof", fromLogo: true },
+        { name: "Leaf", hex: "#00AA79", role: "Status OK: “All 24 panels producing”", fromLogo: true },
+        { name: "Battery", hex: "#1E7FC2", role: "Battery charge and discharge. Blue, so it never reads as the green OK", fromLogo: false },
+        { name: "Grid", hex: "#6B6FD6", role: "Grid import and export", fromLogo: false },
+      ],
+    },
     shots: [
       dark("05-home-ok", "Home in the dark theme", "Home, dark"),
       dark("12-panels-roof", "Roof map in the dark theme", "Panels, dark"),

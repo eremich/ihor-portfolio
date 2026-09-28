@@ -212,6 +212,37 @@ export function ChiliconBody() {
                 </li>
               ))}
             </ul>
+            <figure className="mt-10 grid grid-cols-1 gap-8 rounded-2xl border border-line bg-paper-raised/60 p-6 sm:p-10 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-12">
+              <div className="flex flex-col gap-3">
+                <div className="flex items-center justify-center rounded-xl bg-white p-8">
+                  <img src={b.system.brand.mark} alt="Chilicon Power logo mark: an orange sun over a green leaf" className="h-24 w-auto" />
+                </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-center justify-center rounded-xl bg-white px-4 py-6">
+                    <img src={b.system.brand.wordmark} alt="Chilicon Power wordmark on white" className="h-auto w-full max-w-[180px]" />
+                  </div>
+                  <div className="flex items-center justify-center rounded-xl bg-[#050506] px-4 py-6">
+                    <img src={b.system.brand.wordmark} alt="Chilicon Power wordmark on the app's dark background" className="h-auto w-full max-w-[180px]" />
+                  </div>
+                </div>
+                <figcaption className="text-[13px] leading-[1.45] text-ink-faint">{b.system.brand.caption}</figcaption>
+              </div>
+              <ul className="flex flex-col justify-center divide-y divide-line">
+                {b.system.brand.palette.map((c) => (
+                  <li key={c.name} className="flex items-center gap-4 py-4 first:pt-0 last:pb-0">
+                    <span aria-hidden className="size-12 shrink-0 rounded-xl" style={{ background: c.hex }} />
+                    <span className="min-w-0 flex-1">
+                      <span className="flex flex-wrap items-baseline gap-x-2">
+                        <span className="text-[16px] tracking-tight text-ink">{c.name}</span>
+                        <span className="font-mono text-[12px] text-ink-faint">{c.hex}</span>
+                        {c.fromLogo && <span className="text-[12px] text-ink-muted">· from the logo</span>}
+                      </span>
+                      <span className="mt-1 block text-[14px] leading-[1.5] text-ink-muted">{c.role}</span>
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </figure>
             <div className="mt-10 overflow-hidden rounded-2xl bg-[#111214] px-6 py-8 sm:px-10">
               <Phones shots={b.system.shots} dark />
             </div>
