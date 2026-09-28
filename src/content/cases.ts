@@ -71,6 +71,19 @@ const allCases: Case[] = [
     deliverables: ["UX audit", "User flows", "Service blueprint", "Mobile prototype", "Design system"],
   },
   {
+    slug: "chilicon-power",
+    title: "Chilicon Power",
+    role: "UX/UI Designer",
+    company: "Chilicon Power · California",
+    year: "2021 · revisited 2026",
+    tags: ["Mobile app", "Energy", "Design system"],
+    summary:
+      "Solar monitoring for systems built on microinverters. In 2021 I designed the first mobile app for a data-heavy engineering dashboard; in 2026 I redesigned it around one question, is my system OK, for homeowners and installers, and built it as a working prototype with AI.",
+    headline: "From an engineer's dashboard to an answer in one second.",
+    team: "The only UX/UI designer in a team of 6: 1 front-end and 2 back-end developers, 1 QA, 1 PM",
+    deliverables: ["UX audit", "User flows", "Alert model", "Mobile prototype", "Design system"],
+  },
+  {
     slug: "eticket",
     draft: true,
     title: "Eticket",
