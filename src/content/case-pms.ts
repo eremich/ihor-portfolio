@@ -386,14 +386,6 @@ export const pmsBody = {
       { number: "3", label: "token tiers, about 100 colour tokens, light and dark themes" },
       { number: "AA", label: "text contrast on every screen and dialog in both themes; field borders are still below 3:1" },
     ] as Fact[],
-    notDone: {
-      title: "What is not done",
-      items: [
-        "Check-in is an action on the appointment (“Mark attended”); the arrivals board and the clinic calendar exist only as wireframes",
-        "Hi-fi work in Figma covered the foundations (colour variables, text styles, priority tags, status chips, buttons), not every screen",
-        "No usage data or client feedback: this is a design case, not a shipped product",
-      ],
-    },
   },
 
   lessons: {

@@ -249,15 +249,6 @@ export function ChiliconBody() {
               </ul>
             </div>
 
-            <h3 className="mt-16 text-[18px] tracking-tight text-ink">{b.outcome.notDone.title}</h3>
-            <ul className="mt-4 max-w-[62ch] space-y-2">
-              {b.outcome.notDone.items.map((x) => (
-                <li key={x} className="flex items-baseline gap-3 text-[15px] leading-[1.6] text-ink-muted">
-                  <span className="text-ink-faint">•</span>
-                  <span>{x}</span>
-                </li>
-              ))}
-            </ul>
           </Block>
 
           <Block kicker={b.lessons.kicker} id="lessons">

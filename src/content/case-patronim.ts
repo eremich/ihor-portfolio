@@ -240,14 +240,6 @@ export const patronimBody = {
       role: "CEO, Patronim",
       note: "On the 2019 app",
     },
-    notDone: {
-      title: "What is not done",
-      items: [
-        "The administrator panel, dispatcher and client appear in the service blueprint, not in the prototype",
-        "Mock data: no real payments, maps or chat",
-        "The redesign has not been tested with the company's staff yet",
-      ],
-    },
   },
 
   lessons: {

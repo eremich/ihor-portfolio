@@ -247,14 +247,6 @@ export const chiliconBody = {
         { metric: "Owners who check at least weekly", target: "60%", why: "A healthy app is checked, not stared at, and monitoring keeps the warranty valid" },
       ] as Target[],
     },
-    notDone: {
-      title: "What is not done",
-      items: [
-        "No interviews or usability tests on the redesign yet; next: five owner interviews and a test of setup and the issue flow",
-        "Mock data: no real devices, camera, maps or push notifications",
-        "Android is planned, not designed; the desktop dashboard was not redesigned",
-      ],
-    },
   },
 
   lessons: {
