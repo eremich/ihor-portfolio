@@ -90,14 +90,17 @@ const allCases: Case[] = [
   },
   {
     slug: "eticket",
-    draft: true,
     title: "Eticket",
-    role: "UX / UI Designer",
-    company: "A-Development",
-    year: "2018",
-    tags: ["Ticketing", "Web", "iOS"],
+    role: "Product Designer",
+    company: "Eticket",
+    location: "Kharkiv, Ukraine",
+    year: "2020 · revisited 2026",
+    tags: ["Mobile app", "Public transport", "Design system"],
     summary:
-      "The ticket-buying flow for a European events platform — from search to checkout on mobile and web.",
+      "Kharkiv's electronic travel card for the metro, trams, trolleybuses and buses. In 2020 I designed the first app with two developers; in 2026 I redesigned it around the two moments that matter, paying at the turnstile and knowing when the next tram comes, and built it as a working prototype with AI.",
+    headline: "One tap at the turnstile, the next tram on Home.",
+    team: "Product designer in a team of 3, with 2 developers",
+    deliverables: ["UX research", "UX audit", "User flows", "Mobile prototype", "Design system"],
   },
   {
     slug: "hadron-solar",
