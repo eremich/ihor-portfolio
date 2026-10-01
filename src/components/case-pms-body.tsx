@@ -1,20 +1,58 @@
 import Image from "next/image";
 import { existsSync, readFileSync } from "node:fs";
 import path from "node:path";
-import { pmsBody as b, pmsLinks, type Shot } from "@/content/case-pms";
+import { pmsBody, pmsLinks, type Shot } from "@/content/case-pms";
+import { pmsBodyDe } from "@/content/case-pms.de";
 import { CaseToc, type TocItem } from "@/components/case-toc";
+import type { Lang } from "@/i18n";
 
-const toc: TocItem[] = [
-  { id: "overview", label: "Overview" },
-  { id: "research", label: "Research" },
-  { id: "define", label: "Define" },
-  { id: "design", label: "Design" },
-  { id: "compare", label: "Findings" },
-  { id: "flows", label: "Key flows" },
-  { id: "system", label: "Design system" },
-  { id: "outcome", label: "Outcome" },
-  { id: "lessons", label: "Takeaways" },
-];
+// Accessible suffix for links that open an image at full size.
+const openFull: Record<Lang, string> = { en: "open full size", de: "in voller Größe öffnen" };
+
+const copy = {
+  en: {
+    liveDemo: "Live demo",
+    designSystem: "Design system",
+    openDesignSystem: "Open the design system",
+    alsoFound: "Also found",
+    finding: "Finding",
+    version1: "Version 1 · 2020",
+    redesign: "Redesign · 2026",
+    version1Missing: "Version 1: this screen was never designed; intake was on paper.",
+    toc: [
+      { id: "overview", label: "Overview" },
+      { id: "research", label: "Research" },
+      { id: "define", label: "Define" },
+      { id: "design", label: "Design" },
+      { id: "compare", label: "Findings" },
+      { id: "flows", label: "Key flows" },
+      { id: "system", label: "Design system" },
+      { id: "outcome", label: "Outcome" },
+      { id: "lessons", label: "Takeaways" },
+    ] satisfies TocItem[],
+  },
+  de: {
+    liveDemo: "Live-Demo",
+    designSystem: "Designsystem",
+    openDesignSystem: "Designsystem öffnen",
+    alsoFound: "Außerdem gefunden",
+    finding: "Befund",
+    version1: "Version 1 · 2020",
+    redesign: "Redesign · 2026",
+    version1Missing: "Version 1: Diesen Screen gab es nie; die Aufnahme lief auf Papier.",
+    toc: [
+      { id: "overview", label: "Überblick" },
+      { id: "research", label: "Research" },
+      { id: "define", label: "Define" },
+      { id: "design", label: "Design" },
+      { id: "compare", label: "Befunde" },
+      { id: "flows", label: "Zentrale Abläufe" },
+      { id: "system", label: "Designsystem" },
+      { id: "outcome", label: "Ergebnis" },
+      { id: "lessons", label: "Erkenntnisse" },
+    ] satisfies TocItem[],
+  },
+} satisfies Record<Lang, { liveDemo: string; designSystem: string; openDesignSystem: string; alsoFound: string; finding: string; version1: string; redesign: string; version1Missing: string; toc: TocItem[] }>;
 
 // Body of the Patient Management System case study. Server component: diagrams are inlined
 // from public/case-pms/diagrams so they inherit the page's text colour.
@@ -22,7 +60,9 @@ const toc: TocItem[] = [
 export const link =
   "group inline-flex min-h-11 items-center gap-2 rounded-full border px-5 py-2 text-[14px] transition-[background-color,border-color,color] duration-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink";
 
-export function PmsBody() {
+export function PmsBody({ lang }: { lang: Lang }) {
+  const b = lang === "de" ? pmsBodyDe : pmsBody;
+  const t = copy[lang];
   return (
     <>
       <div className="-mt-6 mb-16 flex flex-wrap gap-3">
@@ -32,7 +72,7 @@ export function PmsBody() {
           rel="noopener noreferrer"
           className={`${link} border-ink bg-ink text-paper! hover:bg-transparent hover:text-ink!`}
         >
-          Live demo <Arrow />
+          {t.liveDemo} <Arrow />
         </a>
         <a
           href={pmsLinks.storybook}
@@ -40,20 +80,20 @@ export function PmsBody() {
           rel="noopener noreferrer"
           className={`${link} border-line-strong text-ink hover:border-ink`}
         >
-          Design system <Arrow />
+          {t.designSystem} <Arrow />
         </a>
       </div>
 
       <dl className="grid grid-cols-1 gap-8 md:grid-cols-3">
-        {b.tldr.map((t) => (
-          <div key={t.label} className="border-t border-line pt-5">
-            <dt className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{t.label}</dt>
-            <dd className="mt-3 text-[15px] leading-[1.6] text-ink-muted">{t.text}</dd>
+        {b.tldr.map((x) => (
+          <div key={x.label} className="border-t border-line pt-5">
+            <dt className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{x.label}</dt>
+            <dd className="mt-3 text-[15px] leading-[1.6] text-ink-muted">{x.text}</dd>
           </div>
         ))}
       </dl>
 
-      <Figure shot={b.flows.items[0].shots[0]} priority className="mt-16" />
+      <Figure shot={b.flows.items[0].shots[0]} priority className="mt-16" lang={lang} />
 
       {/* Headline numbers straight after the cover: roles, task states, stories, contrast. */}
       <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
@@ -66,7 +106,7 @@ export function PmsBody() {
       </dl>
 
       <div className="lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-16">
-      <CaseToc items={toc} />
+      <CaseToc items={t.toc} lang={lang} />
       <div>
       <Block kicker={b.overview.kicker} id="overview">
         <Lead title={b.overview.headline}>
@@ -137,7 +177,7 @@ export function PmsBody() {
             </li>
           ))}
         </ol>
-        <p className="mt-12 text-[13px] tracking-[0.14em] text-ink-faint uppercase">Also found</p>
+        <p className="mt-12 text-[13px] tracking-[0.14em] text-ink-faint uppercase">{t.alsoFound}</p>
         <ul className="mt-4 space-y-2">
           {b.research.other.map((o) => (
             <li key={o} className="flex items-baseline gap-3 text-[15px] leading-[1.6] text-ink-muted">
@@ -152,8 +192,8 @@ export function PmsBody() {
         <Lead title={b.define.pathway.headline}>
           <p>{b.define.pathway.body}</p>
         </Lead>
-        <Board board={b.define.pathway.board} />
-        <Board board={b.define.pathway.boardProposed} />
+        <Board board={b.define.pathway.board} lang={lang} />
+        <Board board={b.define.pathway.boardProposed} lang={lang} />
         <Diagram name={b.define.pathway.diagram} alt={b.define.pathway.alt} />
 
         <Lead title={b.define.status.headline} className="mt-24">
@@ -232,7 +272,7 @@ export function PmsBody() {
           {b.compare.pairs.map((pair, i) => (
             <article key={pair.finding}>
               <div className="grid grid-cols-1 gap-6 border-t border-line pt-6 md:grid-cols-[180px_1fr] md:gap-12">
-                <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">Finding {String(i + 1).padStart(2, "0")}</p>
+                <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{t.finding} {String(i + 1).padStart(2, "0")}</p>
                 <div>
                   <h3 className="text-[20px] leading-[1.3] tracking-tight text-ink">{pair.finding}</h3>
                   <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{pair.fix}</p>
@@ -240,15 +280,15 @@ export function PmsBody() {
               </div>
               <div className="mt-8 space-y-8">
                 {pair.before ? (
-                  <Figure shot={pair.before} label="Version 1 · 2020" />
+                  <Figure shot={pair.before} label={t.version1} lang={lang} />
                 ) : (
                   <p className="rounded-md border border-dashed border-line px-4 py-3 text-[14px] text-ink-faint">
-                    Version 1: this screen was never designed; intake was on paper.
+                    {t.version1Missing}
                   </p>
                 )}
                 <div className={`grid grid-cols-1 gap-6 ${pair.after.length > 1 ? "md:grid-cols-2" : ""}`}>
                   {pair.after.map((s) => (
-                    <Figure key={s.src} shot={s} label="Redesign · 2026" />
+                    <Figure key={s.src} shot={s} label={t.redesign} lang={lang} />
                   ))}
                 </div>
               </div>
@@ -277,7 +317,7 @@ export function PmsBody() {
               <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{flow.desc}</p>
               <div className="mt-8 grid grid-cols-1 gap-6 md:grid-cols-2">
                 {flow.shots.map((s, i) => (
-                  <Figure key={s.src} shot={s} className={flow.shots.length % 2 === 1 && i === flow.shots.length - 1 ? "md:col-span-2" : ""} />
+                  <Figure key={s.src} shot={s} className={flow.shots.length % 2 === 1 && i === flow.shots.length - 1 ? "md:col-span-2" : ""} lang={lang} />
                 ))}
               </div>
             </article>
@@ -299,7 +339,7 @@ export function PmsBody() {
         </ul>
         <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
           {b.system.shots.map((s) => (
-            <Figure key={s.src} shot={s} />
+            <Figure key={s.src} shot={s} lang={lang} />
           ))}
         </div>
         <a
@@ -308,7 +348,7 @@ export function PmsBody() {
           rel="noopener noreferrer"
           className={`${link} mt-10 border-line-strong text-ink hover:border-ink`}
         >
-          Open the design system <Arrow />
+          {t.openDesignSystem} <Arrow />
         </a>
       </Block>
 
@@ -376,7 +416,7 @@ function Headline({ children }: { children: React.ReactNode }) {
 }
 
 /** A process artifact (the Miro board) in a raised frame with a chip label. Renders nothing until the image exists. */
-export function Board({ board, wide }: { board: { src: string; label: string; caption: string; alt: string }; wide?: boolean }) {
+export function Board({ board, wide, lang = "en" }: { board: { src: string; label: string; caption: string; alt: string }; wide?: boolean; lang?: Lang }) {
   const file = path.join(process.cwd(), "public", board.src);
   if (!existsSync(file)) return null;
   return (
@@ -385,7 +425,7 @@ export function Board({ board, wide }: { board: { src: string; label: string; ca
         href={board.src}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${board.label} (open full size)`}
+        aria-label={`${board.label} (${openFull[lang]})`}
         className="block overflow-hidden rounded-xl border border-line bg-paper-raised p-3 transition-colors duration-200 hover:border-line-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:p-4"
       >
         <span className="mb-3 inline-block rounded-md bg-line px-2.5 py-1 text-[12px] text-ink">{board.label}</span>
@@ -412,7 +452,7 @@ export function Lead({ title, className = "", children }: { title: string; class
 
 
 /** A screenshot in a thin frame with a caption. Click opens the full-size image. */
-export function Figure({ shot, label, priority, className = "" }: { shot: Shot; label?: string; priority?: boolean; className?: string }) {
+export function Figure({ shot, label, priority, className = "", lang = "en" }: { shot: Shot; label?: string; priority?: boolean; className?: string; lang?: Lang }) {
   return (
     <figure className={className}>
       {label && <p className="mb-3 text-[12px] tracking-[0.14em] text-ink-faint uppercase">{label}</p>}
@@ -420,7 +460,7 @@ export function Figure({ shot, label, priority, className = "" }: { shot: Shot; 
         href={shot.src}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${shot.caption} (open full size)`}
+        aria-label={`${shot.caption} (${openFull[lang]})`}
         className="block overflow-hidden rounded-md border border-line-strong transition-colors duration-200 hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
       >
         <Image

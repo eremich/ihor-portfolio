@@ -19,7 +19,7 @@ export type Flow = { title: string; desc: string; shots: Shot[] };
 export type Fact = { number: string; label: string };
 export type Lesson = { title: string; body: string };
 
-const after = (file: string, alt: string, caption: string): Shot => ({
+export const after = (file: string, alt: string, caption: string): Shot => ({
   src: `/case-pms/after/${file}.webp`,
   alt,
   caption,
@@ -28,7 +28,7 @@ const after = (file: string, alt: string, caption: string): Shot => ({
 });
 
 // One version 1 screen per finding, cropped and marked; numbers in the image match the caption.
-const before = (file: string, width: number, height: number, alt: string, caption: string): Shot => ({
+export const before = (file: string, width: number, height: number, alt: string, caption: string): Shot => ({
   src: `/case-pms/before/${file}.webp`,
   alt,
   caption,

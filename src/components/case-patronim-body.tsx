@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { patronimBody as b, patronimLinks } from "@/content/case-patronim";
+import { patronimBody, patronimLinks } from "@/content/case-patronim";
+import { patronimBodyDe } from "@/content/case-patronim.de";
+import type { Lang } from "@/i18n";
 import type { Shot } from "@/content/case-pms";
 import { CaseToc, type TocItem } from "@/components/case-toc";
 import { Arrow, Block, Board, Lead, link } from "@/components/case-pms-body";
@@ -7,32 +9,85 @@ import { Arrow, Block, Board, Lead, link } from "@/components/case-pms-body";
 // Body of the Patronim case study. A mobile app, so screens are shown at phone scale in rows,
 // never full-width; flows come from the Miro board.
 
-const toc: TocItem[] = [
-  { id: "overview", label: "Overview" },
-  { id: "research", label: "Research" },
-  { id: "define", label: "Define" },
-  { id: "compare", label: "Before / after" },
-  { id: "flows", label: "Key flows" },
-  { id: "states", label: "Hard states" },
-  { id: "system", label: "Design system" },
-  { id: "outcome", label: "Outcome" },
-  { id: "lessons", label: "Takeaways" },
-];
+type Copy = {
+  toc: TocItem[];
+  liveDemo: string;
+  designSystem: string;
+  openDesignSystem: string;
+  finding: string;
+  version1: string;
+  redesign: string;
+  flowLink: (role: string) => string;
+  blueprintTable: string;
+  answerRow: string;
+  openFull: string;
+};
 
-export function PatronimBody() {
+const copy = {
+  en: {
+    toc: [
+      { id: "overview", label: "Overview" },
+      { id: "research", label: "Research" },
+      { id: "define", label: "Define" },
+      { id: "compare", label: "Before / after" },
+      { id: "flows", label: "Key flows" },
+      { id: "states", label: "Hard states" },
+      { id: "system", label: "Design system" },
+      { id: "outcome", label: "Outcome" },
+      { id: "lessons", label: "Takeaways" },
+    ],
+    liveDemo: "Live demo",
+    designSystem: "Design system",
+    openDesignSystem: "Open the design system",
+    finding: "Finding",
+    version1: "Version 1 · 2019",
+    redesign: "Redesign · 2026",
+    flowLink: (role) => `See the ${role.toLowerCase()} user flow`,
+    blueprintTable: "Service blueprint table",
+    answerRow: "Redesign answer",
+    openFull: "open full size",
+  },
+  de: {
+    toc: [
+      { id: "overview", label: "Überblick" },
+      { id: "research", label: "Research" },
+      { id: "define", label: "Define" },
+      { id: "compare", label: "Vorher / nachher" },
+      { id: "flows", label: "Zentrale Flows" },
+      { id: "states", label: "Schwierige Zustände" },
+      { id: "system", label: "Designsystem" },
+      { id: "outcome", label: "Ergebnis" },
+      { id: "lessons", label: "Erkenntnisse" },
+    ],
+    liveDemo: "Live-Demo",
+    designSystem: "Designsystem",
+    openDesignSystem: "Designsystem öffnen",
+    finding: "Erkenntnis",
+    version1: "Version 1 · 2019",
+    redesign: "Redesign · 2026",
+    flowLink: (role) => `Zum User Flow: ${role}`,
+    blueprintTable: "Tabelle des Service Blueprints",
+    answerRow: "Antwort des Redesigns",
+    openFull: "in voller Größe öffnen",
+  },
+} satisfies Record<Lang, Copy>;
+
+export function PatronimBody({ lang }: { lang: Lang }) {
+  const b = lang === "de" ? patronimBodyDe : patronimBody;
+  const t = copy[lang];
   return (
     <>
       <div className="-mt-6 mb-16 flex flex-wrap gap-3">
         <a href={patronimLinks.demo} target="_blank" rel="noopener noreferrer" className={`${link} border-ink bg-ink text-paper! hover:bg-transparent hover:text-ink!`}>
-          Live demo <Arrow />
+          {t.liveDemo} <Arrow />
         </a>
         <a href={patronimLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} border-line-strong text-ink hover:border-ink`}>
-          Design system <Arrow />
+          {t.designSystem} <Arrow />
         </a>
       </div>
 
       <div className="rounded-2xl border border-line bg-paper-raised/60 px-4 py-8 sm:px-10 sm:py-12">
-        <Phones shots={b.cover} priority />
+        <Phones shots={b.cover} lang={lang} priority />
       </div>
 
       <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
@@ -45,7 +100,7 @@ export function PatronimBody() {
       </dl>
 
       <div className="lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-16">
-        <CaseToc items={toc} />
+        <CaseToc items={t.toc} lang={lang} />
         <div>
           <Block kicker={b.overview.kicker} id="overview">
             <Lead title={b.overview.headline}>
@@ -83,12 +138,12 @@ export function PatronimBody() {
             <Lead title={b.define.idea.headline}>
               <p>{b.define.idea.body}</p>
             </Lead>
-            <Phones shots={b.define.idea.shots} className="mt-10" />
+            <Phones shots={b.define.idea.shots} lang={lang} className="mt-10" />
 
             <Lead title={b.define.e2e.headline} className="mt-24">
               <p>{b.define.e2e.body}</p>
             </Lead>
-            <Board board={b.define.e2e.board} wide />
+            <Board board={b.define.e2e.board} wide lang={lang} />
 
             <Lead title={b.define.blueprint.headline} className="mt-24">
               <p>{b.define.blueprint.body}</p>
@@ -103,7 +158,7 @@ export function PatronimBody() {
                     {b.define.blueprint.rows
                       .filter((row) => row[c + 1])
                       .map((row) => {
-                        const answer = row[0] === "Redesign answer";
+                        const answer = row[0] === t.answerRow;
                         return (
                           <div key={row[0]} className={answer ? "-mx-2 rounded-md bg-paper-raised px-2 py-1.5" : ""}>
                             <dt className={`text-[12px] ${answer ? "text-accent" : "text-ink-faint"}`}>{row[0]}</dt>
@@ -115,7 +170,7 @@ export function PatronimBody() {
                 </li>
               ))}
             </ol>
-            <div className="mt-8 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label="Service blueprint table">
+            <div className="mt-8 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label={t.blueprintTable}>
               <table className="w-full min-w-[820px] border-collapse text-left text-[13px] leading-[1.45]">
                 <thead>
                   <tr>
@@ -128,7 +183,7 @@ export function PatronimBody() {
                 </thead>
                 <tbody>
                   {b.define.blueprint.rows.map((row) => {
-                    const answer = row[0] === "Redesign answer";
+                    const answer = row[0] === t.answerRow;
                     return (
                       <tr key={row[0]} className={`border-b border-line ${answer ? "bg-paper-raised/60" : ""}`}>
                         {row.map((cell, i) =>
@@ -156,16 +211,16 @@ export function PatronimBody() {
               {b.compare.pairs.map((pair, i) => (
                 <article key={pair.finding}>
                   <div className="grid grid-cols-1 gap-6 border-t border-line pt-6 md:grid-cols-[180px_1fr] md:gap-12">
-                    <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">Finding {String(i + 1).padStart(2, "0")}</p>
+                    <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{t.finding} {String(i + 1).padStart(2, "0")}</p>
                     <div>
                       <h3 className="text-[20px] leading-[1.3] tracking-tight text-ink">{pair.finding}</h3>
                       <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{pair.fix}</p>
                     </div>
                   </div>
                   <div className={`${phoneRow} mt-8 md:grid-cols-3`}>
-                    <Phone shot={pair.before} label="Version 1 · 2019" />
+                    <Phone shot={pair.before} label={t.version1} lang={lang} />
                     {pair.after.map((s, j) => (
-                      <Phone key={s.src} shot={s} label={j === 0 ? "Redesign · 2026" : " "} />
+                      <Phone key={s.src} shot={s} label={j === 0 ? t.redesign : " "} lang={lang} />
                     ))}
                   </div>
                 </article>
@@ -187,9 +242,9 @@ export function PatronimBody() {
                     rel="noopener noreferrer"
                     className="mt-3 inline-flex items-center gap-1.5 text-[14px] text-ink-muted! underline decoration-line-strong underline-offset-4 transition-colors duration-200 hover:text-ink! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   >
-                    See the {r.role.toLowerCase()} user flow <Arrow />
+                    {t.flowLink(r.role)} <Arrow />
                   </a>
-                  <Phones shots={r.shots} className="mt-8" />
+                  <Phones shots={r.shots} lang={lang} className="mt-8" />
                 </article>
               ))}
             </div>
@@ -197,7 +252,7 @@ export function PatronimBody() {
 
           <Block kicker={b.states.kicker} id="states">
             <h2 className="max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">{b.states.headline}</h2>
-            <Phones shots={b.states.shots} className="mt-10" />
+            <Phones shots={b.states.shots} lang={lang} className="mt-10" />
           </Block>
 
           <Block kicker={b.system.kicker} id="system">
@@ -213,10 +268,10 @@ export function PatronimBody() {
               ))}
             </ul>
             <div className="mt-10 overflow-hidden rounded-2xl bg-[#111214] px-6 py-8 sm:px-10">
-              <Phones shots={b.system.shots} dark />
+              <Phones shots={b.system.shots} lang={lang} dark />
             </div>
             <a href={patronimLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} mt-10 border-line-strong text-ink hover:border-ink`}>
-              Open the design system <Arrow />
+              {t.openDesignSystem} <Arrow />
             </a>
           </Block>
 
@@ -279,19 +334,19 @@ export function PatronimBody() {
 const phoneRow =
   "-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:scroll-px-10 sm:px-10 md:mx-auto md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0";
 
-function Phones({ shots, className = "", priority, dark }: { shots: Shot[]; className?: string; priority?: boolean; dark?: boolean }) {
+function Phones({ shots, lang, className = "", priority, dark }: { shots: Shot[]; lang: Lang; className?: string; priority?: boolean; dark?: boolean }) {
   const cols = shots.length >= 4 ? "md:grid-cols-4" : "md:grid-cols-3";
   return (
     <div className={`${phoneRow} max-w-[980px] ${cols} ${className}`}>
       {shots.map((s) => (
-        <Phone key={s.src} shot={s} priority={priority} dark={dark} />
+        <Phone key={s.src} shot={s} lang={lang} priority={priority} dark={dark} />
       ))}
     </div>
   );
 }
 
 /** One phone screen in a rounded frame with a caption; opens full size on click. */
-function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; priority?: boolean; dark?: boolean }) {
+function Phone({ shot, lang, label, priority, dark }: { shot: Shot; lang: Lang; label?: string; priority?: boolean; dark?: boolean }) {
   return (
     <figure className="w-[68%] shrink-0 snap-start sm:w-[40%] md:w-auto">
       {label && <p className="mb-3 min-h-[18px] text-[12px] tracking-[0.14em] text-ink-faint uppercase">{label}</p>}
@@ -299,7 +354,7 @@ function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; pr
         href={shot.src}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${shot.caption} (open full size)`}
+        aria-label={`${shot.caption} (${copy[lang].openFull})`}
         className="block overflow-hidden rounded-[22px] border border-line-strong transition-colors duration-200 hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:rounded-[28px]"
       >
         <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(min-width: 1024px) 260px, 45vw" priority={priority} className="h-auto w-full" />

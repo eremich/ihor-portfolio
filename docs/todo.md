@@ -124,3 +124,40 @@ Live demo https://nmdc-patient-management.vercel.app, design system /storybook. 
 - [x] Step 2 — page: `PmsBody` sections wired into `/work/[slug]` (tl;dr, overview, goals, users, research + before shots, define + diagrams, design, before/after pairs, decisions, flows gallery, design system, outcome, lessons, CTA)
 - [~] Step 3 — verified: 1440 and 375 (no overflow), 32 images load with alt text, diagrams inline, no console errors; still to do: keyboard pass, design-review pass, trim length if wanted
 - [ ] Step 4 — first Vercel deploy of the portfolio (needs the user's login); make repos private if wanted
+
+---
+
+## German localization (2026-10-01)
+
+English stays at the root URLs, German lives under `/de`. First visit is always English; the EN · DE switch in the header keeps the current page and section.
+
+- [x] `src/i18n.ts`: `Lang` type, `localePath`, shared interface strings (en/de)
+- [x] Routes: `/`, `/work/[slug]`, `/de`, `/de/work/[slug]`; pages render shared `HomePage` / `CasePage` with `lang`
+- [x] Header, footer, mobile menu, theme toggle, case list, case header translated; job titles stay English
+- [x] Case list data: German fields per case in `cases.ts` (`de`), applied with `localizeCase`
+- [x] Four case studies: `case-*.de.ts` content + bodies take `lang` (translated by sub-agents, checked for leftover English)
+- [x] SEO: `lang="de"` on German pages, canonical + hreflang alternates
+- [x] Verified: all EN/DE routes 200, unknown slug 404, switch keeps the case, mobile 375px, tsc clean
+- [ ] Ihor proofreads the German copy (formal "Sie"; case studies in first person)
+- Known limit: SVG diagrams and screenshots stay in English
+
+## Analytics — Umami Cloud (2026-10-01)
+
+Cookieless, so no consent banner. Script loads in production builds only (`src/app/layout.tsx`); in development events print to the console.
+
+- [x] Page views (automatic): every case page view, with referrer
+- [x] `case-click` from the homepage list (`case`, `lang`)
+- [x] `case-scroll` 25/50/75/100 % per case (`case`, `depth`, `lang`)
+- [x] `case-time` active reading time, counted only while visible and in use (`case`, `seconds`, `range`, `lang`)
+- [x] `outbound` (live demos, design systems), `contact-email`, `contact-linkedin`, `hero-cta`, `lang-switch`
+- [ ] Stats start after the first Vercel deploy
+- [x] Umami described in the Datenschutzerklärung
+
+## Impressum & Datenschutz (2026-10-01)
+
+German only, at `/de/impressum` and `/de/datenschutz`; the EN · DE switch stays on them. `noindex`. **Not linked from the site yet** (no postal address) — re-add the footer links once the Impressum has an address.
+
+- [x] Impressum: § 5 DDG, contact, § 18 MStV, liability, copyright
+- [x] Datenschutzerklärung: hosting (Vercel), Umami, localStorage (theme), local fonts, email, external links, rights, Berlin authority
+- [ ] Ihor: postal address in both pages (placeholders `[Straße Hausnummer]`, `[PLZ]`)
+- [ ] Check against a generator (e.g. e-recht24.de) or a lawyer before publishing

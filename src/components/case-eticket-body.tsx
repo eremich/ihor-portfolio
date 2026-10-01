@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { eticketBody as b, eticketLinks } from "@/content/case-eticket";
+import { eticketBody, eticketLinks } from "@/content/case-eticket";
+import { eticketBodyDe } from "@/content/case-eticket.de";
+import type { Lang } from "@/i18n";
 import type { Shot } from "@/content/case-pms";
 import { CaseToc, type TocItem } from "@/components/case-toc";
 import { Arrow, Block, Lead, link } from "@/components/case-pms-body";
@@ -7,39 +9,82 @@ import { Arrow, Block, Lead, link } from "@/components/case-pms-body";
 // Body of the Eticket case study. A mobile app, so screens are shown at phone scale in rows,
 // never full-width; flows are rendered from the Miro board and the 2020 slides are shown as they were.
 
-const toc: TocItem[] = [
-  { id: "overview", label: "Overview" },
-  { id: "problem", label: "The problem" },
-  { id: "research", label: "Research" },
-  { id: "goals", label: "Goals" },
-  { id: "flows", label: "Flows" },
-  { id: "compare", label: "Before / after" },
-  { id: "decisions", label: "Key decisions" },
-  { id: "states", label: "Hard states" },
-  { id: "system", label: "Design system" },
-  { id: "outcome", label: "Outcome" },
-  { id: "lessons", label: "Takeaways" },
-];
+const copy = {
+  en: {
+    toc: [
+      { id: "overview", label: "Overview" },
+      { id: "problem", label: "The problem" },
+      { id: "research", label: "Research" },
+      { id: "goals", label: "Goals" },
+      { id: "flows", label: "Flows" },
+      { id: "compare", label: "Before / after" },
+      { id: "decisions", label: "Key decisions" },
+      { id: "states", label: "Hard states" },
+      { id: "system", label: "Design system" },
+      { id: "outcome", label: "Outcome" },
+      { id: "lessons", label: "Takeaways" },
+    ] as TocItem[],
+    liveDemo: "Live demo",
+    designSystem: "Design system",
+    quoteSource: "Kharkiv rider, 2020 interview",
+    journeyTable: "Customer journey table",
+    openFull: "open full size",
+    openMiro: "Open the Miro board",
+    miro: "Miro",
+    finding: "Finding",
+    version1: "Version 1 · 2020",
+    redesign: "Redesign · 2026",
+    openSystem: "Open the design system",
+  },
+  de: {
+    toc: [
+      { id: "overview", label: "Überblick" },
+      { id: "problem", label: "Das Problem" },
+      { id: "research", label: "Research" },
+      { id: "goals", label: "Ziele" },
+      { id: "flows", label: "Flows" },
+      { id: "compare", label: "Vorher / nachher" },
+      { id: "decisions", label: "Zentrale Entscheidungen" },
+      { id: "states", label: "Schwierige Zustände" },
+      { id: "system", label: "Designsystem" },
+      { id: "outcome", label: "Ergebnis" },
+      { id: "lessons", label: "Erkenntnisse" },
+    ] as TocItem[],
+    liveDemo: "Live-Demo",
+    designSystem: "Designsystem",
+    quoteSource: "Fahrgast aus Charkiw, Interview 2020",
+    journeyTable: "Tabelle zur Customer Journey",
+    openFull: "in voller Größe öffnen",
+    openMiro: "Miro-Board öffnen",
+    miro: "Miro",
+    finding: "Erkenntnis",
+    version1: "Version 1 · 2020",
+    redesign: "Neugestaltung · 2026",
+    openSystem: "Designsystem öffnen",
+  },
+} satisfies Record<Lang, Record<string, string | TocItem[]>>;
 
 const h2 = "max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]";
 const h3 = "text-[13px] tracking-[0.14em] text-ink-faint uppercase";
 const outline =
   "inline-flex items-center gap-1.5 text-[14px] text-ink-muted! underline decoration-line-strong underline-offset-4 transition-colors duration-200 hover:text-ink! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink";
 
-export function EticketBody() {
+export function EticketBody({ lang }: { lang: Lang }) {
+  const b = lang === "de" ? eticketBodyDe : eticketBody;
+  const t = copy[lang];
   return (
     <>
       <div className="-mt-6 mb-16 flex flex-wrap gap-3">
         <a href={eticketLinks.demo} target="_blank" rel="noopener noreferrer" className={`${link} border-ink bg-ink text-paper! hover:bg-transparent hover:text-ink!`}>
-          Live demo <Arrow />
+          {t.liveDemo} <Arrow />
         </a>
         <a href={eticketLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} border-line-strong text-ink hover:border-ink`}>
-          Design system <Arrow />
+          {t.designSystem} <Arrow />
         </a>
       </div>
 
       <div className="rounded-2xl border border-line bg-paper-raised/60 px-4 py-8 sm:px-10 sm:py-12">
-        <Phones shots={b.cover} priority />
+        <Phones shots={b.cover} lang={lang} priority />
       </div>
 
       <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
@@ -52,7 +97,7 @@ export function EticketBody() {
       </dl>
 
       <div className="lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-16">
-        <CaseToc items={toc} />
+        <CaseToc items={t.toc} lang={lang} />
         <div>
           <Block kicker={b.overview.kicker} id="overview">
             <Lead title={b.overview.headline}>
@@ -112,7 +157,7 @@ export function EticketBody() {
                   <figure>
                     <span aria-hidden className="block text-[40px] leading-none text-accent">&ldquo;</span>
                     <blockquote className="mt-1 text-[17px] leading-[1.5] tracking-tight text-ink">{q.text}</blockquote>
-                    <figcaption className="mt-4 text-[13px] text-ink-faint">Kharkiv rider, 2020 interview</figcaption>
+                    <figcaption className="mt-4 text-[13px] text-ink-faint">{t.quoteSource}</figcaption>
                   </figure>
                 </li>
               ))}
@@ -136,7 +181,7 @@ export function EticketBody() {
                 </li>
               ))}
             </ol>
-            <div className="mt-6 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label="Customer journey table">
+            <div className="mt-6 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label={t.journeyTable}>
               <table className="w-full min-w-[820px] border-collapse text-left text-[13px] leading-[1.45]">
                 <thead>
                   <tr>
@@ -194,7 +239,7 @@ export function EticketBody() {
                     href={s.src}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${s.caption} (open full size)`}
+                    aria-label={`${s.caption} (${t.openFull})`}
                     className="block overflow-hidden rounded-xl border border-line bg-paper-raised transition-colors duration-200 hover:border-line-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink"
                   >
                     <Image src={s.src} alt={s.alt} width={s.width} height={s.height} sizes="(min-width: 1024px) 860px, 100vw" className="h-auto w-full" />
@@ -239,7 +284,7 @@ export function EticketBody() {
               <p>{b.flows.body}</p>
             </Lead>
             <a href={eticketLinks.miro} target="_blank" rel="noopener noreferrer" className={`group mt-6 ${outline}`}>
-              Open the Miro board <Arrow />
+              {t.openMiro} <Arrow />
             </a>
             <div className="mt-10 grid grid-cols-1 gap-6 md:grid-cols-2">
               {b.flows.items.map((f) => (
@@ -248,7 +293,7 @@ export function EticketBody() {
                     href={f.src}
                     target="_blank"
                     rel="noopener noreferrer"
-                    aria-label={`${f.title} (open full size)`}
+                    aria-label={`${f.title} (${t.openFull})`}
                     className="block overflow-hidden rounded-xl border border-line bg-white p-3 transition-colors duration-200 hover:border-line-strong focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:p-4"
                   >
                     {/* eslint-disable-next-line @next/next/no-img-element -- diagram export; keep it pixel-crisp, no resampling */}
@@ -257,7 +302,7 @@ export function EticketBody() {
                   <figcaption className="mt-3 flex items-baseline justify-between gap-4 text-[13px] leading-[1.45] text-ink-faint">
                     <span>{f.title}</span>
                     <a href={eticketLinks.miro} target="_blank" rel="noopener noreferrer" className={`group shrink-0 ${outline}`}>
-                      Miro <Arrow />
+                      {t.miro} <Arrow />
                     </a>
                   </figcaption>
                 </figure>
@@ -271,16 +316,16 @@ export function EticketBody() {
               {b.compare.pairs.map((pair, i) => (
                 <article key={pair.finding}>
                   <div className="grid grid-cols-1 gap-6 border-t border-line pt-6 md:grid-cols-[180px_1fr] md:gap-12">
-                    <p className={h3}>Finding {String(i + 1).padStart(2, "0")}</p>
+                    <p className={h3}>{t.finding} {String(i + 1).padStart(2, "0")}</p>
                     <div>
                       <h3 className="text-[20px] leading-[1.3] tracking-tight text-ink">{pair.finding}</h3>
                       <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{pair.fix}</p>
                     </div>
                   </div>
                   <div className={`${phoneRow} mt-8 md:grid-cols-3`}>
-                    <Phone shot={pair.before} label="Version 1 · 2020" />
+                    <Phone shot={pair.before} label={t.version1} lang={lang} />
                     {pair.after.map((s, j) => (
-                      <Phone key={s.src} shot={s} label={j === 0 ? "Redesign · 2026" : " "} />
+                      <Phone key={s.src} shot={s} label={j === 0 ? t.redesign : " "} lang={lang} />
                     ))}
                   </div>
                 </article>
@@ -292,7 +337,7 @@ export function EticketBody() {
             <Lead title={b.commute.headline}>
               <p>{b.commute.body}</p>
             </Lead>
-            <Phones shots={b.commute.shots} className="mt-10" />
+            <Phones shots={b.commute.shots} lang={lang} className="mt-10" />
 
             <h3 className={`mt-24 ${h3}`}>{b.decisions.headline}</h3>
             <ol className="mt-6 grid grid-cols-1 gap-x-8 border-t border-line md:grid-cols-2">
@@ -310,7 +355,7 @@ export function EticketBody() {
 
           <Block kicker={b.states.kicker} id="states">
             <h2 className={h2}>{b.states.headline}</h2>
-            <Phones shots={b.states.shots} className="mt-10" />
+            <Phones shots={b.states.shots} lang={lang} className="mt-10" />
           </Block>
 
           <Block kicker={b.system.kicker} id="system">
@@ -326,10 +371,10 @@ export function EticketBody() {
               ))}
             </ul>
             <div className="mt-10 overflow-hidden rounded-2xl bg-[#111214] px-6 py-8 sm:px-10">
-              <Phones shots={b.system.shots} dark />
+              <Phones shots={b.system.shots} lang={lang} dark />
             </div>
             <a href={eticketLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} mt-10 border-line-strong text-ink hover:border-ink`}>
-              Open the design system <Arrow />
+              {t.openSystem} <Arrow />
             </a>
           </Block>
 
@@ -396,19 +441,19 @@ const phoneRow =
   "-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:scroll-px-10 sm:px-10 md:mx-auto md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0";
 
 /** A row of phone screens at phone scale: 3 to 5 per row on wide screens. */
-function Phones({ shots, className = "", priority, dark }: { shots: Shot[]; className?: string; priority?: boolean; dark?: boolean }) {
+function Phones({ shots, lang, className = "", priority, dark }: { shots: Shot[]; lang: Lang; className?: string; priority?: boolean; dark?: boolean }) {
   const cols = shots.length === 5 ? "md:grid-cols-5" : shots.length === 6 ? "md:grid-cols-3" : shots.length >= 4 ? "md:grid-cols-4" : "md:grid-cols-3";
   return (
     <div className={`${phoneRow} max-w-[980px] ${cols} ${className}`}>
       {shots.map((s) => (
-        <Phone key={s.src} shot={s} priority={priority} dark={dark} />
+        <Phone key={s.src} shot={s} lang={lang} priority={priority} dark={dark} />
       ))}
     </div>
   );
 }
 
 /** One phone screen in a rounded frame with a caption; opens full size on click. */
-function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; priority?: boolean; dark?: boolean }) {
+function Phone({ shot, lang, label, priority, dark }: { shot: Shot; lang: Lang; label?: string; priority?: boolean; dark?: boolean }) {
   return (
     <figure className="w-[68%] shrink-0 snap-start sm:w-[40%] md:w-auto">
       {label && <p className="mb-3 min-h-[18px] text-[12px] tracking-[0.14em] text-ink-faint uppercase">{label}</p>}
@@ -416,7 +461,7 @@ function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; pr
         href={shot.src}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${shot.caption} (open full size)`}
+        aria-label={`${shot.caption} (${copy[lang].openFull})`}
         className="block overflow-hidden rounded-[22px] border border-line-strong transition-colors duration-200 hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:rounded-[28px]"
       >
         <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(min-width: 1024px) 260px, 45vw" priority={priority} className="h-auto w-full" />

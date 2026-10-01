@@ -5,16 +5,16 @@
 import type { Fact, Lesson, Shot } from "@/content/case-pms";
 
 // Phone screens are 390 × 844 points, exported at 2× (780 × 1688).
-const phone = (dir: "after" | "dark" | "v1", file: string, alt: string, caption: string, height = 1688): Shot => ({
+export const phone = (dir: "after" | "dark" | "v1", file: string, alt: string, caption: string, height = 1688): Shot => ({
   src: `/case-patronim/${dir}/${file}.webp`,
   alt,
   caption,
   width: 780,
   height,
 });
-const after = (file: string, alt: string, caption: string) => phone("after", file, alt, caption);
-const dark = (file: string, alt: string, caption: string) => phone("dark", file, alt, caption);
-const v1 = (file: string, alt: string, caption: string) => phone("v1", file, alt, caption, 1680);
+export const after = (file: string, alt: string, caption: string) => phone("after", file, alt, caption);
+export const dark = (file: string, alt: string, caption: string) => phone("dark", file, alt, caption);
+export const v1 = (file: string, alt: string, caption: string) => phone("v1", file, alt, caption, 1680);
 
 export type PhonePair = { finding: string; fix: string; before: Shot; after: Shot[] };
 export type RoleFlow = { role: string; title: string; desc: string; flow: string; flowAlt: string; shots: Shot[] };

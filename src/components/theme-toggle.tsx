@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 type Theme = "dark" | "light";
 
-export function ThemeToggle() {
+export function ThemeToggle({ labels }: { labels: { toLight: string; toDark: string } }) {
   const [theme, setTheme] = useState<Theme>("dark");
   const [mounted, setMounted] = useState(false);
 
@@ -35,7 +35,7 @@ export function ThemeToggle() {
     );
   }
 
-  const label = theme === "dark" ? "Switch to light theme" : "Switch to dark theme";
+  const label = theme === "dark" ? labels.toLight : labels.toDark;
 
   return (
     <button

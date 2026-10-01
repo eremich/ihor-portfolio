@@ -9,14 +9,14 @@ export function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
-  return caseMetadata((await params).slug, "en");
+  return caseMetadata((await params).slug, "de");
 }
 
 export default async function Page({ params }: Props) {
   const { slug } = await params;
   return (
-    <SiteChrome lang="en">
-      <CasePage slug={slug} lang="en" />
+    <SiteChrome lang="de">
+      <CasePage slug={slug} lang="de" />
     </SiteChrome>
   );
 }

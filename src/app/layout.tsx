@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
-import { SiteHeader } from "@/components/site-header";
-import { SiteFooter } from "@/components/site-footer";
+import Script from "next/script";
+import { LinkTracker } from "@/components/link-tracker";
+import { UMAMI_WEBSITE_ID } from "@/lib/analytics";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -23,9 +24,12 @@ export const metadata: Metadata = {
 };
 
 // Inlined in <head> so data-theme is set before the browser paints — no dark
-// flash for users whose saved choice is light.
+// flash for users whose saved choice is light. Also marks German pages with lang="de".
 const themeInitScript = `
 (function() {
+  if (location.pathname === '/de' || location.pathname.indexOf('/de/') === 0) {
+    document.documentElement.setAttribute('lang', 'de');
+  }
   try {
     var saved = localStorage.getItem('theme');
     var prefersLight = window.matchMedia('(prefers-color-scheme: light)').matches;
@@ -43,14 +47,17 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${geistSans.variable} ${geistMono.variable}`}>
+    <html lang="en" suppressHydrationWarning className={`${geistSans.variable} ${geistMono.variable}`}>
       <head>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
       </head>
       <body className="min-h-screen bg-paper text-ink antialiased">
-        <SiteHeader />
-        <main>{children}</main>
-        <SiteFooter />
+        {children}
+        <LinkTracker />
+        {/* Production only, so local development visits stay out of the stats. */}
+        {process.env.NODE_ENV === "production" && (
+          <Script src="https://cloud.umami.is/script.js" data-website-id={UMAMI_WEBSITE_ID} strategy="afterInteractive" />
+        )}
       </body>
     </html>
   );

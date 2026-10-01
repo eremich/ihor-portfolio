@@ -6,16 +6,16 @@ import type { Fact, Lesson, Shot } from "@/content/case-pms";
 import type { PhonePair } from "@/content/case-patronim";
 
 // Phone screens are 390 × 844 points, exported at 2× (780 × 1688).
-const phone = (dir: "after" | "dark" | "v1", file: string, alt: string, caption: string): Shot => ({
+export const phone = (dir: "after" | "dark" | "v1", file: string, alt: string, caption: string): Shot => ({
   src: `/case-eticket/${dir}/${file}.webp`,
   alt,
   caption,
   width: 780,
   height: 1688,
 });
-const after = (file: string, alt: string, caption: string) => phone("after", file, alt, caption);
-const dark = (file: string, alt: string, caption: string) => phone("dark", file, alt, caption);
-const v1 = (file: string, alt: string, caption: string) => phone("v1", file, alt, caption);
+export const after = (file: string, alt: string, caption: string) => phone("after", file, alt, caption);
+export const dark = (file: string, alt: string, caption: string) => phone("dark", file, alt, caption);
+export const v1 = (file: string, alt: string, caption: string) => phone("v1", file, alt, caption);
 
 export type Slide = Shot & { label: string };
 export type Quote = { text: string };
@@ -27,7 +27,7 @@ export const eticketLinks = {
   miro: "https://miro.com/app/board/uXjVHhQTOfI=/",
 };
 
-const slide = (file: string, label: string, alt: string, caption: string, height: number): Slide => ({
+export const slide = (file: string, label: string, alt: string, caption: string, height: number): Slide => ({
   src: `/case-eticket/research/${file}.webp`,
   label,
   alt,

@@ -1,26 +1,29 @@
 import Link from "next/link";
+import { LangSwitch } from "@/components/lang-switch";
 import { MobileNav } from "@/components/mobile-nav";
 import { ThemeToggle } from "@/components/theme-toggle";
+import { localePath, ui, type Lang } from "@/i18n";
 
-const navItems = [
-  { label: "Case studies", href: "/#case-studies" },
-  { label: "About me", href: "/#about" },
-  { label: "Contacts", href: "/#contacts" },
-];
+export function SiteHeader({ lang }: { lang: Lang }) {
+  const t = ui[lang];
+  const navItems = [
+    { label: t.nav.cases, href: localePath(lang, "/#case-studies") },
+    { label: t.nav.about, href: localePath(lang, "/#about") },
+    { label: t.nav.contacts, href: localePath(lang, "/#contacts") },
+  ];
 
-export function SiteHeader() {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-line bg-paper/70 backdrop-blur-xl supports-[backdrop-filter]:bg-paper/60">
       <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-6 px-6 py-4 sm:px-10">
         <Link
-          href="/"
+          href={localePath(lang, "/")}
           className="text-[15px] tracking-tight text-ink transition-colors duration-150 ease-[cubic-bezier(0.4,0,0.2,1)] hover:text-ink-muted"
         >
           Ihor Yeromich
         </Link>
 
         <div className="flex items-center gap-1 sm:gap-2">
-          <nav aria-label="Main" className="hidden items-center gap-2 sm:flex">
+          <nav aria-label={t.navLabel} className="hidden items-center gap-2 sm:flex">
             {navItems.map((item) => (
               <Link
                 key={item.href}
@@ -31,8 +34,9 @@ export function SiteHeader() {
               </Link>
             ))}
           </nav>
-          <ThemeToggle />
-          <MobileNav items={navItems} />
+          <LangSwitch lang={lang} />
+          <ThemeToggle labels={{ toLight: t.toLight, toDark: t.toDark }} />
+          <MobileNav items={navItems} labels={{ open: t.openMenu, close: t.closeMenu, nav: t.navLabel }} />
         </div>
       </div>
     </header>

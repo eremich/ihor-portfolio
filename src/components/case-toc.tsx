@@ -1,11 +1,13 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ui, type Lang } from "@/i18n";
 
 export type TocItem = { id: string; label: string };
 
 /** Sticky "Story" navigation for long case studies; highlights the section in view. Desktop only. */
-export function CaseToc({ items }: { items: TocItem[] }) {
+export function CaseToc({ items, lang = "en" }: { items: TocItem[]; lang?: Lang }) {
+  const t = ui[lang];
   const [active, setActive] = useState(items[0]?.id);
 
   useEffect(() => {
@@ -27,8 +29,8 @@ export function CaseToc({ items }: { items: TocItem[] }) {
 
   return (
     <aside className="hidden lg:block">
-      <nav aria-label="Case study sections" className="sticky top-28 mt-24 md:mt-32">
-        <p className="mb-4 text-[12px] tracking-[0.14em] text-ink-faint uppercase">Story</p>
+      <nav aria-label={t.tocLabel} className="sticky top-28 mt-24 md:mt-32">
+        <p className="mb-4 text-[12px] tracking-[0.14em] text-ink-faint uppercase">{t.tocTitle}</p>
         <ul className="space-y-1 border-l border-line">
           {items.map((item) => {
             const current = item.id === active;

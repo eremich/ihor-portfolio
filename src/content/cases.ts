@@ -1,3 +1,5 @@
+import type { Lang } from "@/i18n";
+
 export type Case = {
   slug: string;
   title: string;
@@ -16,6 +18,8 @@ export type Case = {
   draft?: boolean;
   // Not a real project (a layout sample): never listed.
   hidden?: boolean;
+  /** German copy for the /de site. Missing fields fall back to English. */
+  de?: Partial<Pick<Case, "role" | "company" | "location" | "year" | "tags" | "summary" | "headline" | "team" | "deliverables">>;
 };
 
 // TODO: verify company/year/tags/summary for every non-API-Nation case.
@@ -45,6 +49,11 @@ const allCases: Case[] = [
     tags: ["B2B SaaS", "Real Estate", "AI"],
     summary:
       "A real-estate automation platform with 4,000+ clients and 45M tasks a month. Design system from scratch, full platform redesign, onboarding, a no-code workflow builder, and conversational UI for an autonomous AI lead agent.",
+    de: {
+      tags: ["B2B SaaS", "Immobilien", "KI"],
+      summary:
+        "Eine Automatisierungsplattform für die Immobilienbranche mit über 4.000 Kunden und 45 Mio. Aufgaben pro Monat. Designsystem von Grund auf, Redesign der gesamten Plattform, Onboarding, ein No-Code-Workflow-Builder und eine Conversational UI für einen autonomen KI-Lead-Agenten.",
+    },
   },
   {
     slug: "patient-management",
@@ -59,6 +68,16 @@ const allCases: Case[] = [
     tags: ["Healthcare", "Web app", "Design system"],
     summary:
       "A staff system for a busy diagnostic clinic. Our team designed the first version in 2020; in 2026 I audited it and redesigned it: one clear priority and status language, task lists that show what needs action now, and role-aware views. Built as a working prototype on a documented design system.",
+    de: {
+      location: "London, Großbritannien",
+      year: "2020 · überarbeitet 2026",
+      headline: "Eine Arbeitsliste für die Klinik, die zeigt, was jetzt zu tun ist.",
+      team: "2 Designer, 1 PM, 1 Frontend- und 1 Backend-Entwickler",
+      deliverables: ["UX-Audit", "User Flows", "Prototyp", "Designsystem"],
+      tags: ["Gesundheitswesen", "Web-App", "Designsystem"],
+      summary:
+        "Ein System für das Personal einer stark ausgelasteten Diagnoseklinik. Unser Team hat die erste Version 2020 gestaltet; 2026 habe ich sie auditiert und neu gestaltet: eine klare Sprache für Priorität und Status, Aufgabenlisten, die zeigen, was jetzt zu tun ist, und Ansichten je nach Rolle. Umgesetzt als funktionierender Prototyp auf einem dokumentierten Designsystem.",
+    },
   },
   {
     slug: "patronim",
@@ -73,6 +92,15 @@ const allCases: Case[] = [
     headline: "From Excel sheets to a service that beats the guest to the door.",
     team: "The only UI/UX designer in a team of 8: 2 mobile, 1 front-end and 1 part-time web developer, 2 QA, 1 PM",
     deliverables: ["UX audit", "User flows", "Service blueprint", "Mobile prototype", "Design system"],
+    de: {
+      year: "2019 · überarbeitet 2026",
+      tags: ["Mobile App", "Operations", "Designsystem"],
+      summary:
+        "Eine mobile App für ein Unternehmen in Tel Aviv, das Ferienwohnungen reinigt. 2019 habe ich sie entworfen, um Excel-Tabellen für sechs Rollen zu ersetzen; 2026 habe ich sie rund um eine einzige Deadline neu gestaltet – den Check-in des nächsten Gastes – und mit KI als funktionierenden Prototyp gebaut.",
+      headline: "Von Excel-Tabellen zu einem Service, der schneller ist als der Gast an der Tür.",
+      team: "Einziger UI/UX-Designer in einem Team von 8: 2 Mobile-, 1 Frontend- und 1 Teilzeit-Web-Entwickler, 2 QA, 1 PM",
+      deliverables: ["UX-Audit", "User Flows", "Service Blueprint", "Mobiler Prototyp", "Designsystem"],
+    },
   },
   {
     slug: "chilicon-power",
@@ -87,6 +115,16 @@ const allCases: Case[] = [
     headline: "From an engineer's dashboard to an answer in one second.",
     team: "The only UX/UI designer in a team of 6: 1 front-end and 2 back-end developers, 1 QA, 1 PM",
     deliverables: ["UX audit", "User flows", "Alert model", "Mobile prototype", "Design system"],
+    de: {
+      location: "Kalifornien, USA",
+      year: "2021 · überarbeitet 2026",
+      tags: ["Mobile App", "Energie", "Designsystem"],
+      summary:
+        "Monitoring für Solaranlagen mit Mikrowechselrichtern. 2021 habe ich die erste mobile App für ein datenlastiges Engineering-Dashboard gestaltet; 2026 habe ich sie für Hausbesitzer und Installateure rund um eine einzige Frage neu gestaltet – ist meine Anlage in Ordnung? – und mit KI als funktionierenden Prototyp gebaut.",
+      headline: "Vom Ingenieurs-Dashboard zur Antwort in einer Sekunde.",
+      team: "Einziger UX/UI-Designer in einem Team von 6: 1 Frontend- und 2 Backend-Entwickler, 1 QA, 1 PM",
+      deliverables: ["UX-Audit", "User Flows", "Alarmmodell", "Mobiler Prototyp", "Designsystem"],
+    },
   },
   {
     slug: "eticket",
@@ -101,6 +139,16 @@ const allCases: Case[] = [
     headline: "One tap at the turnstile, the next tram on Home.",
     team: "Product designer in a team of 3, with 2 developers",
     deliverables: ["UX research", "UX audit", "User flows", "Mobile prototype", "Design system"],
+    de: {
+      location: "Charkiw, Ukraine",
+      year: "2020 · überarbeitet 2026",
+      tags: ["Mobile App", "ÖPNV", "Designsystem"],
+      summary:
+        "Die elektronische Fahrkarte von Charkiw für Metro, Straßenbahn, O-Bus und Bus. 2020 habe ich die erste App mit zwei Entwicklern gestaltet; 2026 habe ich sie rund um die zwei Momente neu gestaltet, auf die es ankommt – das Bezahlen am Drehkreuz und zu wissen, wann die nächste Straßenbahn kommt – und mit KI als funktionierenden Prototyp gebaut.",
+      headline: "Ein Tippen am Drehkreuz, die nächste Straßenbahn direkt auf dem Startbildschirm.",
+      team: "Product Designer in einem Team von 3, mit 2 Entwicklern",
+      deliverables: ["UX-Research", "UX-Audit", "User Flows", "Mobiler Prototyp", "Designsystem"],
+    },
   },
   {
     slug: "hadron-solar",
@@ -112,6 +160,10 @@ const allCases: Case[] = [
     tags: ["Energy", "Dashboard", "Web"],
     summary:
       "Field-technician tooling for solar installations — surveys, wiring diagrams, and site reports.",
+    de: {
+      tags: ["Energie", "Dashboard", "Web"],
+      summary: "Werkzeuge für Servicetechniker von Solaranlagen – Begehungen, Schaltpläne und Einsatzberichte.",
+    },
   },
   {
     slug: "konto",
@@ -123,6 +175,10 @@ const allCases: Case[] = [
     tags: ["Fintech", "Web", "iOS"],
     summary:
       "A personal-finance interface that turns bank feeds into a calm, monthly picture.",
+    de: {
+      company: "Freiberuflich",
+      summary: "Eine Oberfläche für private Finanzen, die Kontoumsätze in einen ruhigen Monatsüberblick verwandelt.",
+    },
   },
   {
     slug: "wandr",
@@ -134,6 +190,11 @@ const allCases: Case[] = [
     tags: ["Travel", "Mobile"],
     summary:
       "A trip-planning app for people who hate trip planning — itineraries built from a few gentle prompts.",
+    de: {
+      company: "Freiberuflich",
+      tags: ["Reisen", "Mobile"],
+      summary: "Eine Reiseplanungs-App für alle, die Reiseplanung hassen – Reiserouten aus ein paar einfachen Fragen.",
+    },
   },
   {
     slug: "pokecollect",
@@ -145,6 +206,10 @@ const allCases: Case[] = [
     tags: ["Consumer", "Mobile", "Community"],
     summary:
       "A collector-first app for tracking, valuing, and trading Pokémon cards.",
+    de: {
+      company: "Freiberuflich",
+      summary: "Eine App für Sammler, um Pokémon-Karten zu erfassen, zu bewerten und zu tauschen.",
+    },
   },
 ];
 
@@ -159,4 +224,9 @@ export const cases: Case[] = allCases.filter((c) => !c.draft && !c.hidden);
 
 export function getCase(slug: string): Case | undefined {
   return cases.find((c) => c.slug === slug);
+}
+
+/** The case with its German fields applied on the /de site. */
+export function localizeCase(c: Case, lang: Lang): Case {
+  return lang === "de" && c.de ? { ...c, ...c.de } : c;
 }

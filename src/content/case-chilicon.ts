@@ -15,9 +15,9 @@ const phone = (dir: "after" | "dark" | "v1", file: string, alt: string, caption:
   width: 780,
   height,
 });
-const after = (file: string, alt: string, caption: string) => phone("after", file, alt, caption);
-const dark = (file: string, alt: string, caption: string) => phone("dark", file, alt, caption);
-const v1 = (file: string, alt: string, caption: string, height = 1689) => phone("v1", file, alt, caption, height);
+export const after = (file: string, alt: string, caption: string) => phone("after", file, alt, caption);
+export const dark = (file: string, alt: string, caption: string) => phone("dark", file, alt, caption);
+export const v1 = (file: string, alt: string, caption: string, height = 1689) => phone("v1", file, alt, caption, height);
 
 export type Target = { metric: string; target: string; why: string };
 

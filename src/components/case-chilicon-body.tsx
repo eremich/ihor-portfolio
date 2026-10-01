@@ -1,5 +1,7 @@
 import Image from "next/image";
-import { chiliconBody as b, chiliconLinks } from "@/content/case-chilicon";
+import { chiliconBody, chiliconLinks } from "@/content/case-chilicon";
+import { chiliconBodyDe } from "@/content/case-chilicon.de";
+import type { Lang } from "@/i18n";
 import type { Shot } from "@/content/case-pms";
 import { CaseToc, type TocItem } from "@/components/case-toc";
 import { Arrow, Block, Board, Lead, link } from "@/components/case-pms-body";
@@ -7,32 +9,80 @@ import { Arrow, Block, Board, Lead, link } from "@/components/case-pms-body";
 // Body of the Chilicon Power case study. Same structure and components as the Patronim case:
 // a mobile app, so screens are shown at phone scale in rows; flows come from the Miro board.
 
-const toc: TocItem[] = [
-  { id: "overview", label: "Overview" },
-  { id: "research", label: "Research" },
-  { id: "define", label: "Define" },
-  { id: "compare", label: "Before / after" },
-  { id: "flows", label: "Key flows" },
-  { id: "states", label: "Hard states" },
-  { id: "system", label: "Design system" },
-  { id: "outcome", label: "Outcome" },
-  { id: "lessons", label: "Takeaways" },
-];
+const copy = {
+  en: {
+    toc: [
+      { id: "overview", label: "Overview" },
+      { id: "research", label: "Research" },
+      { id: "define", label: "Define" },
+      { id: "compare", label: "Before / after" },
+      { id: "flows", label: "Key flows" },
+      { id: "states", label: "Hard states" },
+      { id: "system", label: "Design system" },
+      { id: "outcome", label: "Outcome" },
+      { id: "lessons", label: "Takeaways" },
+    ] satisfies TocItem[],
+    demo: "Live demo",
+    designSystem: "Design system",
+    openDesignSystem: "Open the design system",
+    alertsAria: "When the app alerts, by situation and role",
+    finding: "Finding",
+    version1: "Version 1 · 2021",
+    redesign: "Redesign · 2026",
+    flowLink: (role: string) => `See the ${role.toLowerCase()} user flow`,
+    openFull: "open full size",
+    markAlt: "Chilicon Power logo mark: an orange sun over a green leaf",
+    wordmarkLightAlt: "Chilicon Power wordmark on white",
+    wordmarkDarkAlt: "Chilicon Power wordmark on the app's dark background",
+    fromLogo: "· from the logo",
+    target: "Target",
+  },
+  de: {
+    toc: [
+      { id: "overview", label: "Überblick" },
+      { id: "research", label: "Research" },
+      { id: "define", label: "Define" },
+      { id: "compare", label: "Vorher / nachher" },
+      { id: "flows", label: "Zentrale Flows" },
+      { id: "states", label: "Schwierige Zustände" },
+      { id: "system", label: "Designsystem" },
+      { id: "outcome", label: "Ergebnis" },
+      { id: "lessons", label: "Erkenntnisse" },
+    ] satisfies TocItem[],
+    demo: "Live-Demo",
+    designSystem: "Designsystem",
+    openDesignSystem: "Designsystem öffnen",
+    alertsAria: "Wann die App warnt, nach Situation und Rolle",
+    finding: "Erkenntnis",
+    version1: "Version 1 · 2021",
+    redesign: "Redesign · 2026",
+    flowLink: (role: string) => `User Flow ansehen: ${role}`,
+    openFull: "in voller Größe öffnen",
+    markAlt: "Chilicon-Power-Logo: eine orange Sonne über einem grünen Blatt",
+    wordmarkLightAlt: "Chilicon-Power-Schriftzug auf Weiß",
+    wordmarkDarkAlt: "Chilicon-Power-Schriftzug auf dem dunklen Hintergrund der App",
+    fromLogo: "· aus dem Logo",
+    target: "Ziel",
+  },
+} satisfies Record<Lang, unknown>;
 
-export function ChiliconBody() {
+export function ChiliconBody({ lang }: { lang: Lang }) {
+  const b = lang === "de" ? chiliconBodyDe : chiliconBody;
+  const t = copy[lang];
+  const openFull = t.openFull;
   return (
     <>
       <div className="-mt-6 mb-16 flex flex-wrap gap-3">
         <a href={chiliconLinks.demo} target="_blank" rel="noopener noreferrer" className={`${link} border-ink bg-ink text-paper! hover:bg-transparent hover:text-ink!`}>
-          Live demo <Arrow />
+          {t.demo} <Arrow />
         </a>
         <a href={chiliconLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} border-line-strong text-ink hover:border-ink`}>
-          Design system <Arrow />
+          {t.designSystem} <Arrow />
         </a>
       </div>
 
       <div className="rounded-2xl border border-line bg-paper-raised/60 px-4 py-8 sm:px-10 sm:py-12">
-        <Phones shots={b.cover} priority />
+        <Phones shots={b.cover} openFull={openFull} priority />
       </div>
 
       <dl className="mt-10 grid grid-cols-2 gap-px overflow-hidden rounded-xl border border-line bg-line md:grid-cols-4">
@@ -45,7 +95,7 @@ export function ChiliconBody() {
       </dl>
 
       <div className="lg:grid lg:grid-cols-[160px_minmax(0,1fr)] lg:gap-16">
-        <CaseToc items={toc} />
+        <CaseToc items={t.toc} lang={lang} />
         <div>
           <Block kicker={b.overview.kicker} id="overview">
             <Lead title={b.overview.headline}>
@@ -83,12 +133,12 @@ export function ChiliconBody() {
             <Lead title={b.define.idea.headline}>
               <p>{b.define.idea.body}</p>
             </Lead>
-            <Phones shots={b.define.idea.shots} className="mt-10" />
+            <Phones shots={b.define.idea.shots} openFull={openFull} className="mt-10" />
 
             <Lead title={b.define.e2e.headline} className="mt-24">
               <p>{b.define.e2e.body}</p>
             </Lead>
-            <Board board={b.define.e2e.board} wide />
+            <Board board={b.define.e2e.board} wide lang={lang} />
 
             <Lead title={b.define.alerts.headline} className="mt-24">
               <p>{b.define.alerts.body}</p>
@@ -115,7 +165,7 @@ export function ChiliconBody() {
                 </li>
               ))}
             </ol>
-            <div className="mt-8 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label="When the app alerts, by situation and role">
+            <div className="mt-8 hidden overflow-x-auto md:block" tabIndex={0} role="region" aria-label={t.alertsAria}>
               <table className="w-full min-w-[820px] border-collapse text-left text-[13px] leading-[1.45]">
                 <thead>
                   <tr>
@@ -156,16 +206,16 @@ export function ChiliconBody() {
               {b.compare.pairs.map((pair, i) => (
                 <article key={pair.finding}>
                   <div className="grid grid-cols-1 gap-6 border-t border-line pt-6 md:grid-cols-[180px_1fr] md:gap-12">
-                    <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">Finding {String(i + 1).padStart(2, "0")}</p>
+                    <p className="text-[13px] tracking-[0.14em] text-ink-faint uppercase">{t.finding} {String(i + 1).padStart(2, "0")}</p>
                     <div>
                       <h3 className="text-[20px] leading-[1.3] tracking-tight text-ink">{pair.finding}</h3>
                       <p className="mt-3 max-w-[58ch] text-[15px] leading-[1.6] text-ink-muted">{pair.fix}</p>
                     </div>
                   </div>
                   <div className={`${phoneRow} mt-8 md:grid-cols-3`}>
-                    <Phone shot={pair.before} label="Version 1 · 2021" />
+                    <Phone shot={pair.before} label={t.version1} openFull={openFull} />
                     {pair.after.map((s, j) => (
-                      <Phone key={s.src} shot={s} label={j === 0 ? "Redesign · 2026" : " "} />
+                      <Phone key={s.src} shot={s} label={j === 0 ? t.redesign : " "} openFull={openFull} />
                     ))}
                   </div>
                 </article>
@@ -187,9 +237,9 @@ export function ChiliconBody() {
                     rel="noopener noreferrer"
                     className="mt-3 inline-flex items-center gap-1.5 text-[14px] text-ink-muted! underline decoration-line-strong underline-offset-4 transition-colors duration-200 hover:text-ink! focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
                   >
-                    See the {r.role.toLowerCase()} user flow <Arrow />
+                    {t.flowLink(r.role)} <Arrow />
                   </a>
-                  <Phones shots={r.shots} className="mt-8" />
+                  <Phones shots={r.shots} openFull={openFull} className="mt-8" />
                 </article>
               ))}
             </div>
@@ -197,7 +247,7 @@ export function ChiliconBody() {
 
           <Block kicker={b.states.kicker} id="states">
             <h2 className="max-w-[26ch] text-[26px] leading-[1.2] tracking-tight text-ink sm:text-[32px]">{b.states.headline}</h2>
-            <Phones shots={b.states.shots} className="mt-10" />
+            <Phones shots={b.states.shots} openFull={openFull} className="mt-10" />
           </Block>
 
           <Block kicker={b.system.kicker} id="system">
@@ -215,14 +265,14 @@ export function ChiliconBody() {
             <figure className="mt-10 grid grid-cols-1 gap-8 rounded-2xl border border-line bg-paper-raised/60 p-6 sm:p-10 md:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] md:gap-12">
               <div className="flex flex-col gap-3">
                 <div className="flex items-center justify-center rounded-xl bg-white p-8">
-                  <img src={b.system.brand.mark} alt="Chilicon Power logo mark: an orange sun over a green leaf" className="h-24 w-auto" />
+                  <img src={b.system.brand.mark} alt={t.markAlt} className="h-24 w-auto" />
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex items-center justify-center rounded-xl bg-white px-4 py-6">
-                    <img src={b.system.brand.wordmark} alt="Chilicon Power wordmark on white" className="h-auto w-full max-w-[180px]" />
+                    <img src={b.system.brand.wordmark} alt={t.wordmarkLightAlt} className="h-auto w-full max-w-[180px]" />
                   </div>
                   <div className="flex items-center justify-center rounded-xl bg-[#050506] px-4 py-6">
-                    <img src={b.system.brand.wordmark} alt="Chilicon Power wordmark on the app's dark background" className="h-auto w-full max-w-[180px]" />
+                    <img src={b.system.brand.wordmark} alt={t.wordmarkDarkAlt} className="h-auto w-full max-w-[180px]" />
                   </div>
                 </div>
                 <figcaption className="text-[13px] leading-[1.45] text-ink-faint">{b.system.brand.caption}</figcaption>
@@ -235,7 +285,7 @@ export function ChiliconBody() {
                       <span className="flex flex-wrap items-baseline gap-x-2">
                         <span className="text-[16px] tracking-tight text-ink">{c.name}</span>
                         <span className="font-mono text-[12px] text-ink-faint">{c.hex}</span>
-                        {c.fromLogo && <span className="text-[12px] text-ink-muted">· from the logo</span>}
+                        {c.fromLogo && <span className="text-[12px] text-ink-muted">{t.fromLogo}</span>}
                       </span>
                       <span className="mt-1 block text-[14px] leading-[1.5] text-ink-muted">{c.role}</span>
                     </span>
@@ -244,10 +294,10 @@ export function ChiliconBody() {
               </ul>
             </figure>
             <div className="mt-10 overflow-hidden rounded-2xl bg-[#111214] px-6 py-8 sm:px-10">
-              <Phones shots={b.system.shots} dark />
+              <Phones shots={b.system.shots} openFull={openFull} dark />
             </div>
             <a href={chiliconLinks.storybook} target="_blank" rel="noopener noreferrer" className={`${link} mt-10 border-line-strong text-ink hover:border-ink`}>
-              Open the design system <Arrow />
+              {t.openDesignSystem} <Arrow />
             </a>
           </Block>
 
@@ -272,7 +322,7 @@ export function ChiliconBody() {
                       <p className="mt-1.5 text-[14px] leading-[1.55] text-ink-muted">{t.why}</p>
                     </div>
                     <p className="flex items-baseline gap-2 sm:flex-col sm:items-end sm:gap-1">
-                      <span className="text-[12px] tracking-[0.14em] text-ink-faint uppercase">Target</span>
+                      <span className="text-[12px] tracking-[0.14em] text-ink-faint uppercase">{t.target}</span>
                       <span className="text-[26px] leading-none tabular-nums tracking-tight text-accent">{t.target}</span>
                     </p>
                   </li>
@@ -317,19 +367,19 @@ export function ChiliconBody() {
 const phoneRow =
   "-mx-6 flex snap-x snap-mandatory scroll-px-6 gap-4 overflow-x-auto px-6 pb-2 [scrollbar-width:none] sm:-mx-10 sm:scroll-px-10 sm:px-10 md:mx-auto md:grid md:gap-6 md:overflow-visible md:px-0 md:pb-0";
 
-function Phones({ shots, className = "", priority, dark }: { shots: Shot[]; className?: string; priority?: boolean; dark?: boolean }) {
+function Phones({ shots, openFull, className = "", priority, dark }: { shots: Shot[]; openFull: string; className?: string; priority?: boolean; dark?: boolean }) {
   const cols = shots.length >= 4 ? "md:grid-cols-4" : "md:grid-cols-3";
   return (
     <div className={`${phoneRow} max-w-[980px] ${cols} ${className}`}>
       {shots.map((s) => (
-        <Phone key={s.src} shot={s} priority={priority} dark={dark} />
+        <Phone key={s.src} shot={s} openFull={openFull} priority={priority} dark={dark} />
       ))}
     </div>
   );
 }
 
 /** One phone screen in a rounded frame with a caption; opens full size on click. */
-function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; priority?: boolean; dark?: boolean }) {
+function Phone({ shot, openFull, label, priority, dark }: { shot: Shot; openFull: string; label?: string; priority?: boolean; dark?: boolean }) {
   return (
     <figure className="w-[68%] shrink-0 snap-start sm:w-[40%] md:w-auto">
       {label && <p className="mb-3 min-h-[18px] text-[12px] tracking-[0.14em] text-ink-faint uppercase">{label}</p>}
@@ -337,7 +387,7 @@ function Phone({ shot, label, priority, dark }: { shot: Shot; label?: string; pr
         href={shot.src}
         target="_blank"
         rel="noopener noreferrer"
-        aria-label={`${shot.caption} (open full size)`}
+        aria-label={`${shot.caption} (${openFull})`}
         className="block overflow-hidden rounded-[22px] border border-line-strong transition-colors duration-200 hover:border-ink-muted focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-ink sm:rounded-[28px]"
       >
         <Image src={shot.src} alt={shot.alt} width={shot.width} height={shot.height} sizes="(min-width: 1024px) 260px, 45vw" priority={priority} className="h-auto w-full" />

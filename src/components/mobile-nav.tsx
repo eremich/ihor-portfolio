@@ -6,7 +6,9 @@ import { useEffect, useState } from "react";
 type NavItem = { label: string; href: string };
 
 /** Burger menu for small screens: a full-width panel that drops below the header. */
-export function MobileNav({ items }: { items: NavItem[] }) {
+type Labels = { open: string; close: string; nav: string };
+
+export function MobileNav({ items, labels }: { items: NavItem[]; labels: Labels }) {
   const [open, setOpen] = useState(false);
 
   useEffect(() => {
@@ -22,7 +24,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
         type="button"
         aria-expanded={open}
         aria-controls="mobile-nav"
-        aria-label={open ? "Close menu" : "Open menu"}
+        aria-label={open ? labels.close : labels.open}
         onClick={() => setOpen((v) => !v)}
         className="grid h-11 w-11 place-items-center rounded-full text-ink transition-colors duration-150 hover:bg-paper-raised focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-ink"
       >
@@ -34,7 +36,7 @@ export function MobileNav({ items }: { items: NavItem[] }) {
 
       <nav
         id="mobile-nav"
-        aria-label="Main"
+        aria-label={labels.nav}
         className={`absolute inset-x-0 top-full border-b border-line bg-paper px-6 pt-2 pb-6 transition-[opacity,transform] duration-200 ease-out motion-reduce:transition-none ${
           open ? "translate-y-0 opacity-100" : "pointer-events-none invisible -translate-y-2 opacity-0"
         }`}
