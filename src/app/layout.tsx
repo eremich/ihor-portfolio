@@ -3,6 +3,7 @@ import { Geist, Geist_Mono } from "next/font/google";
 import Script from "next/script";
 import { LinkTracker } from "@/components/link-tracker";
 import { UMAMI_WEBSITE_ID } from "@/lib/analytics";
+import { SITE_NAME, SITE_URL, siteCopy } from "@/lib/site";
 import "./globals.css";
 
 const geistSans = Geist({
@@ -18,9 +19,19 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ihor Yeromich — Product Designer",
-  description:
-    "Product designer for SaaS and AI teams, based in Berlin. I design complex products and build them with AI: from design systems to the interface of an autonomous AI agent at API Nation.",
+  // Turns relative canonical / hreflang / image paths into full URLs.
+  metadataBase: new URL(SITE_URL),
+  title: siteCopy.en.title,
+  description: siteCopy.en.description,
+  openGraph: {
+    type: "website",
+    siteName: SITE_NAME,
+    title: siteCopy.en.title,
+    description: siteCopy.en.description,
+    locale: siteCopy.en.ogLocale,
+    url: "/",
+  },
+  twitter: { card: "summary_large_image" },
 };
 
 // Inlined in <head> so data-theme is set before the browser paints — no dark

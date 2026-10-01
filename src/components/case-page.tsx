@@ -4,6 +4,8 @@ import type { Metadata } from "next";
 import { cases, getCase, localizeCase, type Case } from "@/content/cases";
 import { localePath, ui, type Lang } from "@/i18n";
 import { CaseTracker } from "@/components/case-tracker";
+import { ogCard } from "@/lib/og";
+import { SITE_NAME, siteCopy } from "@/lib/site";
 import { Placeholder } from "@/components/placeholder";
 import { PmsBody } from "@/components/case-pms-body";
 import { PatronimBody } from "@/components/case-patronim-body";
@@ -26,14 +28,34 @@ export function caseMetadata(slug: string, lang: Lang): Metadata {
   const found = getCase(slug);
   if (!found) return { title: lang === "de" ? "Case Study nicht gefunden" : "Case not found" };
   const c = localizeCase(found, lang);
+  const url = localePath(lang, `/work/${slug}`);
   return {
     title: `${c.title} — Ihor Yeromich`,
     description: c.summary,
     alternates: {
-      canonical: localePath(lang, `/work/${slug}`),
+      canonical: url,
       languages: { en: `/work/${slug}`, de: `/de/work/${slug}` },
     },
+    openGraph: {
+      type: "article",
+      siteName: SITE_NAME,
+      title: `${c.title} — Ihor Yeromich`,
+      description: c.summary,
+      locale: siteCopy[lang].ogLocale,
+      url,
+    },
   };
+}
+
+/** Social preview for a case: its outcome headline, or the project name. */
+export function caseOgImage(slug: string, lang: Lang) {
+  const found = getCase(slug);
+  const c = found ? localizeCase(found, lang) : undefined;
+  return ogCard({
+    kicker: c ? `${c.title} · ${ui[lang].caseStudy}` : ui[lang].caseStudy,
+    headline: c?.headline ?? c?.title ?? "Ihor Yeromich",
+    footer: c?.tags.slice(0, 2).join(" · ") ?? "Product Designer · Berlin",
+  });
 }
 
 /** One case study page; the route files under /work and /de/work render it per language. */

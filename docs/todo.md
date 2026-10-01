@@ -161,3 +161,12 @@ German only, at `/de/impressum` and `/de/datenschutz`; the EN · DE switch stays
 - [x] Datenschutzerklärung: hosting (Vercel), Umami, localStorage (theme), local fonts, email, external links, rights, Berlin authority
 - [ ] Ihor: postal address in both pages (placeholders `[Straße Hausnummer]`, `[PLZ]`)
 - [ ] Check against a generator (e.g. e-recht24.de) or a lawyer before publishing
+
+## SEO & social previews (2026-10-01)
+
+Live at https://ihor-yeromich.vercel.app (`SITE_URL` in `src/lib/site.ts`).
+
+- [x] `robots.txt` (allow all) and `sitemap.xml`: home + 4 cases × EN/DE with hreflang alternates
+- [x] `metadataBase` → full canonical and hreflang URLs
+- [x] Open Graph / Twitter cards: home EN/DE and every case EN/DE, generated images (`src/lib/og.tsx`)
+- [ ] Ihor: verify the site in Google Search Console and submit the sitemap
