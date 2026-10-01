@@ -275,6 +275,14 @@ export function ChiliconBody({ lang }: { lang: Lang }) {
                     <img src={b.system.brand.wordmark} alt={t.wordmarkDarkAlt} className="h-auto w-full max-w-[180px]" />
                   </div>
                 </div>
+                <div className="grid grid-cols-2 gap-3">
+                  <div className="flex items-center justify-center gap-3 rounded-xl bg-[#F2F2F7] px-4 py-6">
+                    <img src={b.system.brand.appIcon} alt="App icon, light: the logo mark on white" className="size-16 rounded-[22.37%] shadow-sm" />
+                  </div>
+                  <div className="flex items-center justify-center gap-3 rounded-xl bg-[#1C1C1E] px-4 py-6">
+                    <img src={b.system.brand.appIconDark} alt="App icon, dark: the logo mark on near-black" className="size-16 rounded-[22.37%]" />
+                  </div>
+                </div>
                 <figcaption className="text-[13px] leading-[1.45] text-ink-faint">{b.system.brand.caption}</figcaption>
               </div>
               <ul className="flex flex-col justify-center divide-y divide-line">

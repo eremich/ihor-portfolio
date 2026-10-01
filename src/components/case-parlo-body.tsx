@@ -31,6 +31,7 @@ const copy = {
     flowLink: "See the user flow",
     openFull: "open full size",
     markAlt: "Parlo logo mark: a green “p” whose counter is a speech bubble, with a coral dot",
+    iconAlt: "Parlo app icon: the green mark on white",
     fromLogo: "· from the logo",
     target: "Target",
   },
@@ -55,6 +56,7 @@ const copy = {
     flowLink: "User Flow ansehen",
     openFull: "in voller Größe öffnen",
     markAlt: "Parlo-Logo: ein grünes „p“, dessen Innenraum eine Sprechblase ist, mit einem Korallpunkt",
+    iconAlt: "Parlo-App-Icon: das grüne Zeichen auf Weiß",
     fromLogo: "· aus dem Logo",
     target: "Ziel",
   },
@@ -247,6 +249,11 @@ export function ParloBody({ lang }: { lang: Lang }) {
                   <span aria-hidden className="text-[44px] font-semibold tracking-tight text-[#0F6B5C]">
                     parlo
                   </span>
+                </div>
+                <div className="flex items-center gap-5 rounded-xl bg-[#e9ece9] p-6">
+                  {/* eslint-disable-next-line @next/next/no-img-element -- fixed-size icon */}
+                  <img src={b.system.brand.appIcon} alt={t.iconAlt} className="size-20 rounded-[18px] shadow-[0_6px_18px_rgb(0_0_0/0.12)]" />
+                  <p className="text-[14px] leading-[1.5] text-[#3a4a46]">{b.system.brand.iconCaption}</p>
                 </div>
                 <figcaption className="text-[13px] leading-[1.45] text-ink-faint">{b.system.brand.caption}</figcaption>
               </div>

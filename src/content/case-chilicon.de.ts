@@ -198,7 +198,9 @@ export const chiliconBodyDe: typeof chiliconBody = {
     brand: {
       mark: "/case-chilicon/brand/logo-mark.svg",
       wordmark: "/case-chilicon/brand/logo-wordmark.svg",
-      caption: "Das Chilicon-Power-Logo: eine Sonne über einem Blatt. Seine zwei Farben wurden zu den beiden Ankern der Palette.",
+      appIcon: "/case-chilicon/brand/app-icon.svg",
+      appIconDark: "/case-chilicon/brand/app-icon-dark.svg",
+      caption: "Das Chilicon-Power-Logo: eine Sonne über einem Blatt. Seine zwei Farben wurden zu den beiden Ankern der Palette, und das Zeichen wurde zum App-Icon, auf Weiß und auf fast Schwarz für den Dunkelmodus von iOS.",
       palette: [
         { name: "Sonne", hex: "#FBAB16", role: "Marke und Solarenergie: Hauptbuttons, Ertragsbalken, der Fluss vom Dach", fromLogo: true },
         { name: "Blatt", hex: "#00AA79", role: "Status in Ordnung: „Alle 24 Module liefern Strom“", fromLogo: true },

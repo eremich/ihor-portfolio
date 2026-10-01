@@ -220,7 +220,9 @@ export const chiliconBody = {
     brand: {
       mark: "/case-chilicon/brand/logo-mark.svg",
       wordmark: "/case-chilicon/brand/logo-wordmark.svg",
-      caption: "The Chilicon Power logo: a sun over a leaf. Its two colours became the two anchors of the palette.",
+      appIcon: "/case-chilicon/brand/app-icon.svg",
+      appIconDark: "/case-chilicon/brand/app-icon-dark.svg",
+      caption: "The Chilicon Power logo: a sun over a leaf. Its two colours became the two anchors of the palette, and the mark became the app icon, on white and on near-black for iOS dark mode.",
       palette: [
         { name: "Sun", hex: "#FBAB16", role: "Brand and solar energy: primary buttons, production bars, the flow from the roof", fromLogo: true },
         { name: "Leaf", hex: "#00AA79", role: "Status OK: “All 24 panels producing”", fromLogo: true },

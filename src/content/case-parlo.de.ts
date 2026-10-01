@@ -193,6 +193,8 @@ export const parloBodyDe: typeof parloBody = {
     ],
     brand: {
       mark: "/case-parlo/brand/logo-mark.svg",
+      appIcon: "/case-parlo/brand/app-icon.webp",
+      iconCaption: "App-Icon: das Zeichen auf Weiß, ruhig zwischen bunten Gesundheits-Apps und auch klein gut lesbar.",
       caption: "Das Parlo-Zeichen: ein „p“, dessen Innenraum eine Sprechblase ist, mit einem Korallpunkt. Reden ist das Produkt.",
       palette: [
         { name: "Parlo-Grün", hex: "#0F6B5C", role: "Marke, Auswahl, Navigation, der Kopf der Startseite", fromLogo: true },

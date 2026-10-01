@@ -224,6 +224,8 @@ export const parloBody = {
     ],
     brand: {
       mark: "/case-parlo/brand/logo-mark.svg",
+      appIcon: "/case-parlo/brand/app-icon.webp",
+      iconCaption: "App icon: the mark on white, so it stays calm among bright health apps and still reads at small sizes.",
       caption: "The Parlo mark: a “p” whose counter is a speech bubble, with a coral dot. Talking is the product.",
       palette: [
         { name: "Parlo green", hex: "#0F6B5C", role: "Brand, selected, navigation, the home header", fromLogo: true },
