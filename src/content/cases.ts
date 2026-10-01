@@ -56,6 +56,32 @@ const allCases: Case[] = [
     },
   },
   {
+    slug: "parlo",
+    title: "Parlo",
+    role: "Lead Product Designer",
+    company: "Doctor-booking platform",
+    location: "Berlin, Germany",
+    year: "2019 · reimagined 2026",
+    tags: ["Healthcare", "Mobile and web", "Design system"],
+    summary:
+      "Doctor booking for Germany, built around language: find a doctor who speaks yours and takes your insurance, at the earliest real slot. In 2019 I led design of a booking marketplace; in 2026 I rebuilt it for Germany as a working prototype for patients, doctors and practices, with AI.",
+    headline: "The right doctor, in your language, at the earliest real slot.",
+    team: "2019: lead designer of the marketplace. 2026: concept, flows, design system and prototype, solo with AI",
+    deliverables: ["Research", "User flows", "Three-role prototype", "Design system"],
+    de: {
+      role: "Lead Product Designer",
+      company: "Plattform für Arzttermine",
+      location: "Berlin, Deutschland",
+      year: "2019 · neu gedacht 2026",
+      tags: ["Gesundheitswesen", "Mobile und Web", "Designsystem"],
+      summary:
+        "Arzttermine für Deutschland, gedacht rund um die Sprache: eine Ärztin finden, die Ihre Sprache spricht und Ihre Versicherung nimmt, zum frühesten echten Termin. 2019 habe ich das Design eines Buchungsmarktplatzes geleitet; 2026 habe ich ihn für Deutschland als funktionierenden Prototyp für Patienten, Ärzte und Praxen neu gebaut, mit KI.",
+      headline: "Die richtige Ärztin, in Ihrer Sprache, zum frühesten echten Termin.",
+      team: "2019: Lead Designer des Marktplatzes. 2026: Konzept, Flows, Designsystem und Prototyp, allein mit KI",
+      deliverables: ["Research", "User Flows", "Prototyp für drei Rollen", "Designsystem"],
+    },
+  },
+  {
     slug: "patient-management",
     title: "Patient Management System",
     role: "Product Designer",
