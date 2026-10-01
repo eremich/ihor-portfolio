@@ -34,6 +34,8 @@ const copy = {
     markAlt: "Chilicon Power logo mark: an orange sun over a green leaf",
     wordmarkLightAlt: "Chilicon Power wordmark on white",
     wordmarkDarkAlt: "Chilicon Power wordmark on the app's dark background",
+    appIconLightAlt: "App icon, light: the logo mark on white",
+    appIconDarkAlt: "App icon, dark: the logo mark on near-black",
     fromLogo: "· from the logo",
     target: "Target",
   },
@@ -61,6 +63,8 @@ const copy = {
     markAlt: "Chilicon-Power-Logo: eine orange Sonne über einem grünen Blatt",
     wordmarkLightAlt: "Chilicon-Power-Schriftzug auf Weiß",
     wordmarkDarkAlt: "Chilicon-Power-Schriftzug auf dem dunklen Hintergrund der App",
+    appIconLightAlt: "App-Icon, hell: das Logo-Zeichen auf Weiß",
+    appIconDarkAlt: "App-Icon, dunkel: das Logo-Zeichen auf fast Schwarz",
     fromLogo: "· aus dem Logo",
     target: "Ziel",
   },
@@ -277,10 +281,10 @@ export function ChiliconBody({ lang }: { lang: Lang }) {
                 </div>
                 <div className="grid grid-cols-2 gap-3">
                   <div className="flex items-center justify-center gap-3 rounded-xl bg-[#F2F2F7] px-4 py-6">
-                    <img src={b.system.brand.appIcon} alt="App icon, light: the logo mark on white" className="size-16 rounded-[22.37%] shadow-sm" />
+                    <img src={b.system.brand.appIcon} alt={t.appIconLightAlt} className="size-16 rounded-[22.37%] shadow-sm" />
                   </div>
                   <div className="flex items-center justify-center gap-3 rounded-xl bg-[#1C1C1E] px-4 py-6">
-                    <img src={b.system.brand.appIconDark} alt="App icon, dark: the logo mark on near-black" className="size-16 rounded-[22.37%]" />
+                    <img src={b.system.brand.appIconDark} alt={t.appIconDarkAlt} className="size-16 rounded-[22.37%]" />
                   </div>
                 </div>
                 <figcaption className="text-[13px] leading-[1.45] text-ink-faint">{b.system.brand.caption}</figcaption>
