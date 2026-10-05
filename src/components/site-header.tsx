@@ -8,6 +8,7 @@ export function SiteHeader({ lang }: { lang: Lang }) {
   const t = ui[lang];
   const navItems = [
     { label: t.nav.cases, href: localePath(lang, "/#case-studies") },
+    { label: t.nav.concepts, href: localePath(lang, "/#concepts") },
     { label: t.nav.about, href: localePath(lang, "/#about") },
     { label: t.nav.contacts, href: localePath(lang, "/#contacts") },
   ];

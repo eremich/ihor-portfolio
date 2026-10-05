@@ -1,3 +1,4 @@
+import { ConceptGrid } from "@/components/concept-grid";
 import { WorkList } from "@/components/work-list";
 import { HeroMetaballs } from "@/components/hero-metaballs";
 import type { Lang } from "@/i18n";
@@ -179,6 +180,10 @@ export function HomePage({ lang }: { lang: Lang }) {
       <div className="mx-auto max-w-[1200px] px-6 pb-24 sm:px-10">
         <section id="case-studies" className="scroll-mt-24 pt-16">
           <WorkList lang={lang} />
+        </section>
+
+        <section id="concepts" className="mt-40 scroll-mt-24 md:mt-56">
+          <ConceptGrid lang={lang} />
         </section>
 
         <AboutSection t={t.about} />

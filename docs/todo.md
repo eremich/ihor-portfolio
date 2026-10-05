@@ -170,3 +170,13 @@ Live at https://ihor-yeromich.vercel.app (`SITE_URL` in `src/lib/site.ts`).
 - [x] `metadataBase` → full canonical and hreflang URLs
 - [x] Open Graph / Twitter cards: home EN/DE and every case EN/DE, generated images (`src/lib/og.tsx`)
 - [ ] Ihor: verify the site in Google Search Console and submit the sitemap
+
+## Concepts section (2026-10-05)
+
+Homepage section after Case studies, menu item "Concepts" / "Konzepte". Data in `src/content/concepts.ts`; each card opens the live concept in a new tab.
+
+- [x] BVG Night Shift (https://bvg-nightshift.vercel.app): screenshot cover, EN/DE copy, "Unofficial concept" label
+- [x] Umami: `concept-click` (`concept`, `lang`)
+- [x] Grid 2 columns; an odd last card takes the full row
+- [x] Verified: 1440 and 375, no horizontal scroll, `/de` translated
+- [ ] Ihor: 2–3 more concepts; optional short video instead of the screenshot

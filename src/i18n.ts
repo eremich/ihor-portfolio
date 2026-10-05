@@ -21,7 +21,7 @@ const germanOnly = ["/impressum", "/datenschutz"];
 // Short interface strings shared by the site shell. Case-study copy lives in src/content.
 export const ui = {
   en: {
-    nav: { cases: "Case studies", about: "About me", contacts: "Contacts" },
+    nav: { cases: "Case studies", concepts: "Concepts", about: "About me", contacts: "Contacts" },
     navLabel: "Main",
     openMenu: "Open menu",
     closeMenu: "Close menu",
@@ -31,6 +31,9 @@ export const ui = {
     footerBuilt: "Built in Berlin — Next.js, Tailwind",
     casesHeading: "Case studies",
     comingSoon: "Coming soon",
+    conceptsHeading: "Concepts",
+    unofficialConcept: "Unofficial concept",
+    opensNewTab: "(opens in a new tab)",
     back: "← Back to case studies",
     caseStudy: "case study",
     tocTitle: "Story",
@@ -46,7 +49,7 @@ export const ui = {
     },
   },
   de: {
-    nav: { cases: "Case Studies", about: "Über mich", contacts: "Kontakt" },
+    nav: { cases: "Case Studies", concepts: "Konzepte", about: "Über mich", contacts: "Kontakt" },
     navLabel: "Hauptnavigation",
     openMenu: "Menü öffnen",
     closeMenu: "Menü schließen",
@@ -56,6 +59,9 @@ export const ui = {
     footerBuilt: "Entwickelt in Berlin — Next.js, Tailwind",
     casesHeading: "Case Studies",
     comingSoon: "Demnächst",
+    conceptsHeading: "Konzepte",
+    unofficialConcept: "Inoffizielles Konzept",
+    opensNewTab: "(öffnet in neuem Tab)",
     back: "← Zurück zu den Case Studies",
     caseStudy: "Case Study",
     tocTitle: "Inhalt",
