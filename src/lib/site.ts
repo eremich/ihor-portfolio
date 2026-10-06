@@ -1,5 +1,5 @@
 // Public address of the site: used for canonical links, the sitemap and social previews.
-export const SITE_URL = "https://ihor-yeromich.vercel.app";
+export const SITE_URL = "https://www.yeromich.de";
 
 export const SITE_NAME = "Ihor Yeromich";
 

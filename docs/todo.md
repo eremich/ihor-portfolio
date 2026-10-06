@@ -164,12 +164,13 @@ German only, at `/de/impressum` and `/de/datenschutz`; the EN · DE switch stays
 
 ## SEO & social previews (2026-10-01)
 
-Live at https://ihor-yeromich.vercel.app (`SITE_URL` in `src/lib/site.ts`).
+Live at https://www.yeromich.de (`SITE_URL` in `src/lib/site.ts`). The old https://ihor-yeromich.vercel.app (linked in the CV) redirects there, page by page (`next.config.ts`).
 
 - [x] `robots.txt` (allow all) and `sitemap.xml`: home + 4 cases × EN/DE with hreflang alternates
 - [x] `metadataBase` → full canonical and hreflang URLs
 - [x] Open Graph / Twitter cards: home EN/DE and every case EN/DE, generated images (`src/lib/og.tsx`)
-- [ ] Ihor: verify the site in Google Search Console and submit the sitemap
+- [x] Domain property yeromich.de: DNS TXT record added in Spaceship, confirm in Search Console
+- [ ] Ihor: submit `https://www.yeromich.de/sitemap.xml` in Search Console
 
 ## Concepts section (2026-10-05)
 
