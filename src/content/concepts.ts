@@ -45,4 +45,20 @@ export const concepts: Concept[] = [
       de: "Orangefarbenes Herbstlaub fällt um den Berliner Fernsehturm hinter der Überschrift „VORANGEhen.“",
     },
   },
+  {
+    slug: "bundeswehr-lobby",
+    title: "Bundeswehr Lobby",
+    url: "https://bundeswehr-lobby.vercel.app",
+    year: "2026",
+    image: "/concepts/bundeswehr-lobby.webp",
+    tags: ["WebGL", "Three.js", "AI imagery"],
+    summary: {
+      en: "A careers site for the German armed forces, built like a game lobby: pick one of ten roles, and the character materialises on a platform with its profile, gear and way in.",
+      de: "Eine Karriereseite der Bundeswehr im Stil einer Spiel-Lobby: Wähle eine von zehn Rollen, und die Figur erscheint auf einer Plattform mit Profil, Ausrüstung und Einstiegsweg.",
+    },
+    imageAlt: {
+      en: "Character select screen: a pilot in a flight suit on a hexagonal platform, the role list on the left and her profile on the right.",
+      de: "Charakterauswahl: eine Pilotin im Fliegerkombi auf einer sechseckigen Plattform, links die Rollenliste, rechts ihr Profil.",
+    },
+  },
 ];
