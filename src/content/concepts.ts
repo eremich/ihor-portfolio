@@ -61,4 +61,20 @@ export const concepts: Concept[] = [
       de: "Charakterauswahl: eine Pilotin im Fliegerkombi auf einer sechseckigen Plattform, links die Rollenliste, rechts ihr Profil.",
     },
   },
+  {
+    slug: "vattenfall-oekostrom",
+    title: "Vattenfall Ökostrom",
+    url: "https://vattenfall-oekostrom.vercel.app",
+    year: "2026",
+    image: "/concepts/vattenfall-oekostrom.webp",
+    tags: ["WebGL", "Three.js", "Live data"],
+    summary: {
+      en: "A green-power tariff page as one flight over night-time Europe: where the power comes from, today's live exchange price under a real sun, and back home to Berlin.",
+      de: "Eine Ökostrom-Tarifseite als ein Flug über das nächtliche Europa: woher der Strom kommt, der heutige Börsenpreis unter der echten Sonne und zurück nach Hause nach Berlin.",
+    },
+    imageAlt: {
+      en: "Europe at night seen from orbit, city lights and thin trajectories converging on one yellow point in Berlin, next to the headline “Ihr Strom kommt von weit her.”",
+      de: "Europa bei Nacht aus dem Orbit, Lichter der Städte und feine Bahnen, die in einem gelben Punkt in Berlin zusammenlaufen, neben der Überschrift „Ihr Strom kommt von weit her.“",
+    },
+  },
 ];
